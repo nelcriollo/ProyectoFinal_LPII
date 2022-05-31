@@ -2,9 +2,11 @@ package log.ministerio.fabrica;
 
 import log.ministerio.dao.MySqlAccesoDAO;
 import log.ministerio.dao.MySqlMenuDAO;
+import log.ministerio.dao.MySqlProveedorDAO;
 import log.ministerio.dao.MySqlUsuarioDAO;
 import log.ministerio.interfaces.AccesoInterfaceDAO;
 import log.ministerio.interfaces.MenuInterfaceDAO;
+import log.ministerio.interfaces.ProveedorInterfaceDAO;
 import log.ministerio.interfaces.UsuarioInterfaceDAO;
 
 public class MySqlDAOFactory extends DAOFactory {
@@ -26,5 +28,12 @@ public class MySqlDAOFactory extends DAOFactory {
 		// TODO Auto-generated method stub
 		return new MySqlAccesoDAO();
 	}
+
+	@Override
+	public ProveedorInterfaceDAO getProveedorInterfaceDAO() {
+		//TODO Auto-generated method stub
+		return new MySqlProveedorDAO();
+	}
+	
 
 }

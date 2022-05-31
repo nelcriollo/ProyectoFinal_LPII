@@ -38,44 +38,42 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 
 
 		<div class="row ">
-			<h2 class="text-center mt-5 fw-bolder fs-1">Mantenimiento de Usuario</h2>
-			<div class="row  mb-5 ms-0 justify-content-end align-items-center">
+			<h2 class="text-center mt-5 fw-bolder fs-1">Mantenimiento de
+				Usuario</h2>
+			<!-- <div class="row  mb-5 ms-0 justify-content-end align-items-center">
 				<div class="col  align-middle">
 					<a class="btn btn-secondary float-end " class="btn btn-success"
 						href="ServletAcceso?tipo=LISTAR" role="button">Listar Accesos</a>
 				</div>
-			</div>
+			</div> -->
 			<div class="row ms-0 d-flex p-2">
 				<div class="col mt-5">
-					<form class="row rounded p-2 border border-dark">
+					<form id="idRegistrar" method="post"
+						action="ServletAcceso?tipo=REGISTRAR"
+						class="row rounded p-2 border border-dark">
 
 						<div class="col-md-6">
 							<label for="inputPassword4" class="form-label">Usuario</label> <input
-								type="text" class="form-control" id="inputPassword4">
+								type="text" class="form-control" id="idCodUser" name="codUser">
 						</div>
 						<div class="col-md-6">
 							<label for="inputState" class="form-label">Menu</label> <select
-								id="inputState" class="form-select">
-								<option selected>Choose...</option>
-								<option>...</option>
+								id="idcodMenu" class="form-select" name="codMenu">
+								<option value="" selected>Seleccionar</option>
+
 							</select>
 						</div>
 
 						<div class="col-md-12">
 							<label for="inputState" class="form-label">Opcion de Menu</label>
-							<select id="inputState" class="form-select">
-								<option selected>Choose...</option>
-								<option>...</option>
+							<select id="idcodOpcionMemu" class="form-select"
+								name="codOpcionMemu">
+								<option value="" selected>Seleccionar</option>
+
 							</select>
 						</div>
 
-						<div class="col-12">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" id="gridCheck">
-								<label class="form-check-label" for="gridCheck"> Check
-									me out </label>
-							</div>
-						</div>
+
 						<div class="row d-flex justify-content-center">
 							<div class="col-3 p-2">
 								<button type="submit" class="btn btn-primary">Registar</button>
@@ -151,6 +149,28 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	<!-- JS para validación-->
 	<script
 		src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+
+	<script>
+		 llenarMenus();
+		 llenarOpcionesMenu();
+		
+		
+		function llenarMenus(){
+			$.get("ServletMenuJSON",function(response){
+				$.each(response,function(index,item){
+					$("#idcodMenu").append("<option value='"+item.cod_menu+"'>"+item.des_menu+"</option>");
+				})
+			})
+		}
+		
+		function llenarOpcionesMenu(){
+			$.get("ServletRolMenuJSON",function(response){
+				$.each(response,function(index,item){
+					$("#idcodOpcionMemu").append("<option value='"+item.cod_Rol+"'>"+item.des_rolmenu+"</option>");
+				})
+			})
+		}
+		</script>
 
 	<script>
 		var popoverTriggerList = [].slice.call(document

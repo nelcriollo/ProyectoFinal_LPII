@@ -25,4 +25,7 @@ public class AccesoService {
 	public List<Acceso> ListarMenusPor_Usuario(int codigoUsu){
 		return objAcceso.ListarMenu_PorUsuario(codigoUsu);
 	}
+	public List<Acceso> ListarModulos(){
+		return objAcceso.listAllMenus();
+	}
 }
