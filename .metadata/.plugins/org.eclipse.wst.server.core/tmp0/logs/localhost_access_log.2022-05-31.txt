@@ -1,0 +1,13 @@
+127.0.0.1 - - [31/May/2022:00:36:37 -0500] "GET / HTTP/1.1" 404 1002
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:38 -0500] "GET /ProyectoFinal_LPII/login.jsp HTTP/1.1" 200 4181
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:38 -0500] "GET /ProyectoFinal_LPII/css/login.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:38 -0500] "GET /ProyectoFinal_LPII/img/usuario.svg HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:38 -0500] "GET /ProyectoFinal_LPII/img/llave.svg HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:47 -0500] "POST /ProyectoFinal_LPII/ServletUsuario?tipo=INICIAR HTTP/1.1" 200 9152
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:47 -0500] "POST /ProyectoFinal_LPII/ServletUsuario?tipo=INICIAR HTTP/1.1" 200 9152
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:47 -0500] "GET /ProyectoFinal_LPII/css/menu.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:47 -0500] "GET /ProyectoFinal_LPII/css/header.css HTTP/1.1" 200 525
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:36:58 -0500] "GET /ProyectoFinal_LPII/ServletAcceso?tipo=LISTAR HTTP/1.1" 200 59335
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:37:09 -0500] "GET /ProyectoFinal_LPII/ServletUsuario?tipo=CERRAR HTTP/1.1" 200 4669
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:37:17 -0500] "POST /ProyectoFinal_LPII/ServletUsuario?tipo=INICIAR HTTP/1.1" 200 9152
+0:0:0:0:0:0:0:1 - - [31/May/2022:00:37:28 -0500] "GET /ProyectoFinal_LPII/ServletAcceso?tipo=LISTAR HTTP/1.1" 200 59335
