@@ -1,5 +1,3 @@
 INDEX VERSION 1.131
-C:\Users\Nelcriollo\Downloads\ProyectoLPII_Final-ramaNcriollo\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\215063003.index
-\ProyectoFinal_LPII\src\main\java
-C:\Users\Nelcriollo\Desktop\ProyectoLPII_Final\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\215063003.index
+C:\Users\EduardoB\Desktop\ProyectoFinal_LPII2022\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\215063003.index
 \ProyectoFinal_LPII\src\main\java
