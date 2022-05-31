@@ -20,7 +20,7 @@ public class MenuService {
 	public int EliminarMenu(int codigo) {
 		return objMenu.Delete(codigo);
 	}
-	public List<Menu> ListarMenus(){
+	public List<Menu> ListarRolesMenu(){
 		return objMenu.listAll();
 	}
 	public List<Menu> ListarOpcionesDelMenuPorUsuario(int codUsuario,int codMenu){

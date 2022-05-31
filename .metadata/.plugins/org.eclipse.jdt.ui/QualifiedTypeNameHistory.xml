@@ -14,17 +14,18 @@
     <fullyQualifiedTypeName name="log.ministerio.services.UsuarioService"/>
     <fullyQualifiedTypeName name="org.apache.jasper.tagplugins.jstl.core.ForEach"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="log.ministerio.services.MenuService"/>
     <fullyQualifiedTypeName name="java.util.Iterator"/>
-    <fullyQualifiedTypeName name="log.ministerio.entidad.Menu"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="log.ministerio.interfaces.AccesoInterfaceDAO"/>
-    <fullyQualifiedTypeName name="log.ministerio.services.AccesoService"/>
-    <fullyQualifiedTypeName name="log.ministerio.entidad.Acceso"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
-    <fullyQualifiedTypeName name="java.io.PrintWriter"/>
-    <fullyQualifiedTypeName name="com.google.gson.Gson"/>
     <fullyQualifiedTypeName name="org.apache.taglibs.standard.tag.common.fmt.ParseDateSupport"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.google.gson.Gson"/>
+    <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+    <fullyQualifiedTypeName name="java.awt.Menu"/>
+    <fullyQualifiedTypeName name="log.ministerio.entidad.Menu"/>
+    <fullyQualifiedTypeName name="log.ministerio.services.MenuService"/>
+    <fullyQualifiedTypeName name="log.ministerio.entidad.Acceso"/>
+    <fullyQualifiedTypeName name="log.ministerio.services.AccesoService"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
 </qualifiedTypeNameHistroy>

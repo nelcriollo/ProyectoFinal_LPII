@@ -135,7 +135,7 @@ public class MySqlMenuDAO implements MenuInterfaceDAO {
 
 				bean=new Menu();
 
-				bean.setCod_menu(rs.getInt(1));
+				bean.setCod_rolmenu(rs.getInt(1));
 				bean.setDes_rolmenu(rs.getString(2));
 				bean.setUrl_rolmenu(rs.getString(3));
 				bean.setCod_menu(rs.getInt(4));
@@ -204,5 +204,4 @@ public class MySqlMenuDAO implements MenuInterfaceDAO {
 		}
 		return lista;
 	}
-
 }

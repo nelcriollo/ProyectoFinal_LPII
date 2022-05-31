@@ -13,5 +13,6 @@ public interface AccesoInterfaceDAO {
 	public Acceso findById(int cod);
 	public List<Acceso> listAll();
 	public List<Acceso> ListarMenu_PorUsuario(int codUsu);
+	public List<Acceso>listAllMenus();
 
 }

@@ -1,5 +1,3 @@
-
-
 USE MINISTERIOPUBLICO_GLOGISTICA;
 
 
@@ -1170,7 +1168,6 @@ ON U.id_Empleado=E.id_Empleado
 WHERE login_usuario=V_login_usuario and password_usuario =SHA(V_password_usuario);
 END;
 
-CALL SP_INICIAR_SESSION('Ncriollo','Ncriollo'); 
 -- -------------------------------------------------------------------------------
 -- MANTENIMIENTO DE LA TABLA ROLES DE USUARIO POR MENU
 -- --------------------------------------------------------------------------------
@@ -1188,6 +1185,7 @@ INSERT INTO Roles_UsuarioMenu
 VALUES (V_cod_Rol, V_des_Rol, V_url_Rol,V_cod_menu);
 END;
 
+
 /*P.A. PARA ACTUALIZAR UN ROL DEL USUARIO */
 DELIMITER $$
 CREATE PROCEDURE SP_ACTUALIZAR_ROL_USUARIO_MENU(
@@ -1201,6 +1199,7 @@ UPDATE Roles_UsuarioMenu
 SET des_Rol=V_des_Rol, url_Rol=V_url_Rol,cod_menu=V_cod_menu
 WHERE cod_Rol=V_cod_Rol;
 END;
+
 
 /*P.A. PARA ELIMINAR UN ROL DE USUARIO */
 DELIMITER $$
@@ -1251,6 +1250,7 @@ INSERT INTO Acceso
 VALUES (V_cod_menu, V_cod_usuario,V_cod_Rol);
 END;
 
+
 /*P.A. PARA ACTUALIZAR UN ACCESO*/
 DELIMITER $$
 CREATE PROCEDURE SP_ACTUALIZAR_ACCESO(
@@ -1278,7 +1278,13 @@ END;
 DELIMITER $$
 CREATE PROCEDURE SP_LISTAR_ACCESOS()
 BEGIN
-SELECT * FROM  Acceso; 
+SELECT M.des_mmenu,U.login_usuario,R.des_Rol
+FROM  Acceso A 
+JOIN Menu M 
+ON A.cod_menu=M.cod_menu JOIN Usuario U
+ON A.cod_usuario=U.cod_usuario 
+JOIN Roles_UsuarioMenu R
+ON A.cod_Rol=R.cod_Rol; 
 END;
 
 
@@ -1297,4 +1303,13 @@ JOIN Acceso A
 ON M.cod_menu=A.cod_menu
 WHERE A.cod_usuario=V_cod_usuario
 group by M.cod_menu;
+END;
+
+call SP_LISTAR_ACCESOS();
+
+/*P.A. PARA LISTAR LOS  MENUS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_MENUS()
+BEGIN
+SELECT * FROM Menu ;
 END;

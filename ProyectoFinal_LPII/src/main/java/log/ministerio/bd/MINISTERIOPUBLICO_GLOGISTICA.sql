@@ -1,3 +1,6 @@
+-- si existe la bd la eleiminamos
+
+-- creamos la BD
 
 DROP DATABASE IF  EXISTS MINISTERIOPUBLICO_GLOGISTICA;
 
@@ -161,53 +164,6 @@ SELECT * FROM   Empleado;
 
 
 
-CREATE TABLE IF NOT EXISTS ControlCalidad 
-(
-		id_Controlcalidad int auto_increment,
-		id_proveedor int null,
-		fecha_control date null,
-		Firm_jef_dep_logistica nvarchar(30) not null,
-		Firm_jef_almacen nvarchar(30) not null,
-		constraint primary key (id_Controlcalidad),
-		constraint FKProveedorControlCalidad
-		foreign key(id_proveedor)
-		references Proveedor(id_proveedor)
-) ENGINE = InnoDB;
-
-SELECT * FROM   ControlCalidad;
-
-
-
-CREATE TABLE IF NOT EXISTS DetalleControlCalidad 
-(
-		id_DetalleControlCalidad int auto_increment,
-        id_Controlcalidad int not null,
-		id_Empleado int not null,
-		id_orden_compra int not null,
-        id_bienes int not null,
-		especificaciones_de_OC nvarchar(100) not null,
-		cumple_especificaciones nchar(5) not null,
-		Observaciones text not null,
-		Estado nvarchar(20) not null,
-		constraint primary key (id_DetalleControlCalidad),
-	    constraint FKCtrlCalidad_DetalleCtrlCalidad
-	    foreign key(id_Controlcalidad)
-	    references ControlCalidad(id_Controlcalidad),
-        constraint FKEmpleadoDetalleCtrlCalidad
-	    foreign key(id_Empleado)
-	    references Empleado(id_Empleado),
-		constraint FKOrdenCompraDetalleCtrlCalidad
-	    foreign key(id_orden_compra)
-	    references OrdenCompra(id_orden_compra),
-        constraint FKBienesDetalleCtrlCalidad
-	    foreign key(id_bienes)
-	    references Bienes(id_bienes)
-) ENGINE = InnoDB;
-
-SELECT * FROM   DetalleControlCalidad;
-
-
-
 CREATE TABLE IF NOT EXISTS Devolucion
 (
 		id_Devolucion int auto_increment,
@@ -246,6 +202,32 @@ CREATE TABLE IF NOT EXISTS DetalleDevolucion
    
    select * from detalledevolucion;
    
+
+CREATE TABLE IF NOT EXISTS Carta_Devolucion 
+(
+		id_Carta int auto_increment,
+        fecha_carta date null,
+        id_bienes int not null,
+        id_Devolucion int not null,
+        id_Empleado int not null,
+		id_proveedor int not null,
+		motivo_devolucion text null,
+		constraint primary key (id_Carta),
+		constraint FKBienesCartaDevol
+		foreign key(id_bienes)
+	    references Bienes(id_bienes),
+        constraint FKDevol_CartaDevol
+	    foreign key(id_Devolucion)
+        references Devolucion(id_Devolucion),
+        constraint FKEmpleadoCartaDevol
+	    foreign key(id_Empleado)
+	    references Empleado(id_Empleado),
+        constraint FKProveedorCartaDevol
+	    foreign key(id_proveedor)
+	    references Proveedor(id_proveedor)
+) ENGINE = InnoDB;
+
+SELECT * FROM   Carta_Devolucion;
 
 
 CREATE TABLE IF NOT EXISTS TipoMovimientosAlmacen 
@@ -323,7 +305,7 @@ VALUES (1,'Mantenimiento','fas fa-boxes text-light me-3'),
 	   (2,'Movimientos','fas fa-truck-loading text-light me-3'),
        (3,'Consultar','fas fa-dna text-light me-3'),
        (4,'Reporte','fas fa-barcode text-light me-3'),
-       (5,'Nosotos','fas fa-users text-light me-3');
+       (5,'Nosotros','fas fa-users text-light me-3');
 
 select *  from Menu;
 
@@ -337,20 +319,21 @@ CREATE TABLE IF NOT EXISTS Roles_UsuarioMenu (
 ) ENGINE = InnoDB;
 
 INSERT INTO  Roles_UsuarioMenu (cod_Rol,des_Rol,url_Rol,cod_menu)
-VALUES  (1,'Bienes','ServletBienes?tipo=LISTAR',1),
-		(2,'Orden de Compra','ServletOrdenCompra?tipo=LISTAR.jsp',1),
-		(3,'Proveedores','ServletProveedor?tipo=LISTAR.jsp',1),
-		(4,'Devolucion de bienes','ServletDevolucion?tipo=LISTAR.jsp',1),
-		(5,'Carta de Devolución de Bienes','ServletCartaDevolucion?tipo=LISTAR',1),
-		(6,'Inventario de Bienes','ServletInventarioBienes?tipo=LISTAR.jsp',2),
-        (7,'Consultar Bienes','ServletBienes?tipo=LISTAR.jsp',3),
-		(8,'Consultar Orden de Compra','ServletOrdenCompra?tipo=LISTAR.jsp',3),
-		(9,'Reporte de Orden de Compra','ServletOrdenCompra?tipo=REPORTE.jsp',4),
-		(10,'Reporte de Devolucion de bienes','ServletDevolucion?tipo=REPORTE.jsp',4),
-		(11,'Reporte de Bienes','ServletBienes?tipo=REPORTE',4),
-		(12,'Reporte de Inventario de Bienes','ServletInventarioBienes?tipo=REPORTE.jsp',4),
-		(13,'Qiénes Somos','ServletNosotros?tipo=LISTAR.jsp',5);
-
+VALUES (1,'Bienes','ServletBienes?tipo=LISTAR',1),
+       (2,'Orden de Compra','ServletOrdenCompra?tipo=LISTAR',1),
+     (3,'Proveedores','ServletProveedor?tipo=LISTAR',1),
+     (4,'Devolucion de bienes','ServletDevolucion?tipo=LISTAR',1),
+    (5,'Carta de Devolución de Bienes','ServletCartaDevolucion?tipo=LISTAR',1),
+    (6,'Inventario de Bienes','ServletInventarioBienes?tipo=LISTAR',2),
+    (7,'Consultar Bienes','ServletBienes?tipo=LISTAR',3),
+    (8,'Consultar Orden de Compra','ServletOrdenCompra?tipo=LISTAR',3),
+    (9,'Reporte de Orden de Compra','Reporte_Orden_de_Compra.jsp',4),
+    (10,'Reporte de Devolucion de bienes','Reporte_de_Devolucion.jsp',4),
+    (11,'Reporte de Bienes','Reporte_de_Bienes.jsp',4),
+    (12,'Reporte de Proveedores','Reporte_de_Proveedores.jsp',4),
+    (13,'Qiénes Somos','quienes_somos.jsp',5),
+    (14,'Mantener Usuario','ServletAcceso?tipo=LISTAR',5);
+    
 select * from Roles_UsuarioMenu;
 
 CREATE TABLE IF NOT EXISTS Acceso (
@@ -372,3 +355,8 @@ VALUES (1,1,1),(1,1,2),(1,1,3),(1,1,4),(1,1,5),(2,1,6),(3,1,7),(3,1,8),(4,1,9),(
        (1,6,1),(1,6,2),(1,6,3),(1,6,4),(1,6,5),(2,6,6),(3,6,7),(3,6,8),(4,6,9),(4,6,10),(4,6,11),(4,6,12),(5,6,13);
 
 select *  from Acceso;
+
+
+
+show tables;
+show databases;
