@@ -5,8 +5,6 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 
-
-
 <!--  jquery-->
 <link rel="stylesheet"
 	href=" https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">

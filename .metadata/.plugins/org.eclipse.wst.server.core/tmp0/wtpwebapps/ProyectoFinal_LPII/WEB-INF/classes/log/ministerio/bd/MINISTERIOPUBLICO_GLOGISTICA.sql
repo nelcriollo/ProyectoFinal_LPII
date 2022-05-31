@@ -15,11 +15,11 @@ CREATE TABLE IF NOT EXISTS Proveedor
 		email varchar(50) unique null,
 		direccion varchar(100) null,
         departamento varchar(35)not null,
-        teléfono varchar(15) not null,
+        telÃ©fono varchar(15) not null,
         constraint  primary key(id_proveedor)
 ) ENGINE = InnoDB;
 
-INSERT INTO proveedor (razon_social,nombe_comercial,numero_ruc,email,direccion,departamento,teléfono)
+INSERT INTO proveedor (razon_social,nombe_comercial,numero_ruc,email,direccion,departamento,telÃ©fono)
 VALUES
 ('Compunet S.A.C','Compunet','12345678984','Compunet@gmail.com','los portales 2003 Cercado','Lima','125436588'),
 ('Distribuidora Maderas Perunas S.A.C','Moubles Peruanos','12345678901','MoublesPeruanos@gmail.com','los Portales 221 Surco','Lima','125436577'),
@@ -124,7 +124,7 @@ VALUES ('Gerente de Compras'),
 ('Sub Gerente de Abastecimiento'),
 ('Personal de Almacen'),
 ('Representante de la Oficina de TI'),
-('Sub Gerente de Devolución de Bienes'),
+('Sub Gerente de DevoluciÃ³n de Bienes'),
 ('Sub Gerente Administrativo');
 
 SELECT * FROM Cargo;
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS DetalleDevolucion
         id_Devolucion int not null,
 		id_detalle_orden int not null,
 		descripcion_del_bien nvarchar(100) null,
-		descripcion_del_daño text not null,
+		descripcion_del_daÃ±o text not null,
         Factura_referecia nvarchar(25) null,
 		precio float not null,
         cantidad int not null,
@@ -341,15 +341,15 @@ VALUES  (1,'Bienes','ServletBienes?tipo=LISTAR',1),
 		(2,'Orden de Compra','ServletOrdenCompra?tipo=LISTAR.jsp',1),
 		(3,'Proveedores','ServletProveedor?tipo=LISTAR.jsp',1),
 		(4,'Devolucion de bienes','ServletDevolucion?tipo=LISTAR.jsp',1),
-		(5,'Carta de Devolución de Bienes','ServletCartaDevolucion?tipo=LISTAR',1),
+		(5,'Carta de DevoluciÃ³n de Bienes','ServletCartaDevolucion?tipo=LISTAR',1),
 		(6,'Inventario de Bienes','ServletInventarioBienes?tipo=LISTAR.jsp',2),
         (7,'Consultar Bienes','ServletBienes?tipo=LISTAR.jsp',3),
 		(8,'Consultar Orden de Compra','ServletOrdenCompra?tipo=LISTAR.jsp',3),
-		(9,'Reporte de Orden de Compra','ServletOrdenCompra?tipo=REPORTE.jsp',4),
-		(10,'Reporte de Devolucion de bienes','ServletDevolucion?tipo=REPORTE.jsp',4),
-		(11,'Reporte de Bienes','ServletBienes?tipo=REPORTE',4),
-		(12,'Reporte de Inventario de Bienes','ServletInventarioBienes?tipo=REPORTE.jsp',4),
-		(13,'Qiénes Somos','ServletNosotros?tipo=LISTAR.jsp',5);
+		(9,'Reporte de Orden de Compra','Reporte_Orden_de_Compra.jsp',4),
+		(10,'Reporte de Devolucion de bienes','Reporte_de_Devolucion.jsp',4),
+		(11,'Reporte de Bienes','Reporte_de_Bienes.jsp',4),
+		(12,'Reporte de Proveedores','Reporte_de_Proveedores.jsp',4),
+		(13,'QiÃ©nes Somos','quienes_somos.jsp',5);
 
 select * from Roles_UsuarioMenu;
 
