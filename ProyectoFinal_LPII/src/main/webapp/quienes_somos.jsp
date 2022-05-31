@@ -47,9 +47,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
             <!-- Contenedor 1-->
             <div class="col-md-0 col-lg-2 mb-0">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1" >
-                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                    </div>
+                    
                     <h5 class="text-center" >NELSON CRIOLLO</h5>
                     <img class="img-fluid" src="img/icoHombre.png" alt="Imagen no encontrada"/>
                 </div>
@@ -58,9 +56,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
             <!-- Contenedor 2-->
             <div class="col-md-0 col-lg-2 mb-0">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
-                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                    </div>
+                   
                     <h5 class="text-center">EDITH FLORES</h5>
                     <img class="img-fluid" src="img/icoMujer.png" alt="Imagen no encontrada"/>
                 </div>
@@ -68,9 +64,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
             <!-- Contenedor 3-->
             <div class="col-md-0 col-lg-2 mb-0">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
-                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                    </div>
+                   
                     <h5 class="text-center">ALFREDO SOTO</h5>
                     <img class="img-fluid" src="img/icoHombre.png" alt="Imagen no encontrada"/>
                 </div>
@@ -78,9 +72,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
             <!-- Contenedor 4-->
             <div class="col-md-0 col-lg-2 mb-0">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal4">
-                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                    </div>
+                    
                     <h5 class="text-center">FRANCO CHAVEZ</h5>
                     <img class="img-fluid" src="img/icoHombre.png" alt="Imagen no encontrada"/>
                 </div>
@@ -88,9 +80,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
              <!-- Contenedor 5-->
             <div class="col-md-0 col-lg-2 mb-0">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal5">
-                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                    </div>
+                    
                     <h5 class="text-center">JORGE CHAVEZ</h5>
                     <img class="img-fluid" src="img/icoHombre.png" alt="Imagen no encontrada"/>
                 </div>
@@ -98,9 +88,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
              <!-- Contenedor 6-->
             <div class="col-md-0 col-lg-2 mb-0">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal6">
-                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                    </div>
+                 
                     <h5 class="text-center">EDUARDO ROJAS</h5>
                     <img class="img-fluid" src="img/icoHombre.png" alt="Imagen no encontrada"/>
                 </div>
