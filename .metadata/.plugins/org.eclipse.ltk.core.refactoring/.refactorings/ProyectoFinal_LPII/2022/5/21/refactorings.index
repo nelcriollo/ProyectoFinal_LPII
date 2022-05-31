@@ -1,0 +1,19 @@
+1652894315069	Rename type 'prueba'
+1652895732293	Move compilation units
+1652895738683	Move compilation unit
+1652895773955	Move compilation unit
+1652895778436	Move compilation unit
+1652896339195	Rename type 'prueba'
+1652897569614	Rename type 'prueba'
+1652904771896	Rename local variable 'bean'
+1652913619280	Rename local variable 'insert'
+1652913804475	Rename local variable 'pstm'
+1652913817948	Rename local variable 'pstm'
+1652914965583	Rename local variable 'cn'
+1652916884799	Rename local variable 'codUser'
+1652917101281	Rename local variable 'insert'
+1652918243027	Rename local variable 'cn'
+1652928179337	Rename local variable 'insert'
+1652929279158	Rename type 'prueba'
+1652931236927	Rename field 'objMenu'
+1653021489643	Encapsulate field 'cod_Rol'

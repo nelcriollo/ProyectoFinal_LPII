@@ -1,0 +1,20 @@
+
+<%
+if (request.getSession().getAttribute("LISTAMenu") == null)
+	response.sendRedirect("login.jsp");
+%>
+
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Fondo Principal</title>
+
+<!-- Los estilos locales de la carpeta css de proyecto-->
+<link rel="stylesheet" href="./css/menu.css">
+
+
+</head>
+<body>
+	
+</body>
+</html>

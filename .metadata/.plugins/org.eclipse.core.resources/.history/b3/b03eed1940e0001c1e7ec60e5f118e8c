@@ -1,0 +1,25 @@
+
+<%
+if (request.getSession().getAttribute("LISTAMenu") == null)
+	response.sendRedirect("login.jsp");
+%>
+
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Fondo Principal</title>
+
+<!-- Los estilos locales de la carpeta css de proyecto-->
+<link rel="stylesheet" href="./css/menu.css">
+
+
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,54 @@
+@charset "ISO-8859-1";
+
+body {
+	background: #051F4E;
+	background-image: radial-gradient(circle at 111.24% 14.64%, #3d80d7 0, #05294e 50%,
+		#000000 100%);
+	min-height: 100vh;
+}
+
+.fondo-container {
+	background-image: radial-gradient(circle at 111.24% 14.64%, #3d80d7 0, #05294e 50%,
+		#000000 100%);
+}
+
+.imgenfondologin {
+	background-image: url("../img/loginimg.svg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.navbar-brand__brand {
+	align-content: center;
+}
+
+.img-t {
+	width: 400px;
+}
+
+.itenlink {
+	text-decoration: none;
+}
+
+.input-groupp input {
+	outline: none;
+	padding: 8px 50px;
+	border: 0;
+	justify-content: center;
+	font-size: 15px;
+}
+
+.iconoUser-placeholder-img {
+	background-image: url("../img/usuario.svg");
+	background-repeat: no-repeat;
+	background-size: 15px 15px;
+	background-position: 1rem center;
+}
+
+.iconoClave-placeholder-img {
+	background-image: url("../img/llave.svg");
+	background-repeat: no-repeat;
+	background-size: 15px 15px;
+	background-position: 1rem center;
+}

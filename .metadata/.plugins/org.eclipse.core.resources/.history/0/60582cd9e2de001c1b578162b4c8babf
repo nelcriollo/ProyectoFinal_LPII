@@ -1,0 +1,61 @@
+package log.ministerio.controlador;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+import log.ministerio.entidad.Acceso;
+import log.ministerio.entidad.Menu;
+import log.ministerio.services.AccesoService;
+import log.ministerio.services.MenuService;
+
+@WebServlet("/ServletOpcionesMenuJSON")
+public class ServletOpcionesMenuJSON extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private MenuService servicioMenu = new MenuService();
+	private AccesoService servicioAcceso = new AccesoService();
+       
+
+    public ServletOpcionesMenuJSON() {
+        super();
+
+    }
+
+
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String codUser=request.getParameter("coduser");
+		String codMenu=request.getParameter("codmenu");
+		
+		List<Acceso> Menus=servicioAcceso.ListarMenusPor_Usuario("Ncriollo");
+		List<Menu> OpcionesMenu= new ArrayList<Menu>();
+
+		for (int i = 0; i < Menus.size(); i++) {
+			//almacenamos  las opciones del menu del usuario, según el codigo de usuario y el código del menu
+			List<Menu> rolesmenu=servicioMenu.ListarOpcionesDelMenuPorUsuario(bean.getCod_usuario(),Menus.get(i).getCod_menu());
+
+			//adicionamos las opciones del menu al la lista
+			OpcionesMenu.addAll(rolesmenu);
+		}
+		
+		
+		List<Menu> rolesmenu=servicioMenu.ListarOpcionesDelMenuPorUsuario(1,5);
+		//PASO 2: crear objeto de la clase Gson
+		Gson gson=new Gson();
+		//PASO 3: generar json del arreglo "lista" en formato String
+		String json=gson.toJson(rolesmenu);
+		//PASO 4: mostrar el valor de la variable "json" en formato JSON verdadero
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter salida=response.getWriter();
+		salida.println(json);	
+	}
+
+}
