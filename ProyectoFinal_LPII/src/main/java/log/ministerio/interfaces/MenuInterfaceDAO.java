@@ -11,6 +11,6 @@ public interface MenuInterfaceDAO {
 	public int Update(Menu bean);
 	public int Delete(int cod);
 	public Menu findById(int codmen);
-	public List<Menu> listAll();
+	public List<Menu> listAll(int codMen);
 	public List<Menu> ListarRolesDelMenusPorUsuario(int codUsu,int codMen);
 }

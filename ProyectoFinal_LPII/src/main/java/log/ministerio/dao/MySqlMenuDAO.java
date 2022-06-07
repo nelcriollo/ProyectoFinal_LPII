@@ -119,7 +119,7 @@ public class MySqlMenuDAO implements MenuInterfaceDAO {
 	}
 
 	@Override
-	public List<Menu> listAll() {
+	public List<Menu> listAll(int codMen) {
 		List<Menu> lista=new ArrayList<Menu>();
 		Menu bean=null;
 		Connection conex=null;
@@ -127,8 +127,9 @@ public class MySqlMenuDAO implements MenuInterfaceDAO {
 		ResultSet rs=null;
 		try {
 			conex=MySqlConexion.getConectar();
-			cstm=conex.prepareCall("{call SP_LISTAR_ROLES()}"); 
-
+			cstm=conex.prepareCall("{call SP_LISTAR_ROLES(?)}");
+			cstm.setInt(1, codMen); 
+			
 			rs=cstm.executeQuery();
 
 			while(rs.next()) {

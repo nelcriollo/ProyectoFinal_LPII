@@ -20,22 +20,14 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 <link rel="stylesheet"
 	href=" https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-<!-- Los iconos tipo Solid de Fontawesome-->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-	crossorigin="anonymous" />
-
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- Los estilos de Bootstrap-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous" />
+	crossorigin="anonymous">
+<link
+	href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
+	rel="stylesheet">
 
 </head>
 
@@ -170,22 +162,20 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		</div>
 
 
-		<div class="row mx-4 my-2 mb-5">
-			<table id="example"
-				class="table table-bordered table-hover mx-1 my-2 mb-3">
-				<thead>
-					<tr class="text-center text-white"
-						style="background-image: radial-gradient(circle at 119.64% 37.72%, #18344a 0, #010912 50%, #000000 100%);">
-						<th scope="col">CÓDIGO</th>
-						<th scope="col">RAZÓN SOCIAL</th>
-						<th scope="col">NOMBRE COMERCIAL</th>
-						<th scope="col">RUC</th>
-						<th scope="col">EMAIL</th>
-						<th scope="col">DIRECCIÓN</th>
-						<th scope="col">DEPARTAMENTO</th>
-						<th scope="col">TELEFONO</th>
-						<th scope="col">EDITAR</th>
-						<th scope="col">ELIMINAR</th>
+		<div class="col mt-4">
+			<table id="example" class="table table-striped" style="width: 100%">
+				<thead class="table-dark">
+					<tr>
+						<th>CÓDIGO</th>
+						<th>RAZÓN SOCIAL</th>
+						<th>NOMBRE COMERCIAL</th>
+						<th>RUC</th>
+						<th>EMAIL</th>
+						<th>DIRECCIÓN</th>
+						<th>DEPARTAMENTO</th>
+						<th>TELEFONO</th>
+						<th>EDITAR</th>
+						<th>ELIMINAR</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -213,7 +203,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	<jsp:include page="footer.jsp" />
 
 
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 		crossorigin="anonymous"></script>
 
@@ -221,14 +211,26 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
+			<scripts
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+
+
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script
+		src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 
 	<!-- JS para validación-->
 	<script
-		src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js">
+		src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
 		
-	</script>
+		
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+	<script>
 
 	<script>
 		var popoverTriggerList = [].slice.call(document
@@ -282,5 +284,13 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			$('.toast').toast('show');
 		});
 	</script>
+		<script>
+$(document).ready(function() {
+	
+    $('#example').DataTable();
+   
+} );
+
+</script>
 </body>
 </html>

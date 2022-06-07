@@ -22,11 +22,12 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 
 		try {
 			conex=MySqlConexion.getConectar();
-			cstm=conex.prepareCall("{CALL SP_REGISTRAR_ACCESO(?,?,?)}");
-
-			cstm.setInt(1,bean.getCod_menu());
-			cstm.setInt(2,bean.getCod_usuario());
-			cstm.setInt(3,bean.getCod_Rol());
+			cstm=conex.prepareCall("{CALL SP_REGISTRAR_ACCESO(?,?,?,?)}");
+			
+			cstm.setInt(1,bean.getCod_acceso());
+			cstm.setInt(2,bean.getCod_menu());
+			cstm.setInt(3,bean.getCod_usuario());
+			cstm.setInt(4,bean.getCod_Rol());
 
 			insert=cstm.executeUpdate();
 			System.out.println("Se insertaron: "+insert+ " datos");
@@ -55,11 +56,12 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 
 		try {
 			conex=MySqlConexion.getConectar();
-			cstm=conex.prepareCall("{CALL SP_ACTUALIZAR_ACCESO(?,?,?)}");
+			cstm=conex.prepareCall("{CALL SP_ACTUALIZAR_ACCESO(?,?,?,?)}");
 
-			cstm.setInt(1,bean.getCod_menu());
-			cstm.setInt(2,bean.getCod_usuario());
-			cstm.setInt(3,bean.getCod_Rol());
+			cstm.setInt(1,bean.getCod_acceso());
+			cstm.setInt(2,bean.getCod_menu());
+			cstm.setInt(3,bean.getCod_usuario());
+			cstm.setInt(4,bean.getCod_Rol());
 
 
 			salida=cstm.executeUpdate();
@@ -127,10 +129,10 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 			while(rs.next()) {
 
 				bean=new Acceso();
-
-				bean.setDes_menu(rs.getString(1));
-				bean.setLogin_usuario(rs.getString(2));
-				bean.setDes_rol(rs.getString(3));
+				bean.setCod_acceso(rs.getInt(1));
+				bean.setDes_menu(rs.getString(2));
+				bean.setLogin_usuario(rs.getString(3));
+				bean.setDes_rol(rs.getString(4));
 
 				lista.add(bean);
 				System.out.println("Se listaron: "+lista+ " datos");
@@ -154,7 +156,43 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 
 	@Override
 	public Acceso findById(int cod) {
-		return null;
+		Acceso bean =null;
+		Connection conex =null;
+		CallableStatement  cstm=null;
+		ResultSet rs =null;
+
+		try {
+			conex=MySqlConexion.getConectar();
+			cstm=conex.prepareCall("{call SP_EDITAR_ACCESO(?)}"); 
+			cstm.setInt(1, cod); 
+
+			rs=cstm.executeQuery();
+
+			while (rs.next()) {
+
+				bean=new Acceso();
+				
+				bean.setCod_acceso(rs.getInt(1));
+				bean.setCod_usuario(rs.getInt(2));
+				bean.setLogin_usuario(rs.getString(3));
+				bean.setCod_menu(rs.getInt(4));
+				bean.setDes_menu(rs.getString(5));
+				bean.setCod_Rol(rs.getInt(6));
+				bean.setDes_rol(rs.getString(7));	
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null)rs.close();
+				if(conex != null)conex.close();
+				if(cstm != null)cstm.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return bean;
 	}
 
 	@Override
@@ -198,7 +236,7 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 	}
 
 	@Override
-	public List<Acceso> listAllMenus() {
+	public List<Acceso> listAllModulos() {
 		List<Acceso> lista=new ArrayList<Acceso>();
 		Acceso bean=null;
 		Connection conex=null;
@@ -241,6 +279,22 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 
 	}
 
+	@Override
+	public ResultSet GenerarIdAcceso() {
+		
+		Connection conex=null; 
+		CallableStatement cstm=null; 
+		ResultSet rs=null; 
+		try { 
+			conex=MySqlConexion.getConectar();
+			cstm=conex.prepareCall("{call SP_GENERAR_CODIGO_ACCESO()}"); 
+			rs=cstm.executeQuery(); 
+			
+		} catch (Exception e) 
+		{ e.printStackTrace(); 
+		} 
 
+		return rs;
+	}
 
 }
