@@ -1,5 +1,6 @@
 package log.ministerio.interfaces;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 import log.ministerio.entidad.Acceso;
@@ -13,6 +14,7 @@ public interface AccesoInterfaceDAO {
 	public Acceso findById(int cod);
 	public List<Acceso> listAll();
 	public List<Acceso> ListarMenu_PorUsuario(int codUsu);
-	public List<Acceso>listAllMenus();
+	public List<Acceso>listAllModulos();
+	public ResultSet GenerarIdAcceso();
 
 }

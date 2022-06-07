@@ -35,7 +35,6 @@
 	crossorigin="anonymous">
 
 <!-- Los estilos locales de la carpeta css de proyecto-->
-<link rel="stylesheet" href="./css/menu.css">
 
 </head>
 

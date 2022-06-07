@@ -31,7 +31,9 @@ public class ServletRolMenuJSON extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Menu>  lista = new MenuService().ListarRolesMenu();
+		String codmenu=request.getParameter("rolesmenu");
+		
+		List<Menu>  lista = new MenuService().ListarRolesMenu(Integer.parseInt(codmenu));
 			
 				Gson Gson=new Gson();
 				
