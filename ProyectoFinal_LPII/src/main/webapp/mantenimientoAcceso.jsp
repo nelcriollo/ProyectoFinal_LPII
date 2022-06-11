@@ -247,10 +247,26 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				})
 			})
 		})	
+		
+		llenarcbosubmenu();
+		function llenarcbosubmenu(){
+				let codmenu;
+				codmenu=$("#idcodMenu").val();
+				$("#idcodOpcionMemu").empty();
+				$.get("ServletRolMenuJSON?rolesmenu="+codmenu,function(response){
+					//$('#idcodOpcionMemu').append('<option value="" selected>--Seleccione Opcionde Menú--</option>');
+					$.each(response,function(index,item){
+						$("#idcodOpcionMemu").append("<option value='"+item.cod_rolmenu+"'>"+item.des_rolmenu+"</option>");	
+						
+					})
+					
+				})
+		}
 			
 		
 		//asignamos evento a todos los botones("editar") con nombre de clase "btn-editar"
 		$(document).on("click", ".btn-editar", function() {
+			
 			
 			 $("#idIdentificador").val(1); //pasamos el valor de uno como indicadorpara actualizar
 			 $('.btn-registrar').text("Actualizar"); // para cambiar el texto del boton registrar
@@ -263,13 +279,15 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			
 			
 			$.get("ServletAccesoJSON",{"codigo":codigo},function(response){
-				
+				console.log(response);
 				$("#idcodigo").val(response.cod_acceso);
 				$("#idUser").val(response.cod_usuario);
 				$("#idcodMenu").val(response.cod_menu);
 				$("#idcodOpcionMemu").val(response.cod_Rol);
 				
+				
 			})
+			
 			
 		})
 		

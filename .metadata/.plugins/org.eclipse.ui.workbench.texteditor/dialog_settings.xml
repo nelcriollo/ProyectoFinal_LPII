@@ -6,8 +6,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="modalEliminar"/>
+		<item key="selection" value="form-control"/>
 		<list key="findhistory">
+			<item value="form-control"/>
+			<item value="form-group"/>
 			<item value="modalEliminar"/>
 			<item value="#modalEliminar"/>
 			<item value="codigoEliminar"/>
