@@ -1,0 +1,24 @@
+package log.ministerio.dao;
+
+import java.util.List;
+
+import log.ministerio.entidad.Bienes;
+import log.ministerio.interfaces.BienesInterfaceDAO;
+
+public class MySqlBienesDAO implements BienesInterfaceDAO {
+
+	@Override
+	public List<Bienes> listAll() {
+		// TODO Auto-generated method stub
+		
+		
+		return null;
+	}
+
+	@Override
+	public List<Bienes> listAllByEstado(String estado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

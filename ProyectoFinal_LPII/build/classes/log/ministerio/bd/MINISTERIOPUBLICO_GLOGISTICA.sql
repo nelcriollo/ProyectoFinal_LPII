@@ -29,8 +29,6 @@ SELECT OC.id_orden_compra,OC.fechaOrden_compra,OC.fechaEntrega,PV.razon_social,O
  WHERE OC.id_orden_compra=_id_orden_compra;
 END;
 
-/*COMPROBAR*/
-CALL SP_LISTAR_ORDENES_COMPRA_COD(12);
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA LISTAR LAS ORDENES DE COMPRA*/
@@ -40,29 +38,6 @@ BEGIN
 SELECT * FROM OrdenCompra;
 END;
 
-/*COMPROBAR*/
-CALL SP_LISTAR_ORDEN_COMPRA();
-
-
-
-/*P.A. PARA GENERAR EL NUMERO DE BOLETA*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_NUMERO_OC()
-BEGIN
-  DECLARE NUMERO_OC INT;
-  DECLARE NUEVONUMERO CHAR(8);
-  IF NOT EXISTS(SELECT * FROM OrdenCompra) THEN
-	SET NUMERO_OC=1;
-	  SET NUEVONUMERO=LPAD(NUMERO_OC,8,0);
-      ELSE
-  SET NUMERO_OC=(select max(id_orden_compra) from OrdenCompra  order by id_orden_compra desc);
-  SET NUMERO_OC= NUMERO_OC+1;
-  SET NUEVONUMERO=LPAD(NUMERO_OC,8,0);
-   END IF;
-     SELECT NUEVONUMERO AS NRO_OC;
-END;
-
-CALL SP_GENERAR_NUMERO_OC();
 
 
 /*PROCEDIMIENTOS ALMACENADOS*/
@@ -137,47 +112,28 @@ SELECT  razon_social FROM PROVEEDOR
  ORDER BY razon_social ASC;
 END;
 
-CALL SP_LISTAR_PROVEEDORES_NOM();
+
 
 
 -- ----------------------------------------------------------------------------------------------------------------------
 --  -- MANTENIMIENTO DETALLE OC
 --------------------------------------------------------------------------------------------------------------------------
-/*PROC*/
-/*P.A. PARA GENERAR  UN CODIGO DE DETALLE DE ORDEN DE COMPRA*/
 
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_NUMERO_DETALLE_OC()
-BEGIN
-  DECLARE NUMERO_DOC INT;
-  DECLARE NUEVONUMERO CHAR(8);
-  IF NOT EXISTS(SELECT * FROM detalleordencompra ) THEN
-	SET NUMERO_DOC=1;
-	  SET NUEVONUMERO=LPAD(NUMERO_DOC,8,0);
-      ELSE
-  SET NUMERO_DOC=(select max(id_detalle_orden) from detalleordencompra  order by id_detalle_orden desc);
-  SET NUMERO_DOC= NUMERO_DOC+1;
-  SET NUEVONUMERO=LPAD(NUMERO_DOC,8,0);
-   END IF;
-     SELECT NUEVONUMERO AS NRO_DOC;
-END;
-
-CALL SP_GENERAR_NUMERO_DETALLE_OC();
 
 /*P.A. PARA LISTAR LOS PRODUCTOS*/
 DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_PRODUCTOS()
+CREATE PROCEDURE SP_LISTAR_BIEN()
 BEGIN
 SELECT  b.id_bienes,tb.nombre as 'tipo_bienes',b.nombre,b.precio_Compra,b.stock,b.descripcion  FROM bienes as b 
 JOIN mpglogistica.tipobienes as tb
 ON b.id_bienes=tb.id_TipoBienes;								
 END;
 
-CALL SP_LISTAR_PRODUCTOS();
+
 
 /*P.A. PARA LISTAR LOS PRODUCTOS*/
 DELIMITER $$
-CREATE PROCEDURE SP_BUSCAR_PRODUCTO_COD(
+CREATE PROCEDURE SP_BUSCAR_BIEN_COD(
 _id_bienes INT 
 )
 BEGIN
@@ -187,9 +143,9 @@ ON b.id_bienes=tb.id_TipoBienes
 WHERE b.id_bienes=_id_bienes;							
 END;
 
-/*P.A. PARA LISTAR LOS PRODUCTOS POR TIPO DE BIENES*/
+/*P.A. PARA LISTAR LOS BIENES POR TIPO DE BIENES*/
 DELIMITER $$
-CREATE PROCEDURE SP_BUSCAR_PRODUCTO_TPOBIENES(
+CREATE PROCEDURE SP_BUSCAR_BIEN_POR_TPOBIENES(
 _id_TipoBienes INT 
 )
 BEGIN
@@ -201,7 +157,7 @@ END;
 
 /*P.A. PARA LISTAR LOS PRODUCTOS POR NOMBRE Y/O DESC DE BIENES*/
 DELIMITER $$
-CREATE PROCEDURE SP_BUSCAR_PRODUCTO_NOMRE(
+CREATE PROCEDURE SP_BUSCAR_NOMRE_BIEN(
 BUSCA VARCHAR(100)
 )
 BEGIN
@@ -302,204 +258,6 @@ ON OC.id_proveedor=PV.id_proveedor
 WHERE  OC.id_orden_compra=_id_orden_compra;
 END;
 
--- ----------------------------------------------------------------------------------------------------------------
--- mantenimiento ficha control calidad
---------------------------------------------------------------------------------------------------------------------
-
-/*P.A. PARA GENERAR EL NUMERO DE FICHA DE CONTROL CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_NUMERO_FICGACC()
-BEGIN
-  DECLARE NUMERO_FCC INT;
-  DECLARE NUEVONUMERO CHAR(8);
-  IF NOT EXISTS(SELECT * FROM ControlCalidad) THEN
-	SET NUMERO_FCC=1;
-	  SET NUEVONUMERO=LPAD(NUMERO_FCC,8,0);
-      ELSE
-  SET NUMERO_FCC=(select max(id_Controlcalidad) from ControlCalidad  order by id_Controlcalidad desc);
-  SET NUMERO_FCC= NUMERO_FCC+1;
-  SET NUEVONUMERO=LPAD(NUMERO_FCC,8,0);
-  END IF;
-  SELECT NUEVONUMERO AS NRO_FCC;
-END;
-
-call SP_GENERAR_NUMERO_FICGACC();
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA REGISTRAR UNA FICHA DE CONTROL DE CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_REGISTRAR_FICHACONTROL_CALIDAD(
-        _id_Controlcalidad int ,
-		_id_proveedor int,
-		_fecha_control date ,
-		_Firm_jef_dep_logistica nvarchar(30) ,
-		_Firm_jef_almacen nvarchar(30)
-)
-BEGIN
-INSERT INTO ControlCalidad 
-VALUES (_id_Controlcalidad,_id_proveedor,_fecha_control,_Firm_jef_dep_logistica,_Firm_jef_almacen);
-END;
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA ACTUALIZAR UNA FICHA DE CONTROL DE CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_ACTULIZAR_FICHACONTROL_CALIDAD(
-        _id_Controlcalidad int ,
-		_id_proveedor int,
-		_fecha_control date ,
-		_Firm_jef_dep_logistica nvarchar(30) ,
-		_Firm_jef_almacen nvarchar(30)
-)
-BEGIN
-UPDATE  ControlCalidad 
-SET id_proveedor=_id_proveedor,fecha_control=_fecha_control,Firm_jef_dep_logistica=_Firm_jef_dep_logistica,Firm_jef_almacen=_Firm_jef_almacen
-WHERE id_Controlcalidad=_id_Controlcalidad;
-END;
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA ELIMINAR UNA FICHA DE CONTROL DE CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_ELIMINAR_FICHACONTROL_CALIDAD(
-        _id_Controlcalidad int 
-)
-BEGIN
-DELETE FROM  ControlCalidad 
-WHERE id_Controlcalidad=_id_Controlcalidad;
-END;
-
-SELECT * FROM ControlCalidad;
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA ELIMINAR UNA FICHA DE CONTROL DE CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_FICHACONTROL_CALIDAD(
-)
-BEGIN
-SELECT CC.id_Controlcalidad,CC.fecha_control,PV.razon_social,CC.Firm_jef_dep_logistica,CC.Firm_jef_almacen
- FROM ControlCalidad as CC JOIN PROVEEDOR PV
-ON CC.id_Proveedor=PV.id_Proveedor
-ORDER BY CC.id_Controlcalidad DESC;
-END;
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA LISTAR UNA FICHA DE CONTROL DE CALIDAD POR CODIGO*/
-DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_FICHACONTROLCALIDAD_COD(
- _id_Controlcalidad int 
-)
-BEGIN
-SELECT CC.id_Controlcalidad,CC.fecha_control,PV.razon_social,CC.Firm_jef_dep_logistica,CC.Firm_jef_almacen
- FROM ControlCalidad as CC JOIN PROVEEDOR PV
-ON CC.id_Proveedor=PV.id_Proveedor
-WHERE id_Controlcalidad=_id_Controlcalidad;
-END;
-
--- ----------------------------------------------------------------------------------------------------------------------
--- mantenimiento detalle de control de calidad 
--- ------------------------------------------------------------------------------------------------------------------------
-
-/*P.A. PARA GENERAR EL NUMERO DE DETALLE DE CONTROL CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_NUMERO_DETALLE_FCC()
-BEGIN
-  DECLARE NUMERO_DFCC INT;
-  DECLARE NUEVONUMERO CHAR(8);
-  IF NOT EXISTS(SELECT * FROM DetalleControlCalidad) THEN
-	SET NUMERO_DFCC=1;
-	  SET NUEVONUMERO=LPAD(NUMERO_DFCC,8,0);
-      ELSE
-  SET NUMERO_DFCC=(select max(id_DetalleControlCalidad) from DetalleControlCalidad  order by id_DetalleControlCalidad desc);
-  SET NUMERO_DFCC= NUMERO_DFCC+1;
-  SET NUEVONUMERO=LPAD(NUMERO_DFCC,8,0);
-  END IF;
-  SELECT NUEVONUMERO AS NRO_DFCC;
-END;
-
-CALL SP_GENERAR_NUMERO_DETALLE_FCC();
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA REGISTRAR UN DE DETALLE_CONTROL DE CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_REGISTRAR_DETALLECONTROL_CALIDAD(
-       _id_DetalleControlCalidad int,
-        _id_Controlcalidad int,
-		_id_Empleado int,
-		_id_orden_compra int,
-        _id_bienes int,
-		_especificaciones_de_OC nvarchar(100),
-		_cumple_especificaciones nchar(5),
-		_Observaciones text,
-		_Estado nvarchar(20)
-)
-BEGIN
-INSERT INTO DetalleControlCalidad 
-VALUES (_id_DetalleControlCalidad,_id_Controlcalidad,_id_Empleado,_id_orden_compra,_id_bienes,_especificaciones_de_OC,_cumple_especificaciones,_Observaciones,_Estado);
-END;
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA ACTUALIZAR UNA  DETALLE_CONTROL DE CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_ACTUALIZAR_DETALLECONTROL_CALIDAD(
-       _id_DetalleControlCalidad int,
-        _id_Controlcalidad int,
-		_id_Empleado int,
-		_id_orden_compra int,
-        _id_bienes int,
-		_especificaciones_de_OC nvarchar(100),
-		_cumple_especificaciones nchar(5),
-		_Observaciones text,
-		_Estado nvarchar(20)
-)
-BEGIN
-UPDATE DetalleControlCalidad 
-SET id_Controlcalidad=_id_Controlcalidad,id_Empleado=_id_Empleado,
-id_orden_compra=_id_orden_compra,id_bienes=_id_bienes,especificaciones_de_OC=_especificaciones_de_OC,cumple_especificaciones=_cumple_especificaciones,Observaciones=_Observaciones,Estado=_Estado
-WHERE id_DetalleControlCalidad=_id_DetalleControlCalidad;
-END;
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA ELIMINAR UNA UN DE DETALLE_CONTROL DE CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_ELIMINAR_DETALLECONTROL_CALIDAD(
-       _id_DetalleControlCalidad int
-)
-BEGIN
-DELETE FROM DetalleControlCalidad 
-WHERE id_DetalleControlCalidad=_id_DetalleControlCalidad;
-END;
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA LISTAR UN DETALLE DE CONTROL DE CALIDAD*/
-DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_DETALLECONTROL_CALIDAD(
-)
-BEGIN
-SELECT DTC.id_DetalleControlCalidad,CC.id_Controlcalidad,EM.NomEmpleado,OC.id_orden_compra,B.nombre,
-		DTC.especificaciones_de_OC,DTC.cumple_especificaciones,DTC.Observaciones,DTC.Estado
- FROM DetalleControlCalidad  as DTC JOIN ControlCalidad CC
-ON DTC.id_Controlcalidad=CC.id_Controlcalidad JOIN Empleado EM
-ON DTC.id_Empleado=EM.id_Empleado JOIN OrdenCompra OC
-ON DTC.id_orden_compra=OC.id_orden_compra JOIN Bienes B
-ON DTC.id_bienes=B.id_bienes;
-END;
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA LISTAR UN DETALLE DE CONTROL DE CALIDAD POR CODIGO DE FCC*/
-DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_DETALLECONTROL_CALIDAD_CODFCC(
-_id_Controlcalidad INT
-)
-BEGIN
-SELECT DTC.id_DetalleControlCalidad,CC.id_Controlcalidad,EM.NomEmpleado,OC.id_orden_compra,B.nombre,
-		DTC.especificaciones_de_OC,DTC.cumple_especificaciones,DTC.Observaciones,DTC.Estado
- FROM DetalleControlCalidad  as DTC JOIN ControlCalidad CC
-ON DTC.id_Controlcalidad=CC.id_Controlcalidad JOIN Empleado EM
-ON DTC.id_Empleado=EM.id_Empleado JOIN OrdenCompra OC
-ON DTC.id_orden_compra=OC.id_orden_compra JOIN Bienes B
-ON DTC.id_bienes=B.id_bienes
-WHERE CC.id_Controlcalidad=_id_Controlcalidad 
-ORDER BY CC.id_Controlcalidad DESC;
-END;
 
 
 /*PROCEDIMIENTOS ALMACENADOS*/
@@ -510,7 +268,7 @@ _NomEmpleado nvarchar(50)
 )
 BEGIN
 SELECT  id_Empleado,NomEmpleado FROM Empleado
- WHERE NomEmpleado= _NomEmpleado;
+ WHERE NomEmpleado = _NomEmpleado;
 END;
 
 /*PROCEDIMIENTOS ALMACENADOS*/
@@ -525,127 +283,95 @@ END;
 -- Mantenimiento Bienes-
 -- ------------------------------------------------------------------------------------------------------------------------------
 
-/*P.A. PARA GENERAR EL CODIGO DE BIENES*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_CODIGO_BIENES()
-BEGIN
-  DECLARE CODBIENES INT;
-  DECLARE NUEVONUMERO CHAR(8);
-  IF NOT EXISTS(SELECT * FROM Bienes) THEN
-	SET CODBIENES=1;
-	  SET NUEVONUMERO=LPAD(CODBIENES,8,0);
-      ELSE
-  SET CODBIENES=(select max(id_bienes) from Bienes  order by id_bienes desc);
-  SET CODBIENES= CODBIENES+1;
-  SET NUEVONUMERO=LPAD(CODBIENES,8,0);
-  END IF;
-  SELECT NUEVONUMERO AS NRO_BIEN;
-END;
-
-CALL SP_GENERAR_CODIGO_BIENES();
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA REGISTRAR NUEVOS BIENES*/
 DELIMITER $$
-CREATE PROCEDURE SP_REGISTRAR_NUEVOS_BIENES(
-       _id_bienes int,
-	   _id_TipoBienes int,
+CREATE PROCEDURE SP_REGISTRAR_BIEN(
+       _id_Bien int,
+	   _id_TipoBien int,
        _nombre varchar(100),
-       _precio_Compra float ,
+        _descripcion varchar(256) ,
 	   _stock int,
-       _descripcion varchar(256) ,
        _estado nvarchar(20)
 )
 BEGIN
-INSERT INTO Bienes 
-VALUES (_id_bienes,_id_TipoBienes,_nombre,_precio_Compra,_stock,_descripcion,_estado);
+INSERT INTO Bien
+VALUES (_id_Bien,_id_TipoBien,_nombre,_descripcion,_stock,_estado);
 END;
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA ACTUALIZAR BIENES*/
 DELIMITER $$
-CREATE PROCEDURE SP_ACTUALIZAR_BIENES(
-       _id_bienes int,
-	   _id_TipoBienes int,
+CREATE PROCEDURE SP_ACTUALIZAR_BIEN(
+		_id_Bien int,
+	   _id_TipoBien int,
        _nombre varchar(100),
-       _precio_Compra float ,
+        _descripcion varchar(256) ,
 	   _stock int,
-       _descripcion varchar(256) ,
        _estado nvarchar(20)
 )
 BEGIN
-UPDATE Bienes 
-SET id_TipoBienes=_id_TipoBienes,nombre=_nombre,precio_Compra=_precio_Compra,stock=_stock,descripcion=_descripcion,estado=_estado
-WHERE id_bienes=_id_bienes;
+UPDATE Bien 
+SET id_TipoBien=_id_TipoBien,nombre=_nombre,descripcion=_descripcion,stock=_stock,estado=_estado
+WHERE id_Bien=_id_Bien;
 END;
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA ELIMINAR BIENES*/
 DELIMITER $$
-CREATE PROCEDURE SP_ELIMINAR_BIENES(
-       _id_bienes int
+CREATE PROCEDURE SP_ELIMINAR_BIEN(
+       _id_Bien int
 )
 BEGIN
-DELETE FROM  Bienes 
-WHERE id_bienes=_id_bienes;
+DELETE FROM  Bien
+WHERE id_Bien=_id_Bien;
 END;
+
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA ELIMINAR BIENES*/
 DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_BIENES(
+CREATE PROCEDURE SP_LISTAR_BIEN(
 )
 BEGIN
-SELECT B.id_bienes,TP.nombre,B.nombre,B.precio_Compra,B.stock,B.descripcion,B.estado FROM  Bienes B JOIN TipoBienes TP
-ON B.id_TipoBienes=TP.id_TipoBienes
-ORDER BY B.id_bienes DESC;
+SELECT B.id_Bien,B.nombre,B.descripcion,TP.nombre as 'Tipo_Bien',B.stock,B.estado FROM  Bien B JOIN TipoBien TP
+ON B.id_TipoBien=TP.id_TipoBien
+ORDER BY B.id_Bien DESC;
 END;
 
-call SP_LISTAR_BIENES();
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR BIEN POR CODIGO*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_BIEN_POR_COD(
+ _id_Bien int
+)
+BEGIN
+SELECT B.id_Bien,B.nombre,B.descripcion,TP.id_TipoBien,TP.nombre as 'Tipo_Bien',B.stock,B.estado FROM  Bien B JOIN TipoBien TP
+ON B.id_TipoBien=TP.id_TipoBien
+WHERE id_Bien =_id_Bien
+ORDER BY B.id_Bien DESC;
+END;
+
+
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA LISTAR BIENES MOSTRAR SOLO NOMBRES*/
 DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_TIPOBIENES_NOM(
+CREATE PROCEDURE SP_LISTAR_TIPOBIEN(
 )
 BEGIN
-SELECT  nombre FROM  TipoBienes 
+SELECT  id_TipoBien,nombre FROM  TipoBien
 ORDER BY nombre ASC;
 END;
 
 CALL SP_LISTAR_TIPOBIENES_NOM();
 
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA LISTAR BIENES PASANDO EL PARAMETRO NOMBRE PARA OBTER CODIGO*/
-DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_TIPOBIENES_COD(
-_nombre varchar(100) 
-)
-BEGIN
-SELECT  * FROM  TipoBienes 
-WHERE nombre=_nombre;
-END;
 
 
 -- ----------------------------------------------------------------------------------------------------------------------------
 -- Mantenimiento Devoluciones-
 -- ------------------------------------------------------------------------------------------------------------------------------
-/*P.A. PARA GENERAR EL CODIGO DE UNA DEVOLUCION*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_CODIGO_DEVOLUCION()
-BEGIN
-  DECLARE COD_DEVOLUCION INT;
-  DECLARE NUEVONUMERO CHAR(8);
-  IF NOT EXISTS(SELECT * FROM Devolucion) THEN
-	SET COD_DEVOLUCION=1;
-	  SET NUEVONUMERO=LPAD(COD_DEVOLUCION,8,0);
-      ELSE
-  SET COD_DEVOLUCION=(select max(id_Devolucion) from Devolucion  order by id_Devolucion desc);
-  SET COD_DEVOLUCION= COD_DEVOLUCION+1;
-  SET NUEVONUMERO=LPAD(COD_DEVOLUCION,8,0);
-  END IF;
-  SELECT NUEVONUMERO AS NRO_DEVOL;
-END;
 
 CALL SP_GENERAR_CODIGO_DEVOLUCION();
 
@@ -705,25 +431,6 @@ END;
 -- ----------------------------------------------------------------------------------------------------------------------------
 -- Mantenimiento Detalle-Devoluciones-
 -- ------------------------------------------------------------------------------------------------------------------------------
-
-/*P.A. PARA GENERAR EL CODIGO DE UN DETALLE DE DEVOLUCION*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_CODIGO_DETALLE_DEVOLUCION()
-BEGIN
-  DECLARE COD_DETALLE_DEV INT;
-  DECLARE NUEVONUMERO CHAR(8);
-  IF NOT EXISTS(SELECT * FROM DetalleDevolucion) THEN
-	SET COD_DETALLE_DEV=1;
-	  SET NUEVONUMERO=LPAD(COD_DETALLE_DEV,8,0);
-      ELSE
-  SET COD_DETALLE_DEV=(select max(id_DetalleDevolucion) from DetalleDevolucion  order by id_DetalleDevolucion desc);
-  SET COD_DETALLE_DEV= COD_DETALLE_DEV+1;
-  SET NUEVONUMERO=LPAD(COD_DETALLE_DEV,8,0);
-  END IF;
-  SELECT NUEVONUMERO AS NRO_DETALLE_DEVOL;
-END;
-
-CALL SP_GENERAR_CODIGO_DETALLE_DEVOLUCION();
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA REGISTRAR UN DETALLE DE DEVOLUCIÓN*/
@@ -839,23 +546,6 @@ call SP_LLENAR_DATOS();
 -- ------------------------------------------------------------------------------------------------------------------------------------
 -- movimientos de almacen-
 -- -------------------------------------------------------------------------------------------------------------------------------------
-
-/*P.A. PARA GENERAR EL CODIGO DE UNA DEVOLUCION*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_CODIGO_MOVIMIENTO()
-BEGIN
-  DECLARE COD_MOVI INT;
-  DECLARE NUEVONUMERO CHAR(8);
-IF NOT EXISTS(SELECT * FROM MovimientosAlmacen) THEN
-	SET COD_MOVI=1;
-	  SET NUEVONUMERO=LPAD(COD_MOVI,8,0);
-    ELSE
-  SET COD_MOVI=(select max(id_codMovimiento) from MovimientosAlmacen  order by id_codMovimiento desc);
-  SET COD_MOVI= COD_MOVI+1;
-  SET NUEVONUMERO=LPAD(COD_MOVI,8,0);
-  END IF;
-    SELECT NUEVONUMERO AS NRO_MOV;
-END;
 
 CALL SP_GENERAR_CODIGO_MOVIMIENTO();
 
@@ -1008,24 +698,6 @@ END;
 -- ----------------------------------------------------------------------------------------------------------------------------------------
 -- Mantenimiento proveedores
 --------------------------------------------------------------------------------------------------------------------------------------
-/*P.A. PARA GENERAR EL CODIGO DE UNPROVEEDOR*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_CODIGO_PROVEEDOR()
-BEGIN
-  DECLARE COD_PROVEE INT;
-  DECLARE NUEVONUMERO CHAR(8);
-IF NOT EXISTS(SELECT * FROM Proveedor) THEN
-	SET COD_PROVEE=1;
-	  SET NUEVONUMERO=LPAD(COD_PROVEE,8,0);
-    ELSE
-  SET COD_PROVEE=(select max(id_proveedor) from Proveedor  order by id_proveedor desc);
-  SET COD_PROVEE= COD_PROVEE+1;
-  SET NUEVONUMERO=LPAD(COD_PROVEE,8,0);
-  END IF;
-    SELECT NUEVONUMERO AS NRO_PROVEE;
-END;
-
-CALL SP_GENERAR_CODIGO_PROVEEDOR();
 
 
 /*P.A. PARA REGISTRAR PROVEEDORES*/
@@ -1038,10 +710,10 @@ _numero_ruc nvarchar(15),
 _email varchar(50),
 _direccion varchar(100),
 _departamento varchar(35),
-_teléfono varchar(15)
+_telefono varchar(15)
 )
 BEGIN
-INSERT INTO Proveedor VALUES (_id_proveedor,_razon_social,_nombre_comercial,_numero_ruc,_email,_direccion,_departamento,_teléfono);
+INSERT INTO Proveedor VALUES (_id_proveedor,_razon_social,_nombre_comercial,_numero_ruc,_email,_direccion,_departamento,_telefono);
 END;
 
 
@@ -1241,24 +913,6 @@ END;
 -- -------------------------------------------------------------------------------
 -- MANTENIMIENTO DE LA TABLA ACCESO
 -- --------------------------------------------------------------------------------
-/*P.A. PARA GENERAR EL CODIGO DE UNPROVEEDOR*/
-DELIMITER $$
-CREATE PROCEDURE SP_GENERAR_CODIGO_ACCESO()
-BEGIN
-  DECLARE COD_ACCESO INT;
-  DECLARE NUEVONUMERO CHAR(8);
-IF NOT EXISTS(SELECT * FROM Acceso) THEN
-	SET COD_ACCESO=1;
-	  SET NUEVONUMERO=LPAD(COD_ACCESO,8,0);
-    ELSE
-  SET COD_ACCESO=(select max(id_acceso) from Acceso  order by id_acceso desc);
-  SET COD_ACCESO= COD_ACCESO+1;
-  SET NUEVONUMERO=LPAD(COD_ACCESO,8,0);
-  END IF;
-    SELECT NUEVONUMERO AS NRO_ACCESO;
-END;
-
-CALL SP_GENERAR_CODIGO_ACCESO();
 
 /*P.A. PARA REGISTRAR UN ACCESO*/
 DELIMITER $$
@@ -1350,15 +1004,5 @@ END;
 DELIMITER $$
 CREATE PROCEDURE SP_LISTAR_MENUS()
 BEGIN
-SELECT * FROM Menu ;
+SELECT * FROM Menu;
 END;
-CREATE PROCEDURE SP_EDITAR_ACCESO(
- V_des_Rol varchar(55), 
- V_login_usuario varchar(15) )
- SELECT U.cod_usuario,U.login_usuario,M.cod_menu,M.des_mmenu,R.cod_Rol,R.des_Rol 
- FROM  Acceso A  JOIN Usuario U 
- ON A.cod_usuario=U.cod_usuario JOIN MENU M 
- ON A.cod_menu=M.cod_menu JOIN Roles_UsuarioMenu R 
- ON A.cod_Rol=R.cod_Rol
- WHERE R.des_Rol=V_des_Rol AND  U.login_usuario=V_login_usuario;
- END;

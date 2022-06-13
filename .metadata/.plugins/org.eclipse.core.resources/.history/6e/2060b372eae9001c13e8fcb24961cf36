@@ -1,0 +1,40 @@
+package log.ministerio.dao;
+
+import java.util.List;
+
+import log.ministerio.entidad.Bien;
+import log.ministerio.interfaces.BienInterfaceDAO;
+
+public class MySqlBienDAO implements BienInterfaceDAO {
+
+	@Override
+	public int Save(Bien bean) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int Update(Bien bean) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int Delete(int cod_bien) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Bien findById(int cod_bien) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Bien> listAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

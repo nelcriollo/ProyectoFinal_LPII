@@ -1,4 +1,3 @@
-
 -- si existe la bd la eleiminamos
 
 -- creamos la BD
@@ -53,43 +52,41 @@ CREATE TABLE IF NOT EXISTS OrdenCompra
 
 select * FROM ordencompra;
 
-CREATE TABLE IF NOT EXISTS TipoBienes 
+CREATE TABLE IF NOT EXISTS TipoBien
 (
-	   id_TipoBienes int auto_increment,
+	   id_TipoBien int auto_increment,
        nombre varchar(100)  not null unique,
-       constraint primary key (id_TipoBienes)
+       constraint primary key (id_TipoBien)
 ) ENGINE = InnoDB;
 
-INSERT INTO TipoBienes (nombre)
-VALUES ('Bienes Inmuebles'),('Bienes de consumo'),('Bienes muebles'),('Bienes Publicos'),('Bienes Simples');
+INSERT INTO TipoBien (nombre)
+VALUES ('Bien Inmuebles'),('Bien de consumo'),('Bien muebles'),('Bien Publicos'),('Bien Simples');
 
-SELECT * FROM TipoBienes;
+SELECT * FROM TipoBien;
 
 
-
-CREATE TABLE IF NOT EXISTS Bienes 
+CREATE TABLE IF NOT EXISTS Bien 
 (
-	   id_bienes int auto_increment,
-	   id_TipoBienes int not null,
+	   id_Bien int auto_increment not null,
+	   id_TipoBien int not null,
        nombre varchar(100) not null,
-       precio_Compra float not null,
-	   stock int not null,
        descripcion varchar(256) null,
+	   stock int not null,
        estado nvarchar(20) not null,
-       constraint primary key (id_bienes),
-	   constraint FKTipobienes_Bienes
-	   foreign key(id_TipoBienes)
-	   references TipoBienes(id_TipoBienes)
+       constraint primary key (id_Bien),
+	   constraint FKTipobienes_Bien
+	   foreign key(id_TipoBien)
+	   references TipoBien(id_TipoBien)
        
 ) ENGINE = InnoDB;
 
-INSERT INTO Bienes (id_TipoBienes, nombre, precio_compra, stock, descripcion, estado)
-VALUES('5','Laptops','5000.00','500','HP Laptop','Desaprobado'),
-('5','Telefonos','6000.25','500','Telefono del gobierno','Desaprobado'),
-('2','Agua','10000.90','200','Agua Mineral San Luis','Aprobado'),
-('1','Teclado','25.00','2','Teclado Blue','Aprobado');
+INSERT INTO Bien (id_TipoBien, nombre,descripcion, stock, estado)
+VALUES('5','Laptops','Laptop HP 15.5" de 1TB,8RAM','50','Desaprobado'),
+('5','Telefonos','Telefono xiaomi redmi 9a','15','Desaprobado'),
+('2','Agua','Agua Mineral San Luis,botella x 5L','200','Aprobado'),
+('5','Teclado','Teclado para Pc','20','Aprobado');
 
-SELECT * FROM Bienes;
+SELECT * FROM Bien;
 
 
 
@@ -97,9 +94,8 @@ CREATE TABLE IF NOT EXISTS DetalleOrdenCompra
 (
 		id_detalle_orden int auto_increment not null,
         id_orden_compra int not null,
-        id_bienes int not null,
+        id_Bien int not null,
         cantidad int not null,
-		descripcion nvarchar(100) not null,
 		precio_unitario float not null,
 		valor_total float not null,
 		constraint primary key (id_detalle_orden),
@@ -107,8 +103,8 @@ CREATE TABLE IF NOT EXISTS DetalleOrdenCompra
         foreign key(id_orden_compra)
 		references OrdenCompra(id_orden_compra),
         constraint FKBienesDetalleOC
-        foreign key(id_bienes)
-		references Bienes(id_bienes)
+        foreign key(id_Bien)
+		references Bien(id_Bien)
 ) ENGINE = InnoDB;
 
 SELECT * FROM DetalleOrdenCompra;
@@ -170,7 +166,6 @@ CREATE TABLE IF NOT EXISTS Devolucion
 		id_Devolucion int auto_increment,
 		fecha date not null,
 		id_proveedor int not null,
-		nomRemitente nvarchar(60) not null,
 		total_credito_adeudado float not null,
 		constraint primary key (id_Devolucion),
 	    constraint FKProveedorDevolucion
@@ -186,9 +181,8 @@ CREATE TABLE IF NOT EXISTS DetalleDevolucion
 		id_DetalleDevolucion int auto_increment,
         id_Devolucion int not null,
 		id_detalle_orden int not null,
-		descripcion_del_bien nvarchar(100) null,
+		id_Bien int not null,
 		descripcion_del_daño text not null,
-        Factura_referecia nvarchar(25) null,
 		precio float not null,
         cantidad int not null,
 		credito_adeudado float not null,
@@ -198,7 +192,10 @@ CREATE TABLE IF NOT EXISTS DetalleDevolucion
 	    references Devolucion(id_Devolucion),
         constraint FKDetalleOrdenCompraDetalleDevol
 	    foreign key(id_detalle_orden)
-	    references DetalleOrdenCompra(id_detalle_orden)
+	    references DetalleOrdenCompra(id_detalle_orden),
+         constraint FKBienesDetalleDevol
+        foreign key(id_Bien)
+		references Bien(id_Bien)
 ) ENGINE = InnoDB;
    
    select * from detalledevolucion;
@@ -208,15 +205,11 @@ CREATE TABLE IF NOT EXISTS Carta_Devolucion
 (
 		id_Carta int auto_increment,
         fecha_carta date null,
-        id_bienes int not null,
         id_Devolucion int not null,
         id_Empleado int not null,
 		id_proveedor int not null,
 		motivo_devolucion text null,
 		constraint primary key (id_Carta),
-		constraint FKBienesCartaDevol
-		foreign key(id_bienes)
-	    references Bienes(id_bienes),
         constraint FKDevol_CartaDevol
 	    foreign key(id_Devolucion)
         references Devolucion(id_Devolucion),
@@ -251,20 +244,19 @@ CREATE TABLE IF NOT EXISTS MovimientosAlmacen
 (
 		id_codMovimiento int auto_increment,
 		id_tipoMovimiento int not null,
-        id_TipoBienes int not null,
-        id_bienes int not null,
+        id_TipoBien int not null,
+        id_Bien int not null,
 		cantidad int not null,
-		descripcion_del_bien nvarchar(100) not null,
         constraint primary key (id_codMovimiento),
         constraint FKTipoMovi_MovimientosAlmacen
 	    foreign key(id_tipoMovimiento)
 	    references TipoMovimientosAlmacen(id_TipoMovimiento),
         constraint FKTipobienesMovimientosAlmacen
-		foreign key(id_TipoBienes)
-		references TipoBienes(id_TipoBienes),
+		foreign key(id_TipoBien)
+		references TipoBien(id_TipoBien),
         constraint FKBienesMovimientosAlmacen
-	    foreign key(id_bienes)
-	    references Bienes(id_bienes)
+	    foreign key(id_Bien)
+	    references Bien(id_Bien)
 ) ENGINE = InnoDB;
 
 select * from MovimientosAlmacen;
@@ -320,7 +312,7 @@ CREATE TABLE IF NOT EXISTS Roles_UsuarioMenu (
 ) ENGINE = InnoDB;
 
 INSERT INTO  Roles_UsuarioMenu (cod_Rol,des_Rol,url_Rol,cod_menu)
-VALUES (1,'Bienes','ServletBienes?tipo=LISTAR',1),
+VALUES (1,'Bien','ServletBien?tipo=LISTAR',1),
        (2,'Orden de Compra','ServletOrdenCompra?tipo=LISTAR',1),
      (3,'Proveedores','ServletProveedor?tipo=LISTAR',1),
      (4,'Devolucion de bienes','ServletDevolucion?tipo=LISTAR',1),
@@ -335,7 +327,7 @@ VALUES (1,'Bienes','ServletBienes?tipo=LISTAR',1),
     (13,'Qiénes Somos','quienes_somos.jsp',5),
     (14,'Mantener Acceso','ServletAcceso?tipo=LISTAR',5);
 
-
+CALL SP_ACTUALIZAR_ROL_USUARIO_MENU(1,'Bien','ServletBien?tipo=LISTAR',1);
     
 select * from Roles_UsuarioMenu;
 
@@ -364,4 +356,3 @@ select *  from Acceso;
 
 show tables;
 show databases;
-

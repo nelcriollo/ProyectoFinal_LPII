@@ -122,9 +122,10 @@ public class ServletProveedor extends HttpServlet {
 		}
 		else {
 
-			bean.setId_proveedor(Integer.parseInt(idPro));
+			
 
 			int salida;
+			bean.setId_proveedor(Integer.parseInt(idPro));
 			salida=servicio.actualizar(bean);
 
 			if(salida>0) {

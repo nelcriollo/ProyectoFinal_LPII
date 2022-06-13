@@ -1,0 +1,8 @@
+package log.ministerio.entidad;
+
+public class TipoBienes {
+	
+	private int cod_tipobien;
+	private String tipobienes;
+
+}

@@ -1,0 +1,10 @@
+package log.ministerio.interfaces;
+
+import java.util.List;
+import log.ministerio.entidad.TipoBienes;
+
+public interface TipoBienInterfaceDAO {
+	
+	List<TipoBienes> listAllByTipoBien(String tipo_bien);
+
+}

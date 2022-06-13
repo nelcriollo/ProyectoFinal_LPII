@@ -1,0 +1,16 @@
+package log.ministerio.dao;
+
+import java.util.List;
+
+import log.ministerio.entidad.TipoBien;
+import log.ministerio.interfaces.TipoBienInterfaceDAO;
+
+public class MySqlTipoBienDAO implements TipoBienInterfaceDAO {
+
+	@Override
+	public List<TipoBien> listAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

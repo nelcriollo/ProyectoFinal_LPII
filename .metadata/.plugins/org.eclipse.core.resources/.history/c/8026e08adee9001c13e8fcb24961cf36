@@ -1,0 +1,65 @@
+package log.ministerio.entidad;
+
+public class Bien {
+
+	private int cod_bien, tipo_bien, cantidad;
+	private double precio_unitario;
+	String nombre, descripcion, estado;
+
+	public int getCod_bien() {
+		return cod_bien;
+	}
+
+	public void setCod_bien(int cod_bien) {
+		this.cod_bien = cod_bien;
+	}
+
+	public int getTipo_bien() {
+		return tipo_bien;
+	}
+
+	public void setTipo_bien(int tipo_bien) {
+		this.tipo_bien = tipo_bien;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public double getPrecio_unitario() {
+		return precio_unitario;
+	}
+
+	public void setPrecio_unitario(double precio_unitario) {
+		this.precio_unitario = precio_unitario;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+}

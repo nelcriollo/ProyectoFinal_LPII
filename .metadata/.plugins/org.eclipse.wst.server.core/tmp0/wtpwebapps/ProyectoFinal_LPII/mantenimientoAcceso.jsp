@@ -67,7 +67,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				<div class="col mt-5">
 					<form id="idRegistrar" method="post"
 						action="ServletAcceso?tipo=REGISTRAR"
-						class="row rounded p-2 border border-dark">
+						class="row rounded p-2 border">
 				
 							 <input type="hidden" class="form-control" id="idIdentificador" name="tipoOperacion">
 							
@@ -247,21 +247,6 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				})
 			})
 		})	
-		
-		llenarcbosubmenu();
-		function llenarcbosubmenu(){
-				let codmenu;
-				codmenu=$("#idcodMenu").val();
-				$("#idcodOpcionMemu").empty();
-				$.get("ServletRolMenuJSON?rolesmenu="+codmenu,function(response){
-					//$('#idcodOpcionMemu').append('<option value="" selected>--Seleccione Opcionde Menú--</option>');
-					$.each(response,function(index,item){
-						$("#idcodOpcionMemu").append("<option value='"+item.cod_rolmenu+"'>"+item.des_rolmenu+"</option>");	
-						
-					})
-					
-				})
-		}
 			
 		
 		//asignamos evento a todos los botones("editar") con nombre de clase "btn-editar"
@@ -273,7 +258,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			 $('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
 			 $('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
 			 
-			let codigo, codmenu;
+			let codigo;
 			 //obtenemos el valor de la columna(0), para paserle como parametro al ServletAccesoJSON
 			codigo = $(this).parents("tr").find("td")[0].innerHTML;
 			
@@ -284,7 +269,6 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				$("#idUser").val(response.cod_usuario);
 				$("#idcodMenu").val(response.cod_menu);
 				$("#idcodOpcionMemu").val(response.cod_Rol);
-				
 				
 			})
 			
@@ -343,18 +327,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 								{
 									
 												fields : {
-													codAcc : {
-														validators : {
-															notEmpty:{
-								        		 				message:'Campo Código es obligatorio'
-								        		 				
-								        		 			},
-								        		 			regexp:{
-								        		 				regexp:/^[0-9]{1,8}$/,
-								                                message:'Campo Código Solo debe ingresar 8 digitos'
-								        		 			}
-														}
-													},
+													
 													user : {
 														validators : {
 															notEmpty: {
