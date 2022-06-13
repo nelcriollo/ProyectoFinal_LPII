@@ -1,0 +1,13 @@
+package log.ministerio.interfaces;
+
+import java.util.List;
+
+import log.ministerio.entidad.Bienes;
+
+public interface BienesInterfaceDAO {
+	
+	public List<Bienes> listAll();
+	
+	public List<Bienes> listAllByEstado(String estado);
+
+}

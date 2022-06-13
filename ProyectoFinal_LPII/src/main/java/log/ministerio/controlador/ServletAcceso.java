@@ -80,7 +80,7 @@ public class ServletAcceso extends HttpServlet {
 
 		Acceso bean=new Acceso();
 
-		bean.setCod_acceso(Integer.parseInt(codAcc));
+		
 		bean.setCod_menu(Integer.parseInt(codmenu));
 		bean.setCod_usuario(Integer.parseInt(codUser));
 		bean.setCod_Rol(Integer.parseInt(codRol));
@@ -105,6 +105,7 @@ public class ServletAcceso extends HttpServlet {
 			}
 
 		}else if (tipo==1) {
+			bean.setCod_acceso(Integer.parseInt(codAcc));
 			salida=servicioAcceso.ActualizarAcceso(bean);
 
 			if(salida>0) {

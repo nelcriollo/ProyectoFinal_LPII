@@ -1,3 +1,13 @@
 1654496207077	Rename method 'GenerarIdint'
 1654555911801	Rename resource 'accesosrolesmenu.jsp'
 1654639091555	Delete element
+1654987666278	Rename type 'BienesInterfaceDAO'
+1654987681154	Rename type 'BienesService'
+1654987692394	Rename type 'BieneInterfaceDAO'
+1654987770623	Rename type 'Bienes'
+1654987778224	Rename type 'Biene'
+1654987787799	Rename type 'TipoBienes'
+1654987846584	Rename type 'MySqlBienesDAO'
+1654987883586	Rename type 'ServletBienes'
+1654988244068	Delete element
+1654988248973	Delete element

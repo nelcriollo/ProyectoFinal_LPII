@@ -67,7 +67,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				<div class="col mt-5">
 					<form id="idRegistrar" method="post"
 						action="ServletAcceso?tipo=REGISTRAR"
-						class="row rounded p-2 border border-dark">
+						class="row rounded p-2 border">
 				
 							 <input type="hidden" class="form-control" id="idIdentificador" name="tipoOperacion">
 							
@@ -252,24 +252,26 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		//asignamos evento a todos los botones("editar") con nombre de clase "btn-editar"
 		$(document).on("click", ".btn-editar", function() {
 			
+			
 			 $("#idIdentificador").val(1); //pasamos el valor de uno como indicadorpara actualizar
 			 $('.btn-registrar').text("Actualizar"); // para cambiar el texto del boton registrar
 			 $('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
 			 $('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
 			 
-			let codigo, codmenu;
+			let codigo;
 			 //obtenemos el valor de la columna(0), para paserle como parametro al ServletAccesoJSON
 			codigo = $(this).parents("tr").find("td")[0].innerHTML;
 			
 			
 			$.get("ServletAccesoJSON",{"codigo":codigo},function(response){
-				
+				console.log(response);
 				$("#idcodigo").val(response.cod_acceso);
 				$("#idUser").val(response.cod_usuario);
 				$("#idcodMenu").val(response.cod_menu);
 				$("#idcodOpcionMemu").val(response.cod_Rol);
 				
 			})
+			
 			
 		})
 		
@@ -325,18 +327,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 								{
 									
 												fields : {
-													codAcc : {
-														validators : {
-															notEmpty:{
-								        		 				message:'Campo Código es obligatorio'
-								        		 				
-								        		 			},
-								        		 			regexp:{
-								        		 				regexp:/^[0-9]{1,8}$/,
-								                                message:'Campo Código Solo debe ingresar 8 digitos'
-								        		 			}
-														}
-													},
+													
 													user : {
 														validators : {
 															notEmpty: {

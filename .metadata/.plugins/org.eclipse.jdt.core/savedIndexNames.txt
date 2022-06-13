@@ -1,7 +1,6 @@
 INDEX VERSION 1.131+C:\Users\Nelcriollo\Desktop\ProyectoFinal_LPII\.metadata\.plugins\org.eclipse.jdt.core
 3076802152.index
 2943018719.index
-2979980623.index
 3511960870.index
 1681601314.index
 1566608469.index
