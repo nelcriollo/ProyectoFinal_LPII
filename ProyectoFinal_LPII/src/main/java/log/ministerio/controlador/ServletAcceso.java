@@ -1,6 +1,8 @@
 package log.ministerio.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import log.ministerio.entidad.Acceso;
 import log.ministerio.services.AccesoService;
@@ -33,28 +37,90 @@ public class ServletAcceso extends HttpServlet {
 			listarAccesos(request,response);
 		else if(accion.equals("REGISTRAR")) 
 			registrarAcceso(request,response);
-		else if(accion.equals("ACTUALIZAR")) 
-			actualizarAcceso(request,response);
 		else if(accion.equals("ELIMINAR")) 
 			eliminarAcceso(request,response);
-	}
 
+		else if(accion.equals("GenerarID")) 
+			ObtenerID(request,response);
 
-	private void eliminarAcceso(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	private void actualizarAcceso(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
 
 	}
 
 
-	private void registrarAcceso(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void eliminarAcceso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String codigo;
 
+		codigo=request.getParameter("codigoEliminar");
+
+		int salida;
+		salida=servicioAcceso.EliminarAcceso(Integer.parseInt(codigo));
+
+		if(salida>0) {
+
+			request.setAttribute("MENSAJE", "Acceso eliminado correctamente");
+			listarAccesos(request, response);
+		}
+		else {
+			request.setAttribute("MENSAJE", "Error en la eliminación de Acceso");
+			listarAccesos(request, response);
+
+		}
+
+	}
+
+	private void registrarAcceso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String identificador,codAcc,codUser,codmenu,codRol;
+
+		identificador=request.getParameter("tipoOperacion");
+		codAcc=request.getParameter("codAcc");
+		codmenu=request.getParameter("menu");
+		codUser=request.getParameter("user");
+		codRol=request.getParameter("opcionMemu");
+
+		Acceso bean=new Acceso();
+
+		
+		bean.setCod_menu(Integer.parseInt(codmenu));
+		bean.setCod_usuario(Integer.parseInt(codUser));
+		bean.setCod_Rol(Integer.parseInt(codRol));
+
+		int tipo = Integer.parseInt(identificador);
+		int salida;
+
+		if(tipo==0) {
+
+			salida=servicioAcceso.RegistrarAcceso(bean);
+
+			if(salida>0) {
+
+
+				request.setAttribute("MENSAJE", "Acceso registrado correctamente");
+				listarAccesos(request, response);
+			}
+			else {
+				request.setAttribute("MENSAJE", "Error en el registro de Acceso");
+				listarAccesos(request, response);
+
+			}
+
+		}else if (tipo==1) {
+			bean.setCod_acceso(Integer.parseInt(codAcc));
+			salida=servicioAcceso.ActualizarAcceso(bean);
+
+			if(salida>0) {
+
+
+				request.setAttribute("MENSAJE", "Acceso Actualizado correctamente");
+				listarAccesos(request, response);
+			}
+			else {
+				request.setAttribute("MENSAJE", "Error al actualizar de Acceso");
+				listarAccesos(request, response);
+
+			}
+
+		}
 	}
 
 
@@ -64,7 +130,25 @@ public class ServletAcceso extends HttpServlet {
 
 		request.setAttribute("listaAccesos", data);
 
-		request.getRequestDispatcher("/acceso.jsp").forward(request, response);
+		request.getRequestDispatcher("/mantenimientoAcceso.jsp").forward(request, response);
+
+	}
+
+
+	private void ObtenerID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			ResultSet rs = new AccesoService().GenerarCodigoAcceso();
+			if(rs.next()) {
+
+				request.setAttribute("ID", rs.getString(1));
+
+				request.getRequestDispatcher("/mantenimientoAcceso.jsp").forward(request, response);
+
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 

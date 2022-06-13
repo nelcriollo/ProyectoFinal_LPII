@@ -1,7 +1,7 @@
 package log.ministerio.entidad;
 
 public class Acceso {
-	private int cod_menu,cod_usuario,cod_Rol;
+	private int cod_acceso,cod_menu,cod_usuario,cod_Rol;
 	private String des_menu,login_usuario,icono_menu,des_rol;
 
 	public Acceso(int cod_menu, int cod_usuario, int cod_Rol, String des_menu, String login_usuario, String icono_menu,
@@ -73,6 +73,14 @@ public class Acceso {
 
 	public void setDes_rol(String des_rol) {
 		this.des_rol = des_rol;
+	}
+
+	public int getCod_acceso() {
+		return cod_acceso;
+	}
+
+	public void setCod_acceso(int cod_acceso) {
+		this.cod_acceso = cod_acceso;
 	}
 
 	

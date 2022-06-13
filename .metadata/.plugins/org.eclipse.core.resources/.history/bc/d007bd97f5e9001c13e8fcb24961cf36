@@ -1,0 +1,78 @@
+package log.ministerio.controlador;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import log.ministerio.entidad.Bien;
+import log.ministerio.services.AccesoService;
+import log.ministerio.services.BienService;
+import log.ministerio.services.BienesService;
+
+/**
+ * Servlet implementation class ServletBienes
+ */
+@WebServlet("/ServletBienes")
+public class ServletBien extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+
+	private BienService servicioBien= new BienService();
+	
+    public ServletBien() {
+        super();
+        
+        
+    }
+
+	
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		String accion;
+		accion=request.getParameter("tipo");
+		if(accion.equals("LISTAR")) 
+			listarBienes(request,response);
+		else if(accion.equals("REGISTRAR")) 
+			registrarBienes(request,response);
+		else if(accion.equals("ACTUALIZAR")) 
+			actualizarBienes(request,response);
+		else if(accion.equals("ELIMINAR")) 
+			eliminarBienes(request,response);
+	}
+	
+	
+	private void registrarBienes(HttpServletRequest request, HttpServletResponse response) {
+
+		
+	}
+	private void actualizarBienes(HttpServletRequest request, HttpServletResponse response) {
+	
+		
+	}
+
+	private void listarBienes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		List<Bien> data=servicioBien.ListarBienes();
+
+        request.setAttribute("listaBienes", data);
+
+        request.getRequestDispatcher("/Mantenimiento_Bien.jsp").forward(request, response);
+		
+	}
+
+
+
+
+
+	private void eliminarBienes(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

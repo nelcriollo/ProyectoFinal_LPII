@@ -44,11 +44,14 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					src="./img/logominis_navbar.svg" all="we share" loading="lazy"
 					class="navbar-brand__sup text-light" />
 				</a>
+				<a href="http://localhost:8080/ProyectoFinal_LPII/ServletUsuario?tipo=INICIAR"></a>
 				<button class="navbar-toggler navbar-brand__icon" type="button"
 					data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
 					aria-controls="offcanvasNavbar">
 					<i class="fas fa-home text-light"></i>
 				</button>
+				
+				
 			</div>
 
 			<div class="btn-group">

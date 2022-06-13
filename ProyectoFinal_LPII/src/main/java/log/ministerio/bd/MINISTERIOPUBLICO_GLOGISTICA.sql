@@ -1,374 +1,1008 @@
 
-DROP DATABASE IF  EXISTS MINISTERIOPUBLICO_GLOGISTICA;
-
-CREATE DATABASE IF NOT EXISTS  MINISTERIOPUBLICO_GLOGISTICA;
 USE MINISTERIOPUBLICO_GLOGISTICA;
 
 
--- creamos la tablas
-CREATE TABLE IF NOT EXISTS Proveedor 
-(
-		id_proveedor int auto_increment not null,
-        razon_social nvarchar(50) unique not null,
-        nombe_comercial nvarchar(60) not null,
-		numero_ruc nvarchar(15) unique not null,
-		email varchar(50) unique null,
-		direccion varchar(100) null,
-        departamento varchar(35)not null,
-        teléfono varchar(15) not null,
-        constraint  primary key(id_proveedor)
-) ENGINE = InnoDB;
-
-INSERT INTO proveedor (razon_social,nombe_comercial,numero_ruc,email,direccion,departamento,teléfono)
-VALUES
-('Compunet S.A.C','Compunet','12345678984','Compunet@gmail.com','los portales 2003 Cercado','Lima','125436588'),
-('Distribuidora Maderas Perunas S.A.C','Moubles Peruanos','12345678901','MoublesPeruanos@gmail.com','los Portales 221 Surco','Lima','125436577'),
-('Constructora Andina S.A.C','Imuebles Andina','12345678955','ImueblesAndina@gmail.com','las Palmeras 1552 Miraflores','Lima','125436570'),
-('San Mateo S.A.C','San Mateo','12345678200','SanMateo@gmail.com','Calle Ramirez 1524 Arequipa','Arequipa','125436542'),
-('Samsung S.A.C','Samsung','35345678911','Samsung@gmail.com','Calle Ramirez 1524 San Isidro','Lima','125436500');
-
-SELECT * FROM   proveedor;
-
-
-CREATE TABLE IF NOT EXISTS OrdenCompra 
-(
-		id_orden_compra int auto_increment,
-        fechaOrden_compra date not null,
-        fechaEntrega date not null,
-		id_proveedor int not null,
-        CondicionesPago nvarchar(25) not null,
-        Embalaje nchar(15) null,
-        Transporte nchar(20) null,
-        ValorTotal_Orden float not null,
-		constraint primary key (id_orden_compra),
-        constraint FKProveedor_Ordencompra 
-        foreign key(id_proveedor)
-		references Proveedor(id_proveedor)
-) ENGINE = InnoDB;
-
-
-select * FROM ordencompra;
-
-CREATE TABLE IF NOT EXISTS TipoBienes 
-(
-	   id_TipoBienes int auto_increment,
-       nombre varchar(100)  not null unique,
-       constraint primary key (id_TipoBienes)
-) ENGINE = InnoDB;
-
-INSERT INTO TipoBienes (nombre)
-VALUES ('Bienes Inmuebles'),('Bienes de consumo'),('Bienes muebles'),('Bienes Publicos'),('Bienes Simples');
-
-SELECT * FROM TipoBienes;
-
-
-
-CREATE TABLE IF NOT EXISTS Bienes 
-(
-	   id_bienes int auto_increment,
-	   id_TipoBienes int not null,
-       nombre varchar(100) not null,
-       precio_Compra float not null,
-	   stock int not null,
-       descripcion varchar(256) null,
-       estado nvarchar(20) not null,
-       constraint primary key (id_bienes),
-	   constraint FKTipobienes_Bienes
-	   foreign key(id_TipoBienes)
-	   references TipoBienes(id_TipoBienes)
-       
-) ENGINE = InnoDB;
-
-INSERT INTO Bienes (id_TipoBienes, nombre, precio_compra, stock, descripcion, estado)
-VALUES('5','Laptops','5000.00','500','HP Laptop','Desaprobado'),
-('5','Telefonos','6000.25','500','Telefono del gobierno','Desaprobado'),
-('2','Agua','10000.90','200','Agua Mineral San Luis','Aprobado'),
-('1','Teclado','25.00','2','Teclado Blue','Aprobado');
-
-SELECT * FROM Bienes;
-
-
-
-CREATE TABLE IF NOT EXISTS DetalleOrdenCompra 
-(
-		id_detalle_orden int auto_increment not null,
-        id_orden_compra int not null,
-        id_bienes int not null,
-        cantidad int not null,
-		descripcion nvarchar(100) not null,
-		precio_unitario float not null,
-		valor_total float not null,
-		constraint primary key (id_detalle_orden),
-        constraint FKOrdencompraDetalleOC
-        foreign key(id_orden_compra)
-		references OrdenCompra(id_orden_compra),
-        constraint FKBienesDetalleOC
-        foreign key(id_bienes)
-		references Bienes(id_bienes)
-) ENGINE = InnoDB;
-
-SELECT * FROM DetalleOrdenCompra;
-
-
-
-CREATE TABLE IF NOT EXISTS Cargo 
-(
-		id_Cargo int auto_increment,
-		NombreCargo nvarchar(60) unique not null,
-		 constraint primary key (id_Cargo)
-) ENGINE = InnoDB;
-
-INSERT INTO Cargo (NombreCargo)
-VALUES ('Gerente de Compras'),
-('Asitente Administrativo'),
-('Sub Gerente de Abastecimiento'),
-('Personal de Almacen'),
-('Representante de la Oficina de TI'),
-('Sub Gerente de Devolución de Bienes'),
-('Sub Gerente Administrativo');
-
-SELECT * FROM Cargo;
-
-
-
-CREATE TABLE IF NOT EXISTS Empleado 
-(
-		id_Empleado int auto_increment,
-        id_cargo int not null,
-		NomEmpleado nvarchar(50) not null,
-		Apellidos nvarchar(60) not null,
-		email nvarchar(30) null,
-		Telefono nchar(15) null,
-		fechaIngreso date not null,
-		fechaCeses date null,
-		constraint primary key (id_Empleado),
-	    constraint FKCargoEmpleado
-	    foreign key(id_cargo)
-	    references Cargo(id_cargo)
-) ENGINE = InnoDB;
-
-INSERT INTO Empleado (id_cargo,NomEmpleado,Apellidos,email,Telefono,fechaIngreso,fechaCeses)
-VALUES 
-('1','Nelson','Criollo','ncriollo.minpub@gob.pe','988777666','2011-02-02',null),
-('2','Franco','Chavez','fchavez.minpub@gob.pe','955444333','2014-05-05',null),
-('3','Alfredo','Soto','asoto.minpub@gob.pe','999888777','2010-01-01',null),
-('4','Jorge','Chavez','jchavez.minpub@gob.pe','966555444','2013-04-04',null),
-('5','Edith','Flores','eflores.minpub@gob.pe','977666555','2012-03-03',null),
-('6','Eduardo','Rojas','erojas.minpub@gob.pe','977666555','2012-03-03',null);
-
-
-SELECT * FROM   Empleado;
-
-
-
-CREATE TABLE IF NOT EXISTS ControlCalidad 
-(
-		id_Controlcalidad int auto_increment,
-		id_proveedor int null,
-		fecha_control date null,
-		Firm_jef_dep_logistica nvarchar(30) not null,
-		Firm_jef_almacen nvarchar(30) not null,
-		constraint primary key (id_Controlcalidad),
-		constraint FKProveedorControlCalidad
-		foreign key(id_proveedor)
-		references Proveedor(id_proveedor)
-) ENGINE = InnoDB;
-
-SELECT * FROM   ControlCalidad;
-
-
-
-CREATE TABLE IF NOT EXISTS DetalleControlCalidad 
-(
-		id_DetalleControlCalidad int auto_increment,
-        id_Controlcalidad int not null,
-		id_Empleado int not null,
-		id_orden_compra int not null,
-        id_bienes int not null,
-		especificaciones_de_OC nvarchar(100) not null,
-		cumple_especificaciones nchar(5) not null,
-		Observaciones text not null,
-		Estado nvarchar(20) not null,
-		constraint primary key (id_DetalleControlCalidad),
-	    constraint FKCtrlCalidad_DetalleCtrlCalidad
-	    foreign key(id_Controlcalidad)
-	    references ControlCalidad(id_Controlcalidad),
-        constraint FKEmpleadoDetalleCtrlCalidad
-	    foreign key(id_Empleado)
-	    references Empleado(id_Empleado),
-		constraint FKOrdenCompraDetalleCtrlCalidad
-	    foreign key(id_orden_compra)
-	    references OrdenCompra(id_orden_compra),
-        constraint FKBienesDetalleCtrlCalidad
-	    foreign key(id_bienes)
-	    references Bienes(id_bienes)
-) ENGINE = InnoDB;
-
-SELECT * FROM   DetalleControlCalidad;
-
-
-
-CREATE TABLE IF NOT EXISTS Devolucion
-(
-		id_Devolucion int auto_increment,
-		fecha date not null,
-		id_proveedor int not null,
-		nomRemitente nvarchar(60) not null,
-		total_credito_adeudado float not null,
-		constraint primary key (id_Devolucion),
-	    constraint FKProveedorDevolucion
-	    foreign key(id_proveedor)
-	    references Proveedor(id_proveedor)
-)ENGINE = InnoDB;
-
-select * from Devolucion;
-
-
-CREATE TABLE IF NOT EXISTS DetalleDevolucion 
-(
-		id_DetalleDevolucion int auto_increment,
-        id_Devolucion int not null,
-		id_detalle_orden int not null,
-		descripcion_del_bien nvarchar(100) null,
-		descripcion_del_daño text not null,
-        Factura_referecia nvarchar(25) null,
-		precio float not null,
-        cantidad int not null,
-		credito_adeudado float not null,
-		constraint primary key (id_DetalleDevolucion),
-		constraint FKDevol_DetalleDevol
-	    foreign key(id_Devolucion)
-	    references Devolucion(id_Devolucion),
-        constraint FKDetalleOrdenCompraDetalleDevol
-	    foreign key(id_detalle_orden)
-	    references DetalleOrdenCompra(id_detalle_orden)
-) ENGINE = InnoDB;
-   
-   select * from detalledevolucion;
-   
-
-
-CREATE TABLE IF NOT EXISTS TipoMovimientosAlmacen 
-(
-id_TipoMovimiento int auto_increment,
-nombreMovimiento  nvarchar(25) not null,
- constraint primary key (id_TipoMovimiento)
-) ENGINE = InnoDB;
-
-INSERT INTO TipoMovimientosAlmacen (nombreMovimiento)
-VALUES
-('Ingresos'),
-('Salidas');
-
-select * from TipoMovimientosAlmacen;
-
-
-
-CREATE TABLE IF NOT EXISTS MovimientosAlmacen 
-(
-		id_codMovimiento int auto_increment,
-		id_tipoMovimiento int not null,
-        id_TipoBienes int not null,
-        id_bienes int not null,
-		cantidad int not null,
-		descripcion_del_bien nvarchar(100) not null,
-        constraint primary key (id_codMovimiento),
-        constraint FKTipoMovi_MovimientosAlmacen
-	    foreign key(id_tipoMovimiento)
-	    references TipoMovimientosAlmacen(id_TipoMovimiento),
-        constraint FKTipobienesMovimientosAlmacen
-		foreign key(id_TipoBienes)
-		references TipoBienes(id_TipoBienes),
-        constraint FKBienesMovimientosAlmacen
-	    foreign key(id_bienes)
-	    references Bienes(id_bienes)
-) ENGINE = InnoDB;
-
-select * from MovimientosAlmacen;
-
-
-CREATE TABLE IF NOT EXISTS Usuario 
-(
-  cod_usuario int NOT NULL AUTO_INCREMENT,
-  login_usuario varchar(15) DEFAULT NULL,
-  password_usuario varchar(100) DEFAULT NULL,
-  id_Empleado int NOT NULL,
-  estado_usuario char(1) DEFAULT NULL,
-		constraint primary key (cod_usuario),
-	    constraint FKEmpleadoUsuario 
-	    foreign key(id_Empleado)
-	    references empleado(id_Empleado)
-) ENGINE = InnoDB;
-
-INSERT INTO Usuario (login_usuario,password_usuario,id_Empleado,estado_usuario)
-VALUES
-('Ncriollo',SHA('Ncriollo'),1,'1'),
-('Fchavez',SHA('Fchavez'),2,'1'),
-('Asoto',SHA('Asoto'),3,'1'),
-('Jchavez',SHA('Jchavez'),4,'1'),
-('Edith',SHA('Edith'),5,'1'),
-('Eduardo',SHA('Eduardo'),6,'1');
-
-select *  from Usuario;
-
-CREATE TABLE IF NOT EXISTS Menu (
-  cod_menu int NOT NULL AUTO_INCREMENT,
-  des_mmenu varchar(55) DEFAULT NULL,
-  icono_mmenu varchar(150) DEFAULT NULL,
-  constraint primary key (cod_menu)
-) ENGINE = InnoDB;
-
-INSERT INTO  Menu (cod_menu,des_mmenu,icono_mmenu)
-VALUES (1,'Mantenimiento','fas fa-boxes text-light me-3'),
-	   (2,'Movimientos','fas fa-truck-loading text-light me-3'),
-       (3,'Consultar','fas fa-dna text-light me-3'),
-       (4,'Reporte','fas fa-barcode text-light me-3'),
-       (5,'Nosotos','fas fa-users text-light me-3');
-
-select *  from Menu;
-
-CREATE TABLE IF NOT EXISTS Roles_UsuarioMenu (
-  cod_Rol int NOT NULL AUTO_INCREMENT,
-  des_Rol varchar(55) DEFAULT NULL,
-  url_Rol varchar(500) DEFAULT NULL,
-  cod_menu int NOT NULL,
-  constraint primary key (cod_Rol),
-  CONSTRAINT FKMenu_RolesUsuario FOREIGN KEY (cod_menu) REFERENCES Menu (cod_menu)
-) ENGINE = InnoDB;
-
-INSERT INTO  Roles_UsuarioMenu (cod_Rol,des_Rol,url_Rol,cod_menu)
-VALUES  (1,'Bienes','ServletBienes?tipo=LISTAR',1),
-		(2,'Orden de Compra','ServletOrdenCompra?tipo=LISTAR.jsp',1),
-		(3,'Proveedores','ServletProveedor?tipo=LISTAR.jsp',1),
-		(4,'Devolucion de bienes','ServletDevolucion?tipo=LISTAR.jsp',1),
-		(5,'Carta de Devolución de Bienes','ServletCartaDevolucion?tipo=LISTAR',1),
-		(6,'Inventario de Bienes','ServletInventarioBienes?tipo=LISTAR.jsp',2),
-        (7,'Consultar Bienes','ServletBienes?tipo=LISTAR.jsp',3),
-		(8,'Consultar Orden de Compra','ServletOrdenCompra?tipo=LISTAR.jsp',3),
-		(9,'Reporte de Orden de Compra','ServletOrdenCompra?tipo=REPORTE.jsp',4),
-		(10,'Reporte de Devolucion de bienes','ServletDevolucion?tipo=REPORTE.jsp',4),
-		(11,'Reporte de Bienes','ServletBienes?tipo=REPORTE',4),
-		(12,'Reporte de Inventario de Bienes','ServletInventarioBienes?tipo=REPORTE.jsp',4),
-		(13,'Qiénes Somos','ServletNosotros?tipo=LISTAR.jsp',5);
-
-select * from Roles_UsuarioMenu;
-
-CREATE TABLE IF NOT EXISTS Acceso (
-  cod_menu int NOT NULL,
-  cod_usuario int NOT NULL,
-  cod_Rol int NOT NULL,
- constraint primary key (cod_menu,cod_usuario,cod_Rol),
-  CONSTRAINT FKMenu_Acceso FOREIGN KEY (cod_menu) REFERENCES Menu (cod_menu),
-  CONSTRAINT FKUsuario_Acceso FOREIGN KEY (cod_usuario) REFERENCES Usuario (cod_usuario),
-  CONSTRAINT FKRolesUsuarioMenu_Acceso FOREIGN KEY (cod_Rol) REFERENCES Roles_UsuarioMenu (cod_Rol)
-) ENGINE = InnoDB;
-
-INSERT INTO Acceso (cod_menu,cod_usuario,cod_Rol)
-VALUES (1,1,1),(1,1,2),(1,1,3),(1,1,4),(1,1,5),(2,1,6),(3,1,7),(3,1,8),(4,1,9),(4,1,10),(4,1,11),(4,1,12),(5,1,13),
-	   (1,2,1),(1,2,2),(1,2,3),(1,2,4),(1,2,5),(2,2,6),(3,2,7),(3,2,8),(4,2,9),(4,2,10),(4,2,11),(4,2,12),(5,2,13),
-       (1,3,1),(1,3,2),(1,3,3),(1,3,4),(1,3,5),(2,3,6),(3,3,7),(3,3,8),(4,3,9),(4,3,10),(4,3,11),(4,3,12),(5,3,13),
-       (1,4,1),(1,4,2),(1,4,3),(1,4,4),(1,4,5),(2,4,6),(3,4,7),(3,4,8),(4,4,9),(4,4,10),(4,4,11),(4,4,12),(5,4,13),
-       (1,5,1),(1,5,2),(1,5,3),(1,5,4),(1,5,5),(2,5,6),(3,5,7),(3,5,8),(4,5,9),(4,5,10),(4,5,11),(4,5,12),(5,5,13),
-       (1,6,1),(1,6,2),(1,6,3),(1,6,4),(1,6,5),(2,6,6),(3,6,7),(3,6,8),(4,6,9),(4,6,10),(4,6,11),(4,6,12),(5,6,13);
-
-select *  from Acceso;
+-- ----------------------------------------------------------------------------------------------------------------------
+--  -- MANTENIMIENTO  OC
+--------------------------------------------------------------------------------------------------------------------------
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LAS ORDENES DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_ORDENES_COMPRA()
+BEGIN
+SELECT OC.id_orden_compra,OC.fechaOrden_compra,OC.fechaEntrega,PV.razon_social,OC.CondicionesPago,OC.Embalaje,OC.Transporte,OC.ValorTotal_Orden
+ FROM OrdenCompra OC JOIN proveedor PV
+ ON OC.id_proveedor=PV.id_proveedor
+ ORDER BY OC.id_orden_compra DESC;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LAS ORDENES DE COMPRA POR CODIGO*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_ORDENES_COMPRA_COD(
+_id_orden_compra INT
+)
+BEGIN
+SELECT OC.id_orden_compra,OC.fechaOrden_compra,OC.fechaEntrega,PV.razon_social,OC.CondicionesPago,OC.Embalaje,OC.Transporte,OC.ValorTotal_Orden
+ FROM OrdenCompra OC JOIN proveedor PV
+ ON OC.id_proveedor=PV.id_proveedor
+ WHERE OC.id_orden_compra=_id_orden_compra;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LAS ORDENES DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_ORDEN_COMPRA()
+BEGIN
+SELECT * FROM OrdenCompra;
+END;
+
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA REGISTRAR UNA ORDEN DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_ORDEN_COMPRA(
+		_id_orden_compra int,
+        _fechaOrden_compra date,
+        _fechaEntrega date ,
+		_id_proveedor int,
+        _CondicionesPago nvarchar(25),
+        _Embalaje nchar(15) ,
+        _Transporte nchar(20) ,
+        _ValorTotal_Orden float
+)
+BEGIN
+INSERT INTO OrdenCompra 
+VALUES (_id_orden_compra,_fechaOrden_compra,_fechaEntrega,_id_proveedor,_CondicionesPago,_Embalaje,_Transporte,_ValorTotal_Orden);
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR UNA ORDEN DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_ORDEN_COMPRA(
+		_id_orden_compra int,
+        _fechaOrden_compra date,
+        _fechaEntrega date ,
+		_id_proveedor int,
+        _CondicionesPago nvarchar(25),
+        _Embalaje nchar(15) ,
+        _Transporte nchar(20) ,
+        _ValorTotal_Orden float
+)
+BEGIN
+UPDATE OrdenCompra 
+SET fechaOrden_compra=_fechaOrden_compra,fechaEntrega=_fechaEntrega,id_proveedor=_id_proveedor,
+CondicionesPago=_CondicionesPago,Embalaje=_Embalaje,Transporte=_Transporte,ValorTotal_Orden=_ValorTotal_Orden
+WHERE id_orden_compra=_id_orden_compra;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR UNA ORDEN DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_ORDEN_COMPRA(
+		_id_orden_compra int
+)
+BEGIN
+DELETE FROM OrdenCompra 
+WHERE id_orden_compra=_id_orden_compra;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LOS CODIGOS DE LOS PROVEEDORES*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_PROVEEDORES_COD(
+_razon_social nvarchar(50)
+)
+BEGIN
+SELECT  *  FROM PROVEEDOR
+ WHERE razon_social= _razon_social;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LOS PROVEEDORES*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_PROVEEDORES_NOM()
+BEGIN
+SELECT  razon_social FROM PROVEEDOR
+ ORDER BY razon_social ASC;
+END;
+
+
+
+
+-- ----------------------------------------------------------------------------------------------------------------------
+--  -- MANTENIMIENTO DETALLE OC
+--------------------------------------------------------------------------------------------------------------------------
+
+
+/*P.A. PARA LISTAR LOS PRODUCTOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_BIEN()
+BEGIN
+SELECT  b.id_bienes,tb.nombre as 'tipo_bienes',b.nombre,b.precio_Compra,b.stock,b.descripcion  FROM bienes as b 
+JOIN mpglogistica.tipobienes as tb
+ON b.id_bienes=tb.id_TipoBienes;								
+END;
+
+
+
+/*P.A. PARA LISTAR LOS PRODUCTOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_BUSCAR_BIEN_COD(
+_id_bienes INT 
+)
+BEGIN
+SELECT  b.id_bienes,tb.nombre as 'tipo_bienes',b.nombre,b.precio_Compra,b.stock,b.descripcion  FROM bienes as b 
+JOIN tipobienes as tb
+ON b.id_bienes=tb.id_TipoBienes
+WHERE b.id_bienes=_id_bienes;							
+END;
+
+/*P.A. PARA LISTAR LOS BIENES POR TIPO DE BIENES*/
+DELIMITER $$
+CREATE PROCEDURE SP_BUSCAR_BIEN_POR_TPOBIENES(
+_id_TipoBienes INT 
+)
+BEGIN
+SELECT  b.id_bienes,tb.nombre as 'tipo_bienes',b.nombre,b.precio_Compra,b.stock,b.descripcion  FROM bienes as b 
+JOIN tipobienes as tb
+ON b.id_bienes=tb.id_TipoBienes
+WHERE b.id_TipoBienes=_id_TipoBienes;							
+END;
+
+/*P.A. PARA LISTAR LOS PRODUCTOS POR NOMBRE Y/O DESC DE BIENES*/
+DELIMITER $$
+CREATE PROCEDURE SP_BUSCAR_NOMRE_BIEN(
+BUSCA VARCHAR(100)
+)
+BEGIN
+SELECT  b.id_bienes,tb.nombre as 'tipo_bienes',b.nombre,b.precio_Compra,b.stock,b.descripcion  FROM bienes as b 
+JOIN tipobienes as tb
+ON b.id_bienes=tb.id_TipoBienes
+WHERE b.id_TipoBienes LIKE CONCAT(BUSCA,'%') OR b.descripcion LIKE CONCAT(BUSCA,'%');	
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR UN DETALLE_ORDEN_COMPRA POR CODIGO DE ORDEN COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_DETALLE_ORDEN_COMPRA_COD(
+	_id_orden_compra int
+)
+BEGIN
+SELECT  * FROM  detalleordencompra 
+WHERE  id_orden_compra=_id_orden_compra;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA REGISTRAR UN DETALLE DE ORDEN DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_DETALLE_OC(
+		_id_detalle_orden  int,
+        _id_orden_compra int,
+        _id_bienes int,
+        _cantidad int ,
+		_descripcion nvarchar(100),
+		_precio_unitario float,
+		_valor_Subtotal float
+)
+BEGIN
+INSERT INTO detalleordencompra 
+VALUES (_id_detalle_orden,_id_orden_compra,_id_bienes,_cantidad,_descripcion,_precio_unitario,_valor_Subtotal);
+END;
+
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR N DETALLE DE ORDEN DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_DETALLE_ORDEN_COMPRA(
+		_id_detalle_orden int,
+        _id_orden_compra int,
+        _id_bienes int,
+        _cantidad int ,
+		_descripcion nvarchar(100),
+		_precio_unitario float,
+		_valor_Subtotal float
+)
+BEGIN
+UPDATE detalleordencompra 
+SET id_orden_compra=_id_orden_compra,id_bienes=_id_bienes,cantidad=_cantidad,descripcion=_descripcion,precio_unitario=_precio_unitario,valor_total=_valor_Subtotal
+WHERE id_detalle_orden =_id_detalle_orden;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR UN DETALLEORDEN DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_DETALLE_ORDEN_COMPRA(
+		_id_detalle_orden int
+)
+BEGIN
+DELETE FROM  detalleordencompra 
+WHERE id_detalle_orden =_id_detalle_orden;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR EL MOTO TOTAL DE  UNA ORDEN DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZA_TOTAL_ORDEN_COMPRA(
+		_id_orden_compra int,
+         _ValorTotal_Orden float
+)
+BEGIN
+UPDATE OrdenCompra
+SET ValorTotal_Orden = _ValorTotal_Orden
+WHERE id_orden_compra =_id_orden_compra;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA GEMNERAR RERPTE DE UNA ORDEN DE COMPRA CON SU DETALLE*/
+DELIMITER $$
+CREATE PROCEDURE SP_REPORTE_ORDEN_COMPRA_DETALLE(
+	_id_orden_compra int
+)
+BEGIN
+SELECT OC.id_orden_compra as 'Nro_Orden',OC.fechaOrden_compra,OC.fechaEntrega,PV.razon_social as 'Proveedor',OC.CondicionesPago,OC.Embalaje,OC.Transporte,TP.nombre as 'Tipo_Bienes',BN.nombre as 'Nom_Bienes',BN.descripcion,
+DT.precio_unitario,DT.cantidad,DT.valor_total as 'Importe',OC.ValorTotal_Orden as 'Total_Orden_Compra' FROM  detalleordencompra as DT JOIN  OrdenCompra as OC
+ON  DT.id_orden_compra=OC.id_orden_compra JOIN Bienes as BN
+ON DT.id_bienes=BN.id_bienes JOIN TipoBienes as TP
+ON BN.id_TipoBienes=TP.id_TipoBienes JOIN proveedor as PV
+ON OC.id_proveedor=PV.id_proveedor
+WHERE  OC.id_orden_compra=_id_orden_compra;
+END;
+
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LOS CODIGOS DE LOS EMPLEADOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_EMPLEADOS_COD(
+_NomEmpleado nvarchar(50)
+)
+BEGIN
+SELECT  id_Empleado,NomEmpleado FROM Empleado
+ WHERE NomEmpleado = _NomEmpleado;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LOS NOMBRES DE LOS EMPLEADOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_EMPLEADOS_NOM()
+BEGIN
+SELECT  NomEmpleado FROM Empleado;
+END;
+
+-- ----------------------------------------------------------------------------------------------------------------------------
+-- Mantenimiento Bienes-
+-- ------------------------------------------------------------------------------------------------------------------------------
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA REGISTRAR NUEVOS BIENES*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_BIEN(
+       _id_Bien int,
+	   _id_TipoBien int,
+       _nombre varchar(100),
+        _descripcion varchar(256) ,
+	   _stock int,
+       _estado nvarchar(20)
+)
+BEGIN
+INSERT INTO Bien
+VALUES (_id_Bien,_id_TipoBien,_nombre,_descripcion,_stock,_estado);
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR BIENES*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_BIEN(
+		_id_Bien int,
+	   _id_TipoBien int,
+       _nombre varchar(100),
+        _descripcion varchar(256) ,
+	   _stock int,
+       _estado nvarchar(20)
+)
+BEGIN
+UPDATE Bien 
+SET id_TipoBien=_id_TipoBien,nombre=_nombre,descripcion=_descripcion,stock=_stock,estado=_estado
+WHERE id_Bien=_id_Bien;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR BIENES*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_BIEN(
+       _id_Bien int
+)
+BEGIN
+DELETE FROM  Bien
+WHERE id_Bien=_id_Bien;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR BIENES*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_BIEN(
+)
+BEGIN
+SELECT B.id_Bien,B.nombre,B.descripcion,TP.nombre as 'Tipo_Bien',B.stock,B.estado FROM  Bien B JOIN TipoBien TP
+ON B.id_TipoBien=TP.id_TipoBien
+ORDER BY B.id_Bien DESC;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR BIEN POR CODIGO*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_BIEN_POR_COD(
+ _id_Bien int
+)
+BEGIN
+SELECT B.id_Bien,B.nombre,B.descripcion,TP.id_TipoBien,TP.nombre as 'Tipo_Bien',B.stock,B.estado FROM  Bien B JOIN TipoBien TP
+ON B.id_TipoBien=TP.id_TipoBien
+WHERE id_Bien =_id_Bien
+ORDER BY B.id_Bien DESC;
+END;
+
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR BIENES MOSTRAR SOLO NOMBRES*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_TIPOBIEN(
+)
+BEGIN
+SELECT  id_TipoBien,nombre FROM  TipoBien
+ORDER BY nombre ASC;
+END;
+
+CALL SP_LISTAR_TIPOBIENES_NOM();
+
+
+
+-- ----------------------------------------------------------------------------------------------------------------------------
+-- Mantenimiento Devoluciones-
+-- ------------------------------------------------------------------------------------------------------------------------------
+
+CALL SP_GENERAR_CODIGO_DEVOLUCION();
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA REGISTRAR LOS REGISTROS DE DEVOLUCION*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_DEVOLUCION(
+		_id_devolucion int,
+        _fecha date,
+		_id_proveedor int,
+        _nomRemitente nvarchar(25),
+        _total_credito_adeudado float
+)
+BEGIN
+INSERT INTO Devolucion 
+VALUES (_id_devolucion,_fecha,_id_proveedor,_nomRemitente,_total_credito_adeudado);
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR LOS REGISTROS DE DEVOLUCION*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_DEVOLUCION(
+		_id_devolucion int,
+        _fecha date,
+		_id_proveedor int,
+        _nomRemitente nvarchar(25),
+        _total_credito_adeudado float
+)
+BEGIN
+UPDATE Devolucion 
+SET fecha=_fecha,id_proveedor=_id_proveedor,nomRemitente=_nomRemitente,total_credito_adeudado=_total_credito_adeudado
+WHERE id_devolucion=_id_devolucion;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR UN REGISTROS DE DEVOLUCION*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_DEVOLUCION(
+	_id_devolucion int
+)
+BEGIN
+DELETE FROM Devolucion 
+WHERE id_Devolucion=_id_devolucion;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LAS DEVOLUCIONES*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_DEVOLUCIONES()
+BEGIN
+SELECT D.id_Devolucion,D.fecha,PV.razon_social,D.nomRemitente,D.total_credito_adeudado
+FROM Devolucion D JOIN proveedor PV
+ON D.id_proveedor=PV.id_proveedor
+ORDER BY D.id_Devolucion DESC;
+END;
+
+-- ----------------------------------------------------------------------------------------------------------------------------
+-- Mantenimiento Detalle-Devoluciones-
+-- ------------------------------------------------------------------------------------------------------------------------------
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA REGISTRAR UN DETALLE DE DEVOLUCIÓN*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_DETALLE_DEVOL(
+		_id_DetalleDevolucion int,
+        _id_Devolucion int,
+		_id_detalle_orden int,
+		_descripcion_del_bien nvarchar(100),
+		_descripcion_del_daño text,
+        _Factura_referecia nvarchar(25),
+		_precio float,
+        _cantidad int,
+		_credito_adeudado float
+)
+BEGIN
+INSERT INTO DetalleDevolucion 
+VALUES( _id_DetalleDevolucion,_id_Devolucion,_id_detalle_orden,_descripcion_del_bien,_descripcion_del_daño,_Factura_referecia,_precio,_cantidad,_credito_adeudado); 
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR UN DETALLE DE DEVOLUCIÓN*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_DETALLE_DEVOL(
+		_id_DetalleDevolucion int,
+        _id_Devolucion int,
+		_id_detalle_orden int,
+		_descripcion_del_bien nvarchar(100),
+		_descripcion_del_daño text,
+        _Factura_referecia nvarchar(25),
+		_precio float,
+        _cantidad int,
+		_credito_adeudado float
+)
+BEGIN
+UPDATE  DetalleDevolucion 
+SET  id_Devolucion=_id_Devolucion,id_detalle_orden=_id_detalle_orden,descripcion_del_bien=_descripcion_del_bien,descripcion_del_daño=_descripcion_del_daño,Factura_referecia=_Factura_referecia,precio=_precio,cantidad=_cantidad,credito_adeudado=_credito_adeudado
+WHERE id_DetalleDevolucion=_id_DetalleDevolucion;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR UN DETALLE DE DEVOLUCIÓN*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_DETALLE_DEVOL(
+		_id_DetalleDevolucion int
+)
+BEGIN
+DELETE FROM  DetalleDevolucion 
+WHERE id_DetalleDevolucion=_id_DetalleDevolucion;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR EL MOTO TOTAL DE  UNA ORDEN DE COMPRA*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZA_TOTAL_DEVOLUCION(
+		_id_Devolucion int,
+        _credito_adeudado float
+)
+BEGIN
+UPDATE Devolucion
+SET total_credito_adeudado = _credito_adeudado
+WHERE id_Devolucion =_id_Devolucion;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR EL  DETALLE DE  DEVOL*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_DETALLE_DEVOLUCION_COD_DEVOL(
+_id_Devolucion INT 
+)
+BEGIN
+SELECT DTDV.id_DetalleDevolucion,DTDV.id_Devolucion,DOC.id_detalle_orden,B.descripcion,DTDV.descripcion_del_daño,DTDV.Factura_referecia,B.precio_Compra,DTDV.cantidad,DTDV.credito_adeudado
+FROM DetalleDevolucion as DTDV JOIN Devolucion as DEV
+ON DTDV.id_Devolucion=DEV.id_Devolucion JOIN DetalleOrdenCompra as DOC
+ON DTDV.id_detalle_orden=DOC.id_detalle_orden JOIN Bienes as B 
+ON DOC.id_bienes=B.id_bienes
+WHERE DTDV.id_Devolucion=_id_Devolucion;
+END;
+
+SELECT * FROM ordenCompra;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LLENAR DATOS DE LA DETALLE DEVOL*/
+DELIMITER $$
+CREATE PROCEDURE SP_BUSCAR_DATOS(
+_id_orden_compra INT
+)
+BEGIN
+SELECT DT.id_detalle_orden,OC.id_orden_compra,BN.descripcion,BN.precio_Compra
+FROM  detalleordencompra as DT JOIN  OrdenCompra as OC
+ON  DT.id_orden_compra=OC.id_orden_compra JOIN Bienes as BN
+ON DT.id_bienes=BN.id_bienes
+WHERE DT.id_orden_compra=_id_orden_compra;
+END;
+
+SELECT * FROM  detalleordencompra
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LLENAR DATOS DE LA DETALLE DEVOL*/
+DELIMITER $$
+CREATE PROCEDURE SP_LLENAR_DATOS()
+BEGIN
+SELECT DT.id_detalle_orden,DT.id_orden_compra,BN.descripcion,BN.precio_Compra
+FROM  detalleordencompra as DT JOIN Bienes as BN
+ON DT.id_bienes=BN.id_bienes;
+END;
+
+call SP_LLENAR_DATOS();
+
+
+-- ------------------------------------------------------------------------------------------------------------------------------------
+-- movimientos de almacen-
+-- -------------------------------------------------------------------------------------------------------------------------------------
+
+CALL SP_GENERAR_CODIGO_MOVIMIENTO();
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR INGRESO O SALIDA DE BIENES*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_INGRESO_SALIDA_BIENES()
+BEGIN
+SELECT M.id_codMovimiento,TPA.nombreMovimiento,TPV.nombre as 'Tipo_Bienes',M.id_bienes,M.cantidad,M.descripcion_del_bien FROM MovimientosAlmacen as M JOIN TipoMovimientosAlmacen as TPA 
+ON M.id_TipoMovimiento=TPA.id_TipoMovimiento JOIN TipoBienes as TPV
+ON M.id_TipoBienes=TPV.id_TipoBienes JOIN Bienes as B 
+ON M.id_bienes=B.id_bienes; 
+END;
+
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LOS CODIGOS DE LOS TIPOS DE BIENES*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_BIENES_COD(
+_nombre varchar(100)
+)
+BEGIN
+SELECT id_TipoBienes FROM TipoBienes
+ WHERE nombre= _nombre;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LOS TIPOS DE BIENES POR NOMBRE*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_BIENES_NOM()
+BEGIN
+SELECT  nombre FROM TipoBienes
+ORDER BY nombre ASC;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LOS TIPOS DE MOVIMIENTOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_TIPO_MOVI_ALMACEN()
+BEGIN
+SELECT  nombreMovimiento FROM TipoMovimientosAlmacen
+ORDER BY nombreMovimiento ASC;
+END;
+
+CALL SP_LISTAR_TIPO_MOVI_ALMACEN();
+
+
+/*PROCEDIMIENTOS ALMACENADOS/*
+/*P.A. PARA LISTAR LOS CODIGOS DE LOS TIPOS DE MOVIMIENTOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_TIPO_MOV_COD(
+_nombreMovimiento varchar(100)
+)
+BEGIN
+SELECT id_TipoMovimiento FROM TipoMovimientosAlmacen
+ WHERE nombreMovimiento= _nombreMovimiento;
+END;
+
+CALL SP_LISTAR_TIPO_MOV_COD('Ingresos');
+
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA REGISTRAR EL INRESOS Y SALIDAS DE ALMACEN*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_INGRESO_SALIDA_BIENES(
+        _id_codMovimiento int,
+		_id_tipoMovimiento int,
+        _id_TipoBienes int,
+        _id_bienes int,
+		_cantidad int,
+		_descripcion_del_bien nvarchar(100)
+)
+BEGIN
+DECLARE tipomovimiento INT;
+
+INSERT INTO  MovimientosAlmacen
+VALUES (_id_codMovimiento,_id_tipoMovimiento,_id_TipoBienes,_id_bienes,_cantidad,_descripcion_del_bien);
+SET tipomovimiento=(SELECT m.id_tipoMovimiento FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+IF tipomovimiento = 1 THEN
+UPDATE Bienes
+SET stock = stock + _cantidad
+WHERE id_bienes=_id_bienes;
+ELSE
+UPDATE Bienes
+SET stock = stock - _cantidad
+WHERE id_bienes=_id_bienes;
+END IF;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR EL INRESOS Y SALIDAS DE ALMACEN*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_INGRESO_SALIDA_BIENES(
+        _id_codMovimiento int,
+		_id_tipoMovimiento int,
+        _id_TipoBienes int,
+        _id_bienes int,
+		_cantidad int,
+		_descripcion_del_bien nvarchar(100)
+)
+BEGIN
+DECLARE tipomovimiento INT;
+DECLARE cantidad_old int;
+
+SET cantidad_old=(SELECT m.cantidad FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+UPDATE   MovimientosAlmacen
+SET id_tipoMovimiento=_id_tipoMovimiento,id_TipoBienes=_id_TipoBienes,id_bienes=_id_bienes,cantidad=_cantidad,descripcion_del_bien=_descripcion_del_bien
+WHERE id_codMovimiento=_id_codMovimiento;
+SET tipomovimiento=(SELECT m.id_tipoMovimiento FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+IF tipomovimiento = 1 THEN
+UPDATE Bienes
+SET stock = (stock-cantidad_old) + _cantidad
+WHERE id_bienes=_id_bienes;
+ELSE
+UPDATE Bienes
+SET stock = (stock+cantidad_old) - _cantidad
+WHERE id_bienes=_id_bienes;
+END IF;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR INGRESO-SALIDA DE ALMACEN*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_INGRESO_SALIDA(
+	    _id_codMovimiento int
+)
+BEGIN
+DECLARE tipomovimiento, _cantidad, codBienes INT;
+SET tipomovimiento=(SELECT m.id_tipoMovimiento FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+SET _cantidad=(SELECT m.cantidad FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+
+SET codBienes=(SELECT m.id_bienes FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+
+DELETE FROM  MovimientosAlmacen
+WHERE id_codMovimiento=_id_codMovimiento;
+
+IF tipomovimiento = 1 THEN
+UPDATE Bienes
+SET stock = stock - _cantidad
+WHERE id_bienes=codBienes;
+ELSE
+UPDATE Bienes
+SET stock = stock + _cantidad
+WHERE id_bienes=codBienes;
+END IF;
+END;
+-- ----------------------------------------------------------------------------------------------------------------------------------------
+-- Mantenimiento proveedores
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+/*P.A. PARA REGISTRAR PROVEEDORES*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_PROVEEDORES(
+_id_proveedor int,
+_razon_social nvarchar(50),
+_nombre_comercial nvarchar(60),
+_numero_ruc nvarchar(15),
+_email varchar(50),
+_direccion varchar(100),
+_departamento varchar(35),
+_telefono varchar(15)
+)
+BEGIN
+INSERT INTO Proveedor VALUES (_id_proveedor,_razon_social,_nombre_comercial,_numero_ruc,_email,_direccion,_departamento,_telefono);
+END;
+
+
+/*P.A. PARA ACTUALIZAR REGISTRO DE PROVEEDORES*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_PROVEEDORES(
+		_id_proveedor int,
+        _razon_social nvarchar(50),
+        _nombe_comercial nvarchar(60),
+		_numero_ruc nvarchar(15),
+		_email varchar(50),
+		_direccion varchar(100),
+        _departamento varchar(35),
+        _teléfono varchar(15) 
+)
+BEGIN
+UPDATE Proveedor 
+SET razon_social=_razon_social,nombe_comercial=_nombe_comercial,numero_ruc=_numero_ruc,email=_email,direccion=_direccion,departamento=_departamento,teléfono=_teléfono
+WHERE id_proveedor=_id_proveedor;
+END;
+
+
+/*P.A. PARA ELIMINAR REGISTRO DE PROVEEDORES*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_PROVEEDORES(
+_id_proveedor int
+)
+BEGIN
+DELETE FROM Proveedor WHERE id_proveedor=_id_proveedor;
+END;
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR REGISTRO DE PROVEEDORES*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_PROVEEDORES()
+BEGIN
+SELECT * FROM Proveedor
+ORDER BY id_proveedor DESC; 
+END;
+
+/*COMPROBAR*/
+CALL SP_LISTAR_PROVEEDORES();
+
+-- ---------------------------------------------------------------------------------------------------------------------------
+-- ------- ----------------------------------- PARTE DEL LOGIN LOGIN ---------------------------------------------------------
+-- ---------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
+-- MANTENIMIENTO DE LA TABLA USUARIO
+-- ----------------------------------------------------------------------------------------------------------------------
+/*PROCEDIMIENTOS ALMACENADOS*/
+
+
+/*P.A. PARA REGISTRAR UN USUARIO*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_USUARIO(
+  V_cod_usuario int ,
+  V_login_usuario varchar(15) ,
+  V_password_usuario varchar(100) ,
+  V_id_Empleado int,
+  V_estado_usuario char(1)
+)
+BEGIN
+INSERT INTO Usuario 
+VALUES (V_cod_usuario,V_login_usuario,V_password_usuario,V_id_Empleado,V_estado_usuario);
+END;
+
+
+/*P.A. PARA REGISTRAR ACTUALIZAR UN USUARIO*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_USUARIO(
+  V_cod_usuario int ,
+  V_login_usuario varchar(15) ,
+  V_password_usuario varchar(100) ,
+  V_id_Empleado int,
+  V_estado_usuario char(1)
+)
+BEGIN
+UPDATE  Usuario 
+SET  login_usuario=V_login_usuario, password_usuario=V_password_usuario, id_Empleado=V_id_Empleado, estado_usuario=V_estado_usuario
+WHERE cod_usuario=V_cod_usuario;
+END;
+
+
+/*P.A. PARA REGISTRAR ELIMINAR UN USUARIO*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_USUARIO(
+  V_cod_usuario int
+)
+BEGIN
+DELETE  FROM Usuario 
+WHERE cod_usuario=V_cod_usuario;
+END;
+
+/*P.A. PARA  LISTAR LOS USUARIOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_USUARIOS()
+BEGIN
+SELECT * FROM Usuario;
+END;
+
+/*P.A. PARA  LISTAR USUARIO POR CODIGO*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_USUARIO_POR_CODIGO(
+  V_cod_usuario int
+  )
+BEGIN
+SELECT * FROM Usuario
+WHERE cod_usuario=V_cod_usuario;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA VALIDAR INICIO DE SESSION*/
+DELIMITER $$
+CREATE PROCEDURE SP_INICIAR_SESSION(
+  V_login_usuario varchar(15) ,
+  V_password_usuario varchar(100)
+  
+)
+BEGIN
+SELECT  U.cod_usuario,U.login_usuario,E.NomEmpleado,E.Apellidos
+FROM Usuario U
+JOIN Empleado E
+ON U.id_Empleado=E.id_Empleado
+WHERE login_usuario=V_login_usuario and password_usuario =SHA(V_password_usuario);
+END;
+
+-- -------------------------------------------------------------------------------
+-- MANTENIMIENTO DE LA TABLA ROLES DE USUARIO POR MENU
+-- --------------------------------------------------------------------------------
+
+/*P.A. PARA REGISTRAR UN ROL DEL USUARIO */
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_ROL_USUARIO_MENU(
+  V_cod_Rol int ,
+  V_des_Rol varchar(55) ,
+  V_url_Rol varchar(500), 
+  V_cod_menu int
+)
+BEGIN
+INSERT INTO Roles_UsuarioMenu 
+VALUES (V_cod_Rol, V_des_Rol, V_url_Rol,V_cod_menu);
+END;
+
+
+/*P.A. PARA ACTUALIZAR UN ROL DEL USUARIO */
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_ROL_USUARIO_MENU(
+  V_cod_Rol int ,
+  V_des_Rol varchar(55) ,
+  V_url_Rol varchar(500), 
+  V_cod_menu int
+)
+BEGIN
+UPDATE Roles_UsuarioMenu 
+SET des_Rol=V_des_Rol, url_Rol=V_url_Rol,cod_menu=V_cod_menu
+WHERE cod_Rol=V_cod_Rol;
+END;
+
+
+/*P.A. PARA ELIMINAR UN ROL DE USUARIO */
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_ROL_USUARIO_MENU(
+  V_cod_Rol int 
+)
+BEGIN
+DELETE FROM Roles_UsuarioMenu 
+WHERE cod_Rol=V_cod_Rol;
+END;
+
+/*P.A. PARA LISTAR LOS  MENUS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_ROLES(
+V_cod_menu int
+)
+BEGIN
+SELECT * FROM Roles_UsuarioMenu
+WHERE cod_menu=V_cod_menu;
+END;
+
+/*P.A. PARA LISTAR LOS  ROLES POR USUARIO*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_ROLES_POR_USUARIO(
+ V_cod_usuario int,
+ V_cod_menu int
+)
+BEGIN
+SELECT M.cod_menu,M.des_mmenu,R.cod_Rol,R.des_Rol,R.url_Rol 
+FROM Acceso A
+JOIN Roles_UsuarioMenu R
+ON A.cod_Rol=R.cod_Rol JOIN Menu M
+ON A.cod_menu=M.cod_menu
+WHERE A.cod_usuario=V_cod_usuario AND R.cod_menu=V_cod_menu;
+END;
+
+
+-- -------------------------------------------------------------------------------
+-- MANTENIMIENTO DE LA TABLA ACCESO
+-- --------------------------------------------------------------------------------
+
+/*P.A. PARA REGISTRAR UN ACCESO*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_ACCESO(
+  V_id_acceso int,
+  V_cod_menu int ,
+  V_cod_usuario int,
+  V_cod_Rol int
+)
+BEGIN
+INSERT INTO Acceso 
+VALUES (V_id_acceso,V_cod_menu, V_cod_usuario,V_cod_Rol);
+END;
+
+call SP_REGISTRAR_ACCESO(00000080,5,5,13);
+
+/*P.A. PARA ACTUALIZAR UN ACCESO*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_ACCESO(
+  V_id_acceso int,
+  V_cod_menu int ,
+  V_cod_usuario int,
+  V_cod_Rol int
+)
+BEGIN
+UPDATE  Acceso 
+SET   cod_menu=V_cod_menu,cod_usuario=V_cod_usuario,cod_Rol=V_cod_Rol
+WHERE id_acceso=V_id_acceso;
+END;
+call SP_ACTUALIZAR_ACCESO(79,5,6,14);
+
+/*P.A. PARA ELIMINAR UN ACCESO*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_ACCESO(
+V_id_acceso int
+)
+BEGIN
+DELETE FROM  Acceso A 
+WHERE A.id_acceso=V_id_acceso;
+END;
+
+/*P.A. PARA LISTAR TODOS LOS ACCESOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_ACCESOS()
+BEGIN
+SELECT A.id_acceso,M.des_mmenu,U.login_usuario,R.des_Rol
+FROM  Acceso A 
+JOIN Menu M 
+ON A.cod_menu=M.cod_menu JOIN Usuario U
+ON A.cod_usuario=U.cod_usuario 
+JOIN Roles_UsuarioMenu R
+ON A.cod_Rol=R.cod_Rol; 
+END;
+
+/*P.A. PARA LISTAR LOS  MENUS*/
+DELIMITER $$
+CREATE PROCEDURE SP_EDITAR_ACCESO(
+V_id_acceso int
+)
+BEGIN
+SELECT A.id_acceso,A.cod_usuario,U.login_usuario,M.cod_menu,M.des_mmenu,R.cod_Rol,R.des_Rol
+FROM  Acceso A 
+JOIN Usuario U 
+ON A.cod_usuario=U.cod_usuario JOIN MENU M
+ON A.cod_menu=M.cod_menu JOIN Roles_UsuarioMenu R 
+ON A.cod_Rol=R.cod_Rol
+WHERE A.id_acceso=V_id_acceso;
+END;
+
+call SP_EDITAR_ACCESO(78)
+-- ------------------------------------------------------------------------------------------------
+-- MANTENIMIENTO DE LA TABLA  MENU
+-- -------------------------------------------------------------------------------------------------
+/*P.A. PARA LISTAR LOS  MENU POR USUARIO*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_MENU_POR_USUARIO(
+ V_cod_usuario int
+)
+BEGIN
+SELECT M.cod_menu,M.des_mmenu,M.icono_mmenu
+FROM Menu M
+JOIN Acceso A
+ON M.cod_menu=A.cod_menu
+WHERE A.cod_usuario=V_cod_usuario
+group by M.cod_menu;
+END;
+
+/*P.A. PARA LISTAR LOS  MENUS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_MENUS()
+BEGIN
+SELECT * FROM Menu;
+END;
