@@ -1,0 +1,11 @@
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:12:26 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=1&descripcionDano=ugvygvygvy&cantidad=2&precio=30&creditoAdeudado=30 HTTP/1.1" 200 303
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:12:27 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=1&descripcionDano=ugvygvygvy&cantidad=2&precio=30&creditoAdeudado=30 HTTP/1.1" 200 453
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:12:27 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=1&descripcionDano=ugvygvygvy&cantidad=2&precio=30&creditoAdeudado=30 HTTP/1.1" 200 603
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:12:27 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=1&descripcionDano=ugvygvygvy&cantidad=2&precio=30&creditoAdeudado=30 HTTP/1.1" 200 753
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:12:27 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=1&descripcionDano=ugvygvygvy&cantidad=2&precio=30&creditoAdeudado=30 HTTP/1.1" 200 903
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:13:06 -0500] "GET /ProyectoFinal_LPII/Mantenimiento_Devolucion_de_Bienes.jsp HTTP/1.1" 200 21429
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:13:07 -0500] "GET /ProyectoFinal_LPII/ServletBienesJSON HTTP/1.1" 200 470
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:13:11 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=&descripcionDano=&cantidad=&precio=&creditoAdeudado= HTTP/1.1" 500 1852
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:13:26 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=8&descripcionDano=sewrer&cantidad=4&precio=45&creditoAdeudado=45 HTTP/1.1" 200 1049
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:13:35 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=8&descripcionDano=sewrer&cantidad=4&precio=45&creditoAdeudado=45 HTTP/1.1" 200 1195
+0:0:0:0:0:0:0:1 - - [17/Jun/2022:00:13:36 -0500] "GET /ProyectoFinal_LPII/ServletDevolucionBien?tipo=ADICIONAR&codigo=8&descripcionDano=sewrer&cantidad=4&precio=45&creditoAdeudado=45 HTTP/1.1" 200 1341

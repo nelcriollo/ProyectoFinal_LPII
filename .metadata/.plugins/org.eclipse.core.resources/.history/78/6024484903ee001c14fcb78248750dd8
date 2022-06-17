@@ -1,0 +1,98 @@
+package log.ministerio.entidad;
+
+public class DetalleDevolucion {
+	
+	private int id_DetalleDevolucion,id_Devolucion,id_Bien,cantidad;
+    private String descripcion_del_dano;
+	private double precioCompra,credito_adeudado;
+	
+	
+	public DetalleDevolucion(int id_DetalleDevolucion, int id_Devolucion, int id_Bien, int cantidad,
+			String descripcion_del_dano, double precioCompra, double credito_adeudado) {
+		this.id_DetalleDevolucion = id_DetalleDevolucion;
+		this.id_Devolucion = id_Devolucion;
+		this.id_Bien = id_Bien;
+		this.cantidad = cantidad;
+		this.descripcion_del_dano = descripcion_del_dano;
+		this.precioCompra = precioCompra;
+		this.credito_adeudado = credito_adeudado;
+	}
+
+
+	public DetalleDevolucion() {
+		
+	}
+
+
+	public int getId_DetalleDevolucion() {
+		return id_DetalleDevolucion;
+	}
+
+
+	public void setId_DetalleDevolucion(int id_DetalleDevolucion) {
+		this.id_DetalleDevolucion = id_DetalleDevolucion;
+	}
+
+
+	public int getId_Devolucion() {
+		return id_Devolucion;
+	}
+
+
+	public void setId_Devolucion(int id_Devolucion) {
+		this.id_Devolucion = id_Devolucion;
+	}
+
+
+	public int getId_Bien() {
+		return id_Bien;
+	}
+
+
+	public void setId_Bien(int id_Bien) {
+		this.id_Bien = id_Bien;
+	}
+
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+
+	public String getDescripcion_del_dano() {
+		return descripcion_del_dano;
+	}
+
+
+	public void setDescripcion_del_dano(String descripcion_del_dano) {
+		this.descripcion_del_dano = descripcion_del_dano;
+	}
+
+
+	public double getPrecioCompra() {
+		return precioCompra;
+	}
+
+
+	public void setPrecioCompra(double precioCompra) {
+		this.precioCompra = precioCompra;
+	}
+
+
+	public double getCredito_adeudado() {
+		return credito_adeudado;
+	}
+
+
+	public void setCredito_adeudado(double credito_adeudado) {
+		this.credito_adeudado = credito_adeudado;
+	}
+
+	
+	
+}

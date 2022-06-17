@@ -228,7 +228,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${requestScope.listaBienes}" var="row">
+							<c:forEach items="${sessionScope.listaBienes}" var="row">
 								<tr>
 									<td>${row.cod_bien}</td>
 									<td>${row.nombre}</td>
@@ -242,10 +242,10 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 									<td class="p-1"><button type="button"
 											class="btn btn-outline-success btn-sm align-top btn-editar"
 											data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-											id="idbtn-editar">Editar</button></td>
+											id="idbtn-editar"><i class=" text-write fas fa-pencil-alt"></i></button></td>
 									<td class="p-1"><button type="button"
 											class="btn btn-outline-danger btn-sm align-top p-1"
-											data-bs-toggle="modal" data-bs-target="#modalElimimar">Eliminar</button></td>
+											data-bs-toggle="modal" data-bs-target="#modalElimimar"><i class="text-write fas fa-backspace"></i></button></td>
 
 								</tr>
 							</c:forEach>
@@ -255,7 +255,8 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					</table>
 				</div>
 </div>
-
+<br>
+<br>
 
 
 
@@ -270,7 +271,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
-			<scripts
+			<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 		crossorigin="anonymous"></script>

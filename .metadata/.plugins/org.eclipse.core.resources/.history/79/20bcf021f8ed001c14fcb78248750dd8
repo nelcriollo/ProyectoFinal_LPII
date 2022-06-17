@@ -1,0 +1,105 @@
+package log.ministerio.controlador;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+import log.ministerio.entidad.DetalleDevolucion;
+
+/**
+ * Servlet implementation class ServletDevoluciónBien
+ */
+@WebServlet("/ServletDevolucionBien")
+public class ServletDevolucionBien extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ServletDevolucionBien() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String tipo=request.getParameter("tipo");
+		
+		if(tipo.equals("ADICIONAR"))
+			adicionarBien(request,response);
+		else if(tipo.equals("ELIMINAR"))
+			eliminarBien(request,response);
+		else if(tipo.equals("REGISTRAR"))
+			grabarDevolucion(request,response);
+	}
+
+	private void grabarDevolucion(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void eliminarBien(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void adicionarBien(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		//leer parámetros
+		String cod,des,cant,prec,creditoAdeu;
+		cod=request.getParameter("codigo");
+		des=request.getParameter("descripcionDano");
+		cant=request.getParameter("cantid");
+		prec=request.getParameter("precio");
+		creditoAdeu=request.getParameter("creditoAdeudado");
+		
+		//declarar arreglo de objetos de la clase Detalle
+		List<DetalleDevolucion> lista=null;
+		//validar si existe el atributo DATA de tipo sesión
+		if(request.getSession().getAttribute("DATA")==null) {//no existe el atributo DATA
+			//crear arreglo lista
+			lista=new ArrayList<DetalleDevolucion>();
+		}
+		else {//si existe el atributo DATA
+			//recuperar el atributo "DATA" y guardarlo en el arreglo lista
+			lista=(List<DetalleDevolucion>) request.getSession().getAttribute("DATA");
+		}
+		
+		//crear objeto de la clase Detalle
+		DetalleDevolucion det=new DetalleDevolucion();
+		//setear atributos del objeto det usando las variables
+		
+		det.setId_Bien(Integer.parseInt(cod));
+		det.setDescripcion_del_dano(des);
+		det.setPrecioCompra(Double.parseDouble(prec));
+		det.setCantidad(Integer.parseInt(cant));
+		det.setCredito_adeudado(Double.parseDouble(creditoAdeu));
+		
+		//adicionar objeto det dentro del arreglo lista
+		lista.add(det);
+		//crear atributo de tipo sesión "DATA"  y guardar el arreglo lista
+		request.getSession().setAttribute("DATA", lista);
+		//crear JSON de lista
+		//PASO 2: crear objeto de la clase Gson
+		Gson gson=new Gson();
+		//PASO 3: generar json del arreglo "lista" en formato String
+		String json=gson.toJson(lista);
+		//PASO 4: mostrar el valor de la variable "json" en formato JSON verdadero
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter salida=response.getWriter();
+		salida.println(json);	
+		
+	}
+
+}

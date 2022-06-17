@@ -31,7 +31,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	<!-- Los estilos locales de la carpeta css de proyecto-->
 <link rel="stylesheet" href="./css/header.css">
 
-<footer class="text-center text-white  h-auto navbar-dark fondonavsup">
+<footer class="text-center text-white  h-auto navbar-dark fondonavsup mt-5">
 	<br>
 	<div class="container p-1">
 

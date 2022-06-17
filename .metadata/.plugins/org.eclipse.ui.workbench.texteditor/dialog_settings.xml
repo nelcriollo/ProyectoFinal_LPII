@@ -6,26 +6,30 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="form-control"/>
+		<item key="selection" value="idCantidad"/>
 		<list key="findhistory">
-			<item value="form-control"/>
-			<item value="form-group"/>
-			<item value="modalEliminar"/>
-			<item value="#modalEliminar"/>
-			<item value="codigoEliminar"/>
-			<item value="btn-editar"/>
-			<item value="btn-success"/>
-			<item value="altocontenedor"/>
-			<item value="tamanotexto"/>
-			<item value="modal"/>
-			<item value="modal-header"/>
+			<item value="idCantidad"/>
+			<item value="tableDetalle"/>
+			<item value="cantidad"/>
+			<item value="creditoAdeudado"/>
+			<item value="idBien"/>
+			<item value="iddescri"/>
+			<item value="idcantidad"/>
+			<item value="idprecio"/>
+			<item value="idcreditoAdeudado"/>
+			<item value="codigo"/>
+			<item value="tableBienes"/>
+			<item value="tbexample"/>
+			<item value="example"/>
+			<item value="exampleBien"/>
+			<item value="idcredito"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1012"/>
-		<item key="DIALOG_Y_ORIGIN" value="485"/>
+		<item key="DIALOG_X_ORIGIN" value="507"/>
+		<item key="DIALOG_Y_ORIGIN" value="359"/>
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
