@@ -8,8 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import log.ministerio.entidad.Acceso;
 import log.ministerio.entidad.Bien;
 import log.ministerio.services.BienService;
 
@@ -54,8 +54,6 @@ public class ServletBien extends HttpServlet {
 		identificador=request.getParameter("tipoOperacion");
 
 		Bien bean=new Bien();
-
-
 
 		bean.setTipo_bien(Integer.parseInt(tipobien));
 		bean.setNombre(nombien);
@@ -107,8 +105,10 @@ public class ServletBien extends HttpServlet {
 	private void listarBienes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		List<Bien> data=servicioBien.ListarBienes();
-
-		request.setAttribute("listaBienes", data);
+		
+		HttpSession session=request.getSession();
+		
+		session.setAttribute("listaBienes", data);
 
 		request.getRequestDispatcher("/Mantenimiento_Bien.jsp").forward(request, response);
 
