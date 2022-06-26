@@ -1,0 +1,29 @@
+package log.ministerio.utils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.toedter.calendar.JDateChooser;
+
+public class Fechas {
+
+	public String leerFecha(JDateChooser fec) {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(fec.getDate());
+	}
+	
+	public Date pasarFecha(String fec) {
+		SimpleDateFormat formato = new  SimpleDateFormat("yyyy-MM-dd");
+		Date g=null;
+		try {
+			g =formato.parse(fec);
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return g;
+	}
+}

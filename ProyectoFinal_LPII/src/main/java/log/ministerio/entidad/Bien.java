@@ -5,8 +5,8 @@ public class Bien {
 	private int cod_bien, tipo_bien, stock;
 	private String nombre, descripcion, estado,nombreTipo;
 
-	
-	
+
+
 	public Bien(int cod_bien, int tipo_bien, int stock, String nombre, String descripcion, String estado,
 			String nombreTipo) {
 		this.cod_bien = cod_bien;
@@ -18,9 +18,26 @@ public class Bien {
 		this.nombreTipo = nombreTipo;
 	}
 
-
 	public Bien() {
+
 	}
+	
+
+
+	public Bien(int cod_bien, String nombre, String descripcion) {
+		this.cod_bien = cod_bien;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+	}
+
+	public Bien(String descripcion,int cod_bien, String nombreTipo) {
+		this.nombreTipo = nombreTipo;
+		this.cod_bien = cod_bien;
+		this.descripcion = descripcion;
+		
+	}
+
+
 
 
 	public String getNombreTipo() {
@@ -37,7 +54,7 @@ public class Bien {
 		return cod_bien;
 	}
 
-	
+
 	public int getTipo_bien() {
 		return tipo_bien;
 	}
@@ -82,6 +99,6 @@ public class Bien {
 		this.cod_bien = cod_bien;
 	}
 
-	
+
 
 }

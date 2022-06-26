@@ -1,0 +1,104 @@
+package log.ministerio.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.OffsetTime;
+import java.util.List;
+
+import log.ministerio.entidad.DetalleDevolucion;
+import log.ministerio.entidad.Devolucion;
+import log.ministerio.interfaces.DevolucionInterfaceDAO;
+import log.ministerio.utils.MySqlConexion;
+
+public class MySqlDevolucionDAO implements DevolucionInterfaceDAO {
+
+	@Override
+	public int save(Devolucion bean, List<DetalleDevolucion> lista) {
+		int insert =-1;
+		Connection conex=null;
+		CallableStatement   cstmDetDevol=null;
+		PreparedStatement cstmDevol =null;
+		
+
+		try {
+			conex=MySqlConexion.getConectar();
+			conex.setAutoCommit(false);
+			
+	
+			String sqlProc= "INSERT INTO Devolucion VALUES (null,?,?,?,?,?)";
+			cstmDevol=conex.prepareStatement(sqlProc,Statement.RETURN_GENERATED_KEYS);
+			
+			
+
+			
+			//cstmDevol.setInt(1,bean.getId_Devolucion());
+			cstmDevol.setString(1,bean.getNro_ficha());
+			cstmDevol.setDate(2, Date.valueOf(bean.getFecha()));
+			cstmDevol.setInt(3,bean.getId_proveedor());
+			cstmDevol.setDouble(4,bean.getTotal_credito_adeudado());
+			cstmDevol.setString(5,bean.getNomRemitente());
+
+		   insert= cstmDevol.executeUpdate();
+		 
+				
+			ResultSet rs =cstmDevol.getGeneratedKeys();
+			rs.next();
+			int clave=rs.getInt(1);
+			
+			
+				//int clave =CallableStatement.RETURN_GENERATED_KEYS;
+		
+			
+		
+			for(DetalleDevolucion det: lista) {
+				cstmDetDevol=conex.prepareCall("{CALL SP_REGISTRAR_DETALLE_DEVOLUCION(null,?,?,?,?,?,?,?)}");
+				//cstmDetDevol.setInt(1,det.getId_DetalleDevolucion());
+				cstmDetDevol.setInt(1,clave);
+				cstmDetDevol.setString(2,det.getNro_orden_compra());
+				cstmDetDevol.setInt(3, det.getId_Bien());
+				cstmDetDevol.setString(4,det.getDescripcion_del_dano());
+				cstmDetDevol.setDouble(5,det.getPrecioCompra());
+				cstmDetDevol.setInt(6,det.getCantidad());
+				cstmDetDevol.setDouble(7,det.getCredito_adeudado());
+				
+				insert=cstmDetDevol.executeUpdate();	
+			}
+			
+			conex.commit();
+			//System.out.println("llave Primaria: "+clave);
+			System.out.println("Se insertaron: "+insert+ " datos");
+			
+
+		}
+		catch (Exception e) {
+			System.out.println("Error en la insert..."+ e.getMessage());
+	
+			try {
+				conex.rollback();
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
+			}
+			
+		}finally {
+			try {
+				if(cstmDetDevol !=null || cstmDevol!=null || conex!=null) {
+					cstmDetDevol.close();
+					cstmDevol.close();
+				    conex.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("No se pudo conectar a la BD "+ex.getMessage());
+				ex.printStackTrace();
+			}
+		}
+
+		return insert;
+	}
+
+}

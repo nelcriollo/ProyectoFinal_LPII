@@ -55,12 +55,12 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			</div>
 
 			<div class="btn-group">
-				<c:if test="${requestScope.usuario !=null}">
+				<c:if test="${sessionScope.usuario !=null}">
 					<button type="button"
 						class="btn bg-dark text-white dropdown-menu-dark dropdown-toggle btn btn-round btn-theme"
 						data-bs-toggle="dropdown" data-bs-display="static"
 						aria-expanded="false">
-						${requestScope.usuario.login_usuario}<i
+						${sessionScope.usuario.login_usuario}<i
 							class="fa-solid fa-arrow-down ms-2"></i>
 					</button>
 
@@ -70,7 +70,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 							href="#" role="button" data-bs-toggle="popover"
 							data-bs-trigger="hover focus" data-bs-placement="left"
 							title="Bienvenido al Sistema"
-							data-bs-content="El Ministerio Público te desea un buen día  ${requestScope.usuario.nombre} ${requestScope.usuario.apellido}">
+							data-bs-content="  ${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}">
 
 								<i class="fa fa-user mt-2 me-2"></i>
 						</a></li>

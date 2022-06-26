@@ -1,0 +1,174 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+</head>
+<body>
+ <table class="table table-bordered table-striped table-hover table-condensed table-responsive">
+  <thead>
+    <Tr>
+      <ésimo>Nombre completo
+      </ésimo>
+      <ésimo>
+ Sitio web
+      </ésimo>
+      <ésimo>
+ Contacto No
+      </ésimo>
+    </Tr>
+  </thead>
+  <tbody>
+    <Tr>
+      <Td>
+ Juan M
+      </Td>
+      <Td>
+        http://john-m.com
+      </Td>
+      <Td>
+        9876543210
+      </Td>
+    </Tr>
+    <Tr>
+      <Td>
+        Ariana Smith
+      </Td>
+      <Td>
+        https://araiana-smith.com
+      </Td>
+      <Td>
+        1234567890
+      </Td>
+    </Tr>
+    <Tr>
+      <Td>
+ Plata Bourne
+      </Td>
+      <Td>
+        https://silver-bourne.com
+      </Td>
+      <Td>
+        988889888
+      </Td>
+    </Tr>
+    <Tr>
+      <Td>
+        Rahul Ray
+      </Td>
+      <Td>
+        https://rahul-ray.com
+      </Td>
+      <Td>
+        9797979797
+      </Td>
+    </Tr>
+  </tbody>
+</table>
+
+ 
+<script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+<script src="bootstable.min.js"></script>
+
+
+
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="jquery.dynamicTable.js"></script>
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="dataTable.js"></script>
+
+<script >
+
+<div style="text-align:right; tamaño de fuente: 18px; ancho: 95%; margin-top:1%"><a href="https://stackfame.com/editable-html-table-using-javascript-jquery/" >tutorial |  <a href="https://stackfame.com/">Página web de </a></div>
+<Br>
+   <h1 class="col-md-12 text-center" style="color: black">Dynamic Editable HTML table using Javascript, Jquery and Bootstrap with add, edit, and Delete Options</h1>
+  
+   
+   <Br>
+   <div class="col-md-10 con capacidad de respuesta a la tabla">
+<table class="table table-bordered table-striped table-hover table-condensed  text-center" id="DyanmicTable">
+ <thead>
+   <Tr>
+     <th class="centro de texto">
+Nombre completo
+     </ésimo>
+     <th class="centro de texto">
+Sitio web
+     </ésimo>
+     <th class="centro de texto">
+Contacto No
+     </ésimo>
+     <th class="centro de texto">
+       <button id="addNewRow" class="btn btn-primary btn-sm">Agregar nueva fila</button>
+     </ésimo>
+   </Tr>
+ </thead>
+ <tbody>
+   <Tr>
+     <Td>
+Juan M
+     </Td>
+     <Td>
+       http://john-m.com
+     </Td>
+     <Td>
+       9876543210
+     </Td>
+   </Tr>
+   <Tr>
+     <Td>
+       Ariana Smith
+     </Td>
+     <Td>
+       https://araiana-smith.com
+     </Td>
+     <Td>
+       1234567890
+     </Td>
+   </Tr>
+   <Tr>
+     <Td>
+Plata Bourne
+     </Td>
+     <Td>
+       https://silver-bourne.com
+     </Td>
+     <Td>
+       988889888
+     </Td>
+   </Tr>
+   <Tr>
+     <Td>
+       Rahul Ray
+     </Td>
+     <Td>
+       https://rahul-ray.com
+     </Td>
+     <Td>
+       9797979797
+     </Td>
+   </Tr>
+ </tbody>
+</mesa>
+</Div>
+   <!-- Archivos JS ->
+<script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+<script src="bootstable.min.js"></script>
+
+
+<script>
+$('#DyanmicTable'). SetEditable({ $addButton: $('#addNewRow')});
+
+
+</script>
+
+
+</body>
+</html>

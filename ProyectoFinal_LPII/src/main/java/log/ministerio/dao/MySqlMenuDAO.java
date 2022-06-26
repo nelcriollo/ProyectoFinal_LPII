@@ -30,7 +30,7 @@ public class MySqlMenuDAO implements MenuInterfaceDAO {
 			cstm.setInt(4,bean.getCod_menu());
 
 			insert=cstm.executeUpdate();
-			System.out.println("Se insertaron: "+insert+ " datos");
+		
 
 		} catch (Exception e) {
 			System.out.println("Error en la insert..."+e.getMessage());
@@ -64,7 +64,7 @@ public class MySqlMenuDAO implements MenuInterfaceDAO {
 			cstm.setInt(4,bean.getCod_menu());
 
 			salida=cstm.executeUpdate();
-			System.out.println("Se insertaron: "+salida+ " datos");
+		
 
 		} catch (Exception e) {
 			System.out.println("Error en la insert..."+e.getMessage());
@@ -94,7 +94,7 @@ public class MySqlMenuDAO implements MenuInterfaceDAO {
 			cstm.setInt(1, cod); 
 
 			salida=cstm.executeUpdate();
-			System.out.println("Se Eliminaron: "+salida+ " datos");
+			
 		} 
 		catch (Exception e) {
 			System.out.println("Error en la Eliminazación..."+e.getMessage());
@@ -143,7 +143,7 @@ public class MySqlMenuDAO implements MenuInterfaceDAO {
 
 
 				lista.add(bean);
-				System.out.println("Se listaron: "+lista+ " datos");
+				
 			} 
 		}
 		catch (Exception e) {

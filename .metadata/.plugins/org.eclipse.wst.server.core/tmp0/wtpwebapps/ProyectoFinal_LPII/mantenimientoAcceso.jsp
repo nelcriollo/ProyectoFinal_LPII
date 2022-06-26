@@ -138,7 +138,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					</div>
 
 				<div class="col mt-4">
-					<table id="example" class="table table-striped" style="width: 100%">
+					<table id="example" class="table table-striped" style="width: 100%; font-size: 12px">
 						<thead class="table-dark">
 							<tr>
 							    <th>CODIGO</th>
@@ -161,10 +161,10 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 									<td class="p-1"><button type="button"
 											class="btn btn-outline-success btn-sm align-top btn-editar"
 											data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-											id="idbtn-editar">Editar</button></td>
+											id="idbtn-editar"><i class="fas fa-edit"></i></button></td>
 									<td class="p-1"><button type="button"
 											class="btn btn-outline-danger btn-sm align-top p-1"
-											data-bs-toggle="modal" data-bs-target="#modalElimimar">Eliminar</button></td>
+											data-bs-toggle="modal" data-bs-target="#modalElimimar"><i class="fas fa-backspace"></i></button></td>
 
 								</tr>
 							</c:forEach>
@@ -251,6 +251,22 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		
 		//asignamos evento a todos los botones("editar") con nombre de clase "btn-editar"
 		$(document).on("click", ".btn-editar", function() {
+			let codmenu;
+			let codigo;
+			codmenu=$("#idcodMenu").val();
+			 //obtenemos el valor de la columna(0), para paserle como parametro al ServletAccesoJSON
+			codigo = $(this).parents("tr").find("td")[0].innerHTML;
+			
+			
+			$.get("ServletRolMenuJSON?rolesmenu="+codmenu,function(response){
+				$("#idcodOpcionMemu").empty();
+				$('#idcodOpcionMemu').append('<option value="" selected>--Seleccione Opcionde Menú--</option>');
+				$.each(response,function(index,item){
+					$("#idcodOpcionMemu").append("<option value='"+item.cod_rolmenu+"'>"+item.des_rolmenu+"</option>");
+					
+				})
+				
+			})
 			
 			
 			 $("#idIdentificador").val(1); //pasamos el valor de uno como indicadorpara actualizar
@@ -258,18 +274,19 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			 $('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
 			 $('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
 			 
-			let codigo;
-			 //obtenemos el valor de la columna(0), para paserle como parametro al ServletAccesoJSON
-			codigo = $(this).parents("tr").find("td")[0].innerHTML;
+			 
+			
 			
 			
 			$.get("ServletAccesoJSON",{"codigo":codigo},function(response){
 				console.log(response);
+				
 				$("#idcodigo").val(response.cod_acceso);
 				$("#idUser").val(response.cod_usuario);
 				$("#idcodMenu").val(response.cod_menu);
 				$("#idcodOpcionMemu").val(response.cod_Rol);
 				
+					
 			})
 			
 			
