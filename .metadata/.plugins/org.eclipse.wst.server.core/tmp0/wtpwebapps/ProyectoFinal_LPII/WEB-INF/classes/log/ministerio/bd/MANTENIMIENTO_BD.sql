@@ -1,3 +1,4 @@
+
 USE MINISTERIOPUBLICO_GLOGISTICA;
 
 
@@ -122,16 +123,6 @@ END;
 --------------------------------------------------------------------------------------------------------------------------
 
 
-/*P.A. PARA LISTAR LOS PRODUCTOS*/
-DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_BIEN()
-BEGIN
-SELECT  b.id_bienes,tb.nombre as 'tipo_bienes',b.nombre,b.precio_Compra,b.stock,b.descripcion  FROM bienes as b 
-JOIN mpglogistica.tipobienes as tb
-ON b.id_bienes=tb.id_TipoBienes;								
-END;
-
-
 
 /*P.A. PARA LISTAR LOS PRODUCTOS*/
 DELIMITER $$
@@ -204,6 +195,7 @@ CALL SP_REGISTRAR_DETALLE_OC(null,'1',1,40,25.00,500);
 
 
 
+
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA ACTUALIZAR N DETALLE DE ORDEN DE COMPRA*/
 DELIMITER $$
@@ -248,22 +240,6 @@ SET ValorTotal_Orden = _ValorTotal_Orden
 WHERE id_orden_compra =_id_orden_compra;
 END;
 
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA GEMNERAR RERPTE DE UNA ORDEN DE COMPRA CON SU DETALLE*/
-DELIMITER $$
-CREATE PROCEDURE SP_REPORTE_ORDEN_COMPRA_DETALLE(
-	_id_orden_compra int
-)
-BEGIN
-SELECT OC.id_orden_compra,OC.nro_orden_compra as 'Nro_Orden',OC.fechaOrden_compra,OC.fechaEntrega,PV.razon_social as 'Proveedor',OC.CondicionesPago,OC.Embalaje,OC.Transporte,TP.nombre as 'Tipo_Bienes',BN.nombre as 'Nom_Bienes',BN.descripcion,
-DT.precio_unitario,DT.cantidad,DT.valor_total as 'Importe',OC.ValorTotal_Orden as 'Total_Orden_Compra' FROM  detalleordencompra as DT JOIN  OrdenCompra as OC
-ON  DT.id_orden_compra=OC.id_orden_compra JOIN Bien as BN
-ON DT.id_bien=BN.id_bien JOIN TipoBien as TP
-ON BN.id_TipoBien=TP.id_TipoBien JOIN proveedor as PV
-ON OC.id_proveedor=PV.id_proveedor
-WHERE  OC.id_orden_compra=_id_orden_compra;
-END;
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA GEMNERAR RERPTE DE UNA ORDEN DE COMPRA CON SU DETALLE*/
@@ -344,6 +320,7 @@ SELECT B.id_Bien,B.nombre,B.descripcion,TP.nombre as 'Tipo_Bien',B.stock,B.estad
 ON B.id_TipoBien=TP.id_TipoBien
 ORDER BY B.id_Bien DESC;
 END;
+
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA ELIMINAR BIEN POR CODIGO*/

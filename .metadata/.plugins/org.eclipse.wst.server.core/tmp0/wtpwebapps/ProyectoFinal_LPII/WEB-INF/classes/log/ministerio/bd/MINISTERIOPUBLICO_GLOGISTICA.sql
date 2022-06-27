@@ -322,9 +322,8 @@ VALUES(1,'Bien','ServletBien?tipo=LISTAR',1),
 (9,'Reporte de Devolucion de bienes','Reporte_de_Devolucion.jsp',4),
 (10,'Reporte de Bienes','Reporte_de_Bienes.jsp',4),
 (11,'Reporte de Proveedores','Reporte_de_Proveedores.jsp',4),
-(12,'Mantener Acceso','ServletAcceso?tipo=LISTAR',4),
+(12,'Mantener Acceso','ServletAcceso?tipo=LISTAR',1),
 (13,'Qiénes Somos','quienes_somos.jsp',5);
-    
 
     
 select * from Roles_UsuarioMenu;
@@ -341,7 +340,7 @@ CREATE TABLE IF NOT EXISTS Acceso (
 ) ENGINE = InnoDB;
 
 INSERT INTO Acceso (cod_menu,cod_usuario,cod_Rol)
-VALUES (1,1,1),(1,1,2),(1,1,3),(1,1,4),(2,1,5),(2,1,6),(3,1,7),(3,1,8),(4,1,9),(4,1,10),(4,1,11),(4,1,12),(4,1,13),
+VALUES (1,1,1),(1,1,2),(1,1,3),(1,1,4),(2,1,5),(2,1,6),(3,1,7),(3,1,8),(4,1,9),(4,1,10),(4,1,11),(1,1,12),(4,1,13),
 	   (1,2,1),(1,2,2),(1,2,3),(1,2,4),(2,2,5),(2,2,6),(3,2,7),(3,2,8),(4,2,9),(4,2,10),(4,2,11),(5,2,13),
        (1,3,1),(1,3,2),(1,3,3),(1,3,4),(2,3,5),(2,3,6),(3,3,7),(3,3,8),(4,3,9),(4,3,10),(4,3,11),(5,3,13),
        (1,4,1),(1,4,2),(1,4,3),(1,4,4),(2,4,5),(2,4,6),(3,4,7),(3,4,8),(4,4,9),(4,4,10),(4,4,11),(5,4,13),
