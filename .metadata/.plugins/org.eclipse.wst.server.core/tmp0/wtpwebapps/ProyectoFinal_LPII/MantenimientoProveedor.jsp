@@ -48,19 +48,19 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	<div class="container">
 
 		<form id="idRegistrarProveedor" method="post"
-			action="ServletProveedor?tipo=REGISTRAR" class="row mx-5 my-3 p-3">
-
-			<div class="row mx-5 my-4">
+			action="ServletProveedor?tipo=REGISTRAR" class="row mx-5 my-3 p-2">
+			
+						<div class="row mx-5 my-4">
 				<div class="col-md-6 text-center p-3 lh-sm">
 					<br>
-					<h6 class="fw-bolder">Registro de Proveedores</h6>
+					<h5 class="fw-bolder">RUC:20401381291</h5>
 					<p>Av Abancay cuadra. 5 S/N, Lima,Perú</p>
 					<p>Telf: 990990215 - 989435229</p>
 				</div>
 
-				<div class="col-md-3 text-center p-3 lh-sm border border-secondary">
-					<h5 class="fw-bolder">RUC:20401381291</h5>
-					<h7>Registro de Proveeedores</h7>
+				<div class="col-md-3 text-center p-3 lh-sm border">
+					
+					<h6 class="fw-bolder">Registro de Proveedor</h6>
 					<div class="row">
 						<div class="mb-2 row g-2 d-flex justify-content-center mr-3">
 							<div class="col-auto">
@@ -69,19 +69,21 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 							<div class="col-auto">
 								<input type="text" id="mpIdProveedor" name="mpIdProveedor"
 									value="0" class="form-control"
-									aria-describedby="passwordHelpInline">
+									aria-describedby="passwordHelpInline" readonly="readonly">
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			
 
 			<div class="row mx-4 my-2 mb-2">
 				<h5 class="text-darck">Datos del Proveedor</h5>
 			</div>
-
+			
 			<form class="row mx-5 my-2 p-2 border border-secondary">
 				<!-- Primer nivel -->
+				<input type="hidden" class="form-control" id="idIdentificador" name="tipoOperacion" value=0>
 				<div class="col-md-3 mb-2">
 
 					<input type="text" class="form-control" id="mpRazonSocial"
@@ -95,7 +97,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				</div>
 				<div class="col-md-1 mb-2"></div>
 				<div class="col-md-2 mb-2">
-					<button class="btn btn-dark m-1 mt-4 col-md-7 p-1" type="reset">Nuevo</button>
+					<button class="btn btn-dark m-1 mt-4 col-md-7 p-1 btn-nuevo" type="reset">Nuevo</button>
 				</div>
 				<!-- Segundo nivel -->
 				<div class="col-md-3 mb-2">
@@ -111,7 +113,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				</div>
 				<div class="col-md-3 mb-2"></div>
 				<div class="col-md-2 mb-2">
-					<button class="btn btn-dark m-1 mt-4 col-md-7 p-1" type="submit">Grabar</button>
+					<button class="btn btn-primary m-1 mt-4 col-md-7 p-1 btn-registrar" type="submit"> Registrar</button>
 				</div>
 				<!-- Tercer nivel -->
 				<div class="col-md-3 mb-4">
@@ -162,9 +164,9 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		</div>
 
 
-		<div class="col mt-4">
-			<table id="example" class="table table-striped" style="width: 100%">
-				<thead class="table-dark">
+		<div class="col mt-4 table-responsive">
+			<table id="example" class="table table-striped" style="width: 100%; font-size: 12px">
+				<thead class="table-success">
 					<tr>
 						<th>CÓDIGO</th>
 						<th>RAZÓN SOCIAL</th>
@@ -189,10 +191,10 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 							<td>${row.direccion}</td>
 							<td>${row.departamento}</td>
 							<td>${row.telefonos}</td>
-							<td><button type="button" class="btn btn-success"
-									data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar</button></td>
-							<td><button type="button" class="btn btn-danger"
-									data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar</button></td>
+							<td><button type="button" class="btn btn-outline-dark btn-editar"
+									data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fas fa-edit"></i></button></td>
+							<td><button type="button" class="btn btn-outline-danger"
+									data-bs-toggle="modal" data-bs-target="#modalEliminar"><i class="fas fa-backspace"></i></button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -232,7 +234,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 
 	<script>
 
-	<script>
+
 		var popoverTriggerList = [].slice.call(document
 				.querySelectorAll('[data-bs-toggle="popover"]'))
 		var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
@@ -241,34 +243,105 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	</script>
 
 	<script>
-		$(document)
-				.on(
-						"click",
-						".btn-EditarDatos",
-						function() {
-							let id_proveedor, razon_social, nombre_comercial, numero_ruc, email, direccion, departamento, telefonos;
+	deshabilitarBotones();
+	
+	DeshabilitarCajas();
+	
+	 function DeshabilitarCajas(){
+	
+	$("#mpRazonSocial").prop('disabled', true);
+	$("#mpNombreComercial").prop('disabled', true);
+	$("#mpRuc").prop('disabled', true);
+	$("#mpEmail").prop('disabled', true);
+	$("#mpDireccion").prop('disabled', true);
+	$("#mpDepartamento").prop('disabled', true);
+	$("#mpTelefono").prop('disabled', true);
 
-							id_proveedor = $(this).parents("tr").find("td")[0].innerHTML;
-							razon_social = $(this).parents("tr").find("td")[1].innerHTML;
-							nombre_comercial = $(this).parents("tr").find("td")[2].innerHTML;
-							numero_ruc = $(this).parents("tr").find("td")[3].innerHTML;
-							email = $(this).parents("tr").find("td")[4].innerHTML;
-							direccion = $(this).parents("tr").find("td")[5].innerHTML;
-							departamento = $(this).parents("tr").find("td")[6].innerHTML;
-							telefonos = $(this).parents("tr").find("td")[7].innerHTML;
+	 }
 
-							$("#mpIdProveedor").val(id_proveedor);
-							$("#mpRazonSocial").val(razon_social);
-							$("#mpNombreComercial").val(nombre_comercial);
-							$("#mpRuc").val(numero_ruc);
-							$("#mpEmail").val(email);
-							$("#mpDireccion").val(direccion);
-							$("#mpDepartamento").val(departamento);
-							$("#mpTelefono").val(telefonos);
+	 function habilitarCajas(){
+			
+			$("#mpRazonSocial").prop('disabled', false);
+			$("#mpNombreComercial").prop('disabled', false);
+			$("#mpRuc").prop('disabled', false);
+			$("#mpEmail").prop('disabled', false);
+			$("#mpDireccion").prop('disabled', false);
+			$("#mpDepartamento").prop('disabled', false);
+			$("#mpTelefono").prop('disabled', false);
+	
+			 }
+	 
+	
+	function deshabilitarBotones(){			
+		$('.btn-registrar').prop('disabled', true); // para habilitar el  boton registrar
+	}
+	
+	// Evento para btn-nuevo.
+	$(document).on("click", ".btn-nuevo", function() {
+		habilitarCajas()
+		if($('.btn-nuevo').text()=="Nuevo"){
+			$("#mpIdProveedor").val(0);
+			$("#mpRazonSocial").val("");
+			$("#mpNombreComercial").val("");
+			$("#mpRuc").val("");
+			$("#mpEmail").val("");
+			$("#mpDireccion").val("");
+			$("#mpDepartamento").val("");
+			$("#mpTelefono").val("");
+			$('.btn-registrar').text("Registrar"); // para cambiar el texto del boton registrar
+			$('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
+			$('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
+			$("#idIdentificador").val(0); //pasamos el valor de cero como indicadorpara registrar					
+		}
+		else {
+			habilitarCajas()
+			$("#mpIdProveedor").val(0);			
+			$("#mpRazonSocial").val("");
+			$("#mpNombreComercial").val("");
+			$("#mpRuc").val("");
+			$("#mpEmail").val("");
+			$("#mpDireccion").val("");
+			$("#mpDepartamento").val("");
+			$("#mpTelefono").val("");
+			$('.btn-registrar').text("Registrar"); // para cambiar el texto del boton registrar
+			$('.btn-nuevo').text("Nuevo"); // para cambiar el texto del boton Nuevo
+			$('.btn-registrar').prop('disabled', true);// para deshabilitar el  boton registrar
+			
+		}
 
-						})
-
-		$(document).on("click", ".btn-danger", function() {
+	})
+	
+	// Evento para btn-editar.
+	$(document).on("click",".btn-editar",function(){
+		
+		$("#idIdentificador").val(1); //pasamos el valor de uno como indicadorpara actualizar
+		$('.btn-registrar').text("Actualizar"); // para cambiar el texto del boton registrar
+		$('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
+		$('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
+		habilitarCajas();
+		
+    	let id_proveedor,razon_social,nombre_comercial,numero_ruc,email,direccion,departamento,telefonos;
+		
+    	id_proveedor = $(this).parents("tr").find("td")[0].innerHTML;
+    	razon_social = $(this).parents("tr").find("td")[1].innerHTML;
+    	nombre_comercial = $(this).parents("tr").find("td")[2].innerHTML;
+    	numero_ruc = $(this).parents("tr").find("td")[3].innerHTML;
+    	email = $(this).parents("tr").find("td")[4].innerHTML;
+    	direccion = $(this).parents("tr").find("td")[5].innerHTML;
+    	departamento = $(this).parents("tr").find("td")[6].innerHTML;
+    	telefonos = $(this).parents("tr").find("td")[7].innerHTML;
+    
+        $("#mpIdProveedor").val(id_proveedor);
+        $("#mpRazonSocial").val(razon_social);
+        $("#mpNombreComercial").val(nombre_comercial);
+        $("#mpRuc").val(numero_ruc);
+        $("#mpEmail").val(email);
+        $("#mpDireccion").val(direccion);
+        $("#mpDepartamento").val(departamento);
+        $("#mpTelefono").val(telefonos);    
+		 })
+		 
+		$(document).on("click", ".btn-outline-danger", function() {
 			//variable
 			let id_proveedor;
 			//obtener el código del docente según el botón eliminar que se a pulsado

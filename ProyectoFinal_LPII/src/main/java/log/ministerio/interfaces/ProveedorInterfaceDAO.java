@@ -10,5 +10,6 @@ public interface ProveedorInterfaceDAO {
 	public int ActualizarProveedor(Proveedor bean);
 	public int EliminarProveedor(int idProd);
 	public List<Proveedor> listAll();
+	
 
 }

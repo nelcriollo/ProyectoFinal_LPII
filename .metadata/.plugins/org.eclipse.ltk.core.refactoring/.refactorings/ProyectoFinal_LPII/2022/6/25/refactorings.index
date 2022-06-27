@@ -5,3 +5,9 @@
 1655062952694	Rename method 'ListarBienPorCodigo'
 1655077701105	Delete element
 1655077739900	Delete element
+1655483175460	Rename method 'listOc_Detalle'
+1655487682224	Rename field 'idbienes'
+1655487702675	Rename field 'iddetalleOC'
+1655487733287	Rename local variable 'idbienes'
+1655487764305	Rename local variable 'idbienes'
+1655487818590	Rename local variable 'iddetalleOC'

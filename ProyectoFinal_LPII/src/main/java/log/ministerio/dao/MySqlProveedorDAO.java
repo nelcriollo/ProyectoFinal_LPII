@@ -32,7 +32,7 @@ public class MySqlProveedorDAO implements ProveedorInterfaceDAO{
 			
 			salida=cstm.executeUpdate();
 			
-			System.out.println("Se insertaron: "+salida+ " datos");
+		
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,18 +56,20 @@ public class MySqlProveedorDAO implements ProveedorInterfaceDAO{
 
 		try {
 			cn=MySqlConexion.getConectar();
-			cstm=cn.prepareCall("{CALL SP_ACTUALIZAR_PROVEEDORES(?,?,?,?,?)}");
-
-			cstm.setString(1,bean.getRazon_social());
-			cstm.setString(2,bean.getNombre_comercial());
-			cstm.setString(3,bean.getNumero_ruc());
-			cstm.setString(4,bean.getEmail());
-			cstm.setString(5,bean.getDireccion());
-			cstm.setString(6,bean.getDepartamento());
-			cstm.setString(7,bean.getTelefonos());
+			cstm=cn.prepareCall("{CALL SP_ACTUALIZAR_PROVEEDORES(?,?,?,?,?,?,?,?)}");
+			
+			cstm.setInt(1,bean.getId_proveedor());			
+			cstm.setString(2,bean.getRazon_social());
+			cstm.setString(3,bean.getNombre_comercial());
+			cstm.setString(4,bean.getNumero_ruc());
+			cstm.setString(5,bean.getEmail());
+			cstm.setString(6,bean.getDireccion());
+			cstm.setString(7,bean.getDepartamento());
+			cstm.setString(8,bean.getTelefonos());
 
 			salida=cstm.executeUpdate();
-			System.out.println("Se Actualizaron: "+salida+ " datos");
+			
+			
 
 		} catch (Exception e) {
 			System.out.println("Error en la Actualización..."+e.getMessage());
@@ -97,7 +99,7 @@ public class MySqlProveedorDAO implements ProveedorInterfaceDAO{
 			cstm.setInt(1, idProd); 
 
 			salida=cstm.executeUpdate();
-			System.out.println("Se Eliminaron: "+salida+ " datos");
+			
 		} 
 		catch (Exception e) {
 			System.out.println("Error en la Eliminazación..."+e.getMessage());

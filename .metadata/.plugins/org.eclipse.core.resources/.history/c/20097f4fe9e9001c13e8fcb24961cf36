@@ -1,7 +1,0 @@
-package log.ministerio.dao;
-
-import log.ministerio.interfaces.TipoBienInterfaceDAO;
-
-public class MySqlTipoBienDAO implements TipoBienInterfaceDAO {
-
-}

@@ -1,0 +1,228 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="dataTable">
+</div>
+
+<div id="pageDropDown">
+  <label for="rowsPerPage">Rows per Page:</label>
+
+  <select id="rowsPerPage" name="rowsPerPage">
+
+    <option value="5">5</option>
+
+    <option value="10" selected>10</option>
+
+    <option value="15">15</option>
+
+    <option value="20">20</option>
+
+    <option value="30">30</option>
+
+    <option value="40">40</option>
+
+    <option value="50">50</option>
+
+  </select>
+
+</div>
+
+ 
+
+<div id="SearchBox">
+
+  <label for="search">Search: </label>
+
+  <input type="text" id="search" placeholder="Search data..."/>
+
+</div>
+
+<div id="pagination"></div>
+
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="dataTable.js"></script>
+
+<script type="text/javascript">
+
+var ar dataTable =new DataTable();
+
+_$("rowsPerPage").addEventListener('change',function(){
+
+    dataTable.rowsPerPage = parseInt(this.value);
+
+    dataTable.currentPage = 1;
+
+    dataTable.currentIndex = 0;
+
+    dataTable.refreshTable();
+
+});
+
+_$("search").addEventListener('keyup',function(){
+
+    dataTable.currentPage = 1;
+
+    dataTable.currentIndex = 0;
+
+    dataTable.search =this.value;
+
+    dataTable.refreshTable();
+
+});
+
+DataTable.prototype.onload =function(source) {
+
+    this.loadData(source);
+
+};
+
+ 
+
+DataTable.prototype.dataLoaded =function(data) {
+
+    this.intializeData(data);
+
+};
+
+ 
+
+DataTable.prototype.intializeData =function(data) {
+
+    let self =this;
+
+    this.originalData = data;
+
+    this.filteredData = JSON.parse(JSON.stringify(this.originalData));
+
+    this.renderPagination(data);
+
+    this.renderData(data);
+
+};
+
+ 
+
+DataTable.prototype.loadData =function(source) {
+
+  var self =this;
+
+ 
+
+  if (!window.XMLHttpRequest) {
+
+    alert("Cannot load a JSON on this browser!");
+
+    return false;
+
+  }
+
+ 
+
+    var xhr =new XMLHttpRequest();
+
+    xhr.open("GET", source,true);
+
+  xhr.onreadystatechange =function () {
+
+    if(xhr.readyState == 4) {
+
+      if (!xhr.responseText) { console.error("Could not load JSON");return false; }
+
+            if (!self.isValidJSON(xhr.responseText)) { console.error("Invalid JSON data obtained from url '" + url +"'");return false;}
+
+      self.dataLoaded(JSON.parse(xhr.response));
+
+    }
+
+  };
+
+  xhr.send();
+
+ 
+
+  return true;
+
+};
+
+ 
+
+DataTable.prototype.isValidJSON =function(str) {
+
+    try {
+
+        JSON.parse(str);
+
+    }catch (e) {
+
+        return false;
+
+    }
+
+    return true;
+
+};
+
+
+
+[
+	
+	  {
+	
+	    "ID": 1001,
+	
+	    "Name":"Bradley Clements",
+	
+	    "Company":"Integer Tincidunt Aliquam Limited",
+	
+	    "Email":"tristique.ac@Phasellus.net",
+	
+	    "Phone":"1-474-977-4946"
+	
+	  },
+	
+	  {
+	
+	    "ID": 1002,
+	
+	    "Name":"Lani Dawson",
+	
+	    "Company":"Lacus Ut LLP",
+	
+	    "Email":"feugiat.nec@fringilla.com",
+	
+	    "Phone":"1-876-788-2584"
+	
+	  },
+	
+	  {
+	
+	    "ID": 1003,
+	
+	    "Name":"Britanni Dyer",
+	
+	    "Company":"Lacus Pede Ltd",
+	
+	    "Email":"molestie@Donecluctusaliquet.net",
+	
+	    "Phone":"1-523-378-9066"
+	
+	  },
+	
+	  {...
+
+	  }
+	
+	]
+
+</script>
+
+
+</body>
+</html>

@@ -30,7 +30,7 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 			cstm.setInt(4,bean.getCod_Rol());
 
 			insert=cstm.executeUpdate();
-			System.out.println("Se insertaron: "+insert+ " datos");
+			
 
 		} catch (Exception e) {
 			System.out.println("Error en la insert..."+e.getMessage());
@@ -65,7 +65,7 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 
 
 			salida=cstm.executeUpdate();
-			System.out.println("Se Actualizaron: "+salida+ " datos");
+			
 
 		} catch (Exception e) {
 			System.out.println("Error en la insert..."+e.getMessage());
@@ -95,7 +95,7 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 			cstm.setInt(1, cod); 
 
 			salida=cstm.executeUpdate();
-			System.out.println("Se Eliminaron: "+salida+ " datos");
+			
 		} 
 		catch (Exception e) {
 			System.out.println("Error en la Eliminazación..."+e.getMessage());
@@ -135,7 +135,7 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 				bean.setDes_rol(rs.getString(4));
 
 				lista.add(bean);
-				System.out.println("Se listaron: "+lista+ " datos");
+				
 			} 
 		}
 		catch (Exception e) {
@@ -259,7 +259,7 @@ public class MySqlAccesoDAO implements AccesoInterfaceDAO {
 
 
 				lista.add(bean);
-				System.out.println("Se listaron: "+lista+ " datos");
+				
 			} 
 		}
 		catch (Exception e) {

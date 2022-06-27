@@ -32,7 +32,7 @@ public class MySqlBienDAO implements BienInterfaceDAO {
 			cstm.setString(6,bean.getEstado());
 
 			insert=cstm.executeUpdate();
-			System.out.println("Se insertaron: "+insert+ " datos");
+
 
 		} catch (Exception e) {
 			System.out.println("Error en la insert..."+e.getMessage());
@@ -68,7 +68,7 @@ public class MySqlBienDAO implements BienInterfaceDAO {
 			cstm.setString(6,bean.getEstado());
 
 			insert=cstm.executeUpdate();
-			System.out.println("Se actualizaron: "+insert+ " datos");
+			
 
 		} catch (Exception e) {
 			System.out.println("Error en la actualización..."+e.getMessage());
@@ -98,7 +98,7 @@ public class MySqlBienDAO implements BienInterfaceDAO {
 			cstm.setInt(1, cod_bien); 
 
 			salida=cstm.executeUpdate();
-			System.out.println("Se Eliminaron: "+salida+ " datos");
+			
 		} 
 		catch (Exception e) {
 			System.out.println("Error en la Eliminazación..."+e.getMessage());
@@ -183,7 +183,7 @@ public class MySqlBienDAO implements BienInterfaceDAO {
 				bean.setEstado(rs.getString(6));
 
 				lista.add(bean);
-				System.out.println("Se listaron: "+lista+ " datos");
+				
 			} 
 		}
 		catch (Exception e) {

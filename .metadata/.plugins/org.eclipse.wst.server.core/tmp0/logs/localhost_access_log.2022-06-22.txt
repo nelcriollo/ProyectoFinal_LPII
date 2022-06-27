@@ -1,0 +1,9 @@
+127.0.0.1 - - [22/Jun/2022:18:04:02 -0500] "GET / HTTP/1.1" 404 1002
+0:0:0:0:0:0:0:1 - - [22/Jun/2022:18:04:03 -0500] "GET /ProyectoFinal_LPII/mantenimientoAcceso.jsp HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [22/Jun/2022:18:04:03 -0500] "GET /ProyectoFinal_LPII/login.jsp HTTP/1.1" 200 4181
+0:0:0:0:0:0:0:1 - - [22/Jun/2022:18:04:03 -0500] "GET /ProyectoFinal_LPII/css/login.css HTTP/1.1" 200 1033
+0:0:0:0:0:0:0:1 - - [22/Jun/2022:18:04:03 -0500] "GET /ProyectoFinal_LPII/img/llave.svg HTTP/1.1" 200 353
+0:0:0:0:0:0:0:1 - - [22/Jun/2022:18:04:03 -0500] "GET /ProyectoFinal_LPII/img/usuario.svg HTTP/1.1" 200 291
+0:0:0:0:0:0:0:1 - - [22/Jun/2022:18:04:03 -0500] "GET /ProyectoFinal_LPII/img/loginimg.svg HTTP/1.1" 200 271301
+0:0:0:0:0:0:0:1 - - [22/Jun/2022:18:04:03 -0500] "GET /ProyectoFinal_LPII/img/facebook.png HTTP/1.1" 200 1291
+0:0:0:0:0:0:0:1 - - [22/Jun/2022:18:04:03 -0500] "GET /ProyectoFinal_LPII/img/google.png HTTP/1.1" 200 1220
