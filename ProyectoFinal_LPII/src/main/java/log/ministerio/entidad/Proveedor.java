@@ -5,6 +5,31 @@ public class Proveedor {
 	private int id_proveedor;
 	private String razon_social,nombre_comercial,numero_ruc,email,direccion,departamento,telefonos;
 	
+	
+	public Proveedor(int id_proveedor, String razon_social, String nombre_comercial, String numero_ruc, String email,
+			String direccion, String departamento, String telefonos) {
+		this.id_proveedor = id_proveedor;
+		this.razon_social = razon_social;
+		this.nombre_comercial = nombre_comercial;
+		this.numero_ruc = numero_ruc;
+		this.email = email;
+		this.direccion = direccion;
+		this.departamento = departamento;
+		this.telefonos = telefonos;
+	}
+
+	public Proveedor() {
+	}
+	
+	public Proveedor(String razon_social) {
+		this.razon_social = razon_social;
+	}
+
+	public Proveedor(int id_proveedor, String razon_social) {
+		this.id_proveedor = id_proveedor;
+		this.razon_social = razon_social;
+	}
+
 	public int getId_proveedor() {
 		return id_proveedor;
 	}

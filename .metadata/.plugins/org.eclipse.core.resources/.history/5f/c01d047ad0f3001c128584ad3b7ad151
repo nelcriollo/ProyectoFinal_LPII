@@ -1,0 +1,5 @@
+package log.ministerio.services;
+
+public class DeatalleDevolucionService {
+
+}

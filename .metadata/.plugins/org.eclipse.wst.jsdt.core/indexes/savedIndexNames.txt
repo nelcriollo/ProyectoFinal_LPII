@@ -3,5 +3,9 @@ INDEX VERSION 1.4+C:\Users\Nelcriollo\Desktop\ProyectoFinal_LPII\.metadata\.plug
 2680919033.index
 246890836.index
 1653673621.index
+<<<<<<< HEAD
 100348559.index
+=======
+>>>>>>> NelsonCriollo
 1306534196.index
+100348559.index

@@ -1,0 +1,154 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="dataTable">
+</div>
+
+<div id="pageDropDown">
+  <label for="rowsPerPage">Rows per Page:</label>
+
+  <select id="rowsPerPage" name="rowsPerPage">
+
+    <option value="5">5</option>
+
+    <option value="10" selected>10</option>
+
+    <option value="15">15</option>
+
+    <option value="20">20</option>
+
+    <option value="30">30</option>
+
+    <option value="40">40</option>
+
+    <option value="50">50</option>
+
+  </select>
+
+</div>
+
+ 
+
+<div id="SearchBox">
+
+  <label for="search">Search: </label>
+
+  <input type="text" id="search" placeholder="Search data..."/>
+
+</div>
+
+<div id="pagination"></div>
+
+
+
+<table id="myTable"></table>
+
+
+
+
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="jquery.dynamicTable.js"></script>
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="dataTable.js"></script>
+
+<script type="text/javascript">
+
+$("#myTable").dynamicTable({
+
+	  columns: [{
+
+	          text:"Name",
+
+	          key:"name"
+
+	      },
+
+	      {
+
+	          text:"Age",
+
+	          key:"age"
+
+	      },
+
+	      {
+
+	          text:"Gender",
+
+	          key:"gender"
+
+	      },
+
+	  ],
+
+	  data: [{
+
+	          name:'Mr. Jeff Brown',
+
+	          age: 30,
+
+	          gender:'M',
+
+	      },
+
+	      {
+
+	          name:'Ms. Rebeca John',
+
+	          age: 24,
+
+	          gender:'F',
+
+	      },
+
+	  ]
+
+	});
+
+ 
+
+$("#myTable").dynamicTable({
+	
+	  getControl:function (columnKey) {
+	
+	      if (columnKey =="age") {
+
+	          return '<input type="number" class="form-control" />';
+
+	      }
+
+	 
+
+	      if (columnKey =="gender") {
+
+	          return '<select class="form-control"><option value="M">Male</option><option value="F">Female</option></select>';
+
+	      }
+
+	 
+
+	      return '<input type="text" class="form-control" />';
+
+	  },
+
+	});
+	
+$("#myTable").dynamicTable({
+
+	  showActionColumn:true
+	});
+
+
+
+</script>
+
+
+</body>
+</html>

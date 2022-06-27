@@ -1,0 +1,16 @@
+package log.ministerio.dao;
+
+import java.util.List;
+
+import log.ministerio.entidad.DetalleDevolucion;
+import log.ministerio.interfaces.DetalleDevolucionInterfaceDAO;
+
+public class MySqlDetalleDevolucion implements DetalleDevolucionInterfaceDAO {
+
+	@Override
+	public List<DetalleDevolucion> ListarDetalleDevolucionPorCodDevol(int codigo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -47,11 +47,11 @@ public class ServletProveedor extends HttpServlet {
 			registrarProveedor(request,response);
 		}
 		else if(accion.equals("ELIMINAR")) {
-			eliminarDocente(request,response);
+			eliminarProveedor(request,response);
 		}
 	}
 	
-	private void eliminarDocente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void eliminarProveedor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String idPro;
 		idPro=request.getParameter("codigoEliminar");
@@ -60,8 +60,6 @@ public class ServletProveedor extends HttpServlet {
 		salida=servicio.eliminarPorId(Integer.parseInt(idPro));
 
 		if(salida>0) {
-			//direccionar a la página "MantenimientoProveedor.jsp" y enviar el parámetro "MENSAJE" con el valor de éxito
-			//response.sendRedirect("docente.jsp?MENSAJE=Proveedor eliminado correctamente");
 			request.setAttribute("MENSAJE", "Proveedor eliminado correctamente");
 			listarProveedor(request, response);
 		}
@@ -82,8 +80,9 @@ public class ServletProveedor extends HttpServlet {
 	
 	private void registrarProveedor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-		String idPro,razoPro,nomPro,rucPro,emailPro,dirPro,depPro,telPro;
-
+String identificador,idPro,razoPro,nomPro,rucPro,emailPro,dirPro,depPro,telPro;
+		
+		identificador=request.getParameter("tipoOperacion");
 		idPro=request.getParameter("mpIdProveedor");
 		razoPro=request.getParameter("mpRazonSocial");
 		nomPro=request.getParameter("mpNombreComercial");
@@ -93,9 +92,9 @@ public class ServletProveedor extends HttpServlet {
 		depPro=request.getParameter("mpDepartamento");
 		telPro=request.getParameter("mpTelefono");
 
-		Proveedor bean=new Proveedor();
+		Proveedor bean=new Proveedor();		
 		
-		bean.setId_proveedor(Integer.parseInt(idPro));
+		
 		bean.setRazon_social(razoPro);
 		bean.setNombre_comercial(nomPro);
 		bean.setNumero_ruc(rucPro);
@@ -103,30 +102,31 @@ public class ServletProveedor extends HttpServlet {
 		bean.setDireccion(dirPro);
 		bean.setDepartamento(depPro);
 		bean.setTelefonos(telPro);
-
-		if(Integer.parseInt(idPro)>0) {
-
-			int salida;
+		
+		int tipo = Integer.parseInt(identificador);
+		int salida;
+		
+		if (tipo == 0) {
+			
 			salida=servicio.registrar(bean);
 
 			if(salida>0) {
-				//direccionar a la página "MantenimientoProveedor.jsp" y enviar el parámetro "MENSAJE" con el valor de éxito
-				//response.sendRedirect("MantenimientoProveedor.jsp?MENSAJE=Proveedor registrado correctamente");
+				
 				request.setAttribute("MENSAJE", "Proveedor registrado correctamente");
 				listarProveedor(request, response);
+				
 			}
 			else {
-				request.setAttribute("MENSAJE", "Error en el registro de Proveedor");
+				request.setAttribute("MENSAJE", "Error en el registro");
 				listarProveedor(request, response);
 			}
+						
 		}
-		else {
-
+		else if (tipo == 1) {
 			
-
-			int salida;
 			bean.setId_proveedor(Integer.parseInt(idPro));
-			salida=servicio.actualizar(bean);
+			
+			salida=servicio.actualizar(bean);			
 
 			if(salida>0) {
 				request.setAttribute("MENSAJE", "Proveedor actualizado correctamente");
@@ -135,8 +135,9 @@ public class ServletProveedor extends HttpServlet {
 			else {
 				request.setAttribute("MENSAJE", "Error en la actualización");
 				listarProveedor(request, response);
-			}
-		}		
+			}			
+		}
+	
 	}
 
 }

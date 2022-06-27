@@ -6,6 +6,7 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
+<<<<<<< HEAD
 		<item key="selection" value="idCantidad"/>
 		<list key="findhistory">
 			<item value="idCantidad"/>
@@ -23,13 +24,38 @@
 			<item value="example"/>
 			<item value="exampleBien"/>
 			<item value="idcredito"/>
+=======
+		<item key="selection" value="tableBienes"/>
+		<list key="findhistory">
+			<item value="tableBienes"/>
+			<item value="codigoEliminar"/>
+			<item value="btn-danger"/>
+			<item value="mpIdProveedor"/>
+			<item value="btn-registrar"/>
+			<item value="btn-nuevo"/>
+			<item value="idIdentificador"/>
+			<item value="btn-editar"/>
+			<item value="codDetalleDevol"/>
+			<item value="numeroFichaDevol"/>
+			<item value="nuevoTotalCreditoAdeudo"/>
+			<item value="idtotalCreditoAdeudonuevo"/>
+			<item value="idnumeroFichadevol"/>
+			<item value="codigodevol"/>
+			<item value="divCodigoDevolOculto"/>
+>>>>>>> NelsonCriollo
 		</list>
 		<list key="replacehistory">
+			<item value="cstmDetDevol"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+<<<<<<< HEAD
 		<item key="DIALOG_X_ORIGIN" value="507"/>
 		<item key="DIALOG_Y_ORIGIN" value="359"/>
+=======
+		<item key="DIALOG_X_ORIGIN" value="1107"/>
+		<item key="DIALOG_Y_ORIGIN" value="656"/>
+>>>>>>> NelsonCriollo
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

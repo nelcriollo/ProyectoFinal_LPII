@@ -86,7 +86,7 @@ public class ServletUsuario extends HttpServlet {
 
 			HttpSession session=request.getSession();
 
-			request.setAttribute("usuario", bean);
+			session.setAttribute("usuario", bean);
 			session.setAttribute("LISTAMenu", Menus);
 			session.setAttribute("LISTAOpciones", OpcionesMenu);
 			request.getRequestDispatcher("/index.jsp").forward(request, response);

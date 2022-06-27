@@ -65,14 +65,14 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					<div class="row mx-5 my-4">
 				<div class="col-md-6 text-center p-3 lh-sm">
 					<br>
-					<h6 class="fw-bolder">Registro de Proveedores</h6>
+					<h6 class="fw-bolder">RUC:20401381291</h6>
 					<p>Av Abancay cuadra. 5 S/N, Lima,Perú</p>
 					<p>Telf: 990990215 - 989435229</p>
 				</div>
 
-				<div class="col-md-3 text-center p-3 lh-sm border border-secondary">
-					<h5 class="fw-bolder">RUC:20401381291</h5>
-					<h7>Registro de Bien</h7>
+				<div class="col-md-3 text-center p-3 lh-sm border">
+					
+					<h6 class="fw-bolder">Registro de Bien</h6>
 					<div class="row">
 						<div class="mb-2 row g-2 d-flex justify-content-center mr-3">
 							<div class="col-auto">
@@ -91,7 +91,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		<div class="col-md-2"></div>
 	</div>
 
-	<div class="row">
+	<div class="row mx-2">
 		<h6>Datos de Registro de Bienes</h6>
 		
 			 <input type="hidden" class="form-control" id="idIdentificador" name="tipoOperacion">
@@ -126,9 +126,9 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					<div class="row">
 						<div class="col-md-6 col-12">
 							<div class="row my-1">
-								<label for="txtNombredelBien" class=" col-6 col-form-label">Nombre del Bien</label>
+								 <label for="txtNombredelBien" class=" col-6 col-form-label"></label>
 								<div class="col-6">
-									<input type="text" id="idNomBien" name="nombien" class="form-control">
+									<input type="hidden" id="idNomBien" name="nombien" class="form-control" value="null">
 								</div>
 							</div>
 						</div>
@@ -170,13 +170,13 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				<div class="col-md-2 col-12">
 					<div class="row my-1">
 						<div class="col-lg-12 d-grid">
-							<button class="btn btn-dark btn-nuevo" type="button">Nuevo</button>
+							<button class="btn btn-dark btn-nuevo" type="reset">Nuevo</button>
 						</div>
 
 					</div>
 					<div class="row my-1">
 						<div class="col-lg-12 d-grid">
-							<button type="submit"  class="btn btn-dark btn-registrar" disabled="disabled">Registrar</button>
+							<button type="submit"  class="btn btn-primary btn-registrar" disabled="disabled">Registrar</button>
 						</div>
 
 					</div>
@@ -198,7 +198,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					      <div class="modal-body">
 					        	<form id="idEliminar" method="post"
 							action="ServletBien?tipo=ELIMINAR">
-							<input type="" class="form-control" name="codigoEliminar"
+							<input type="hidden" class="form-control" name="codigoEliminar"
 								id="codigoEliminar">
 							<h6>¿Seguro de eliminar?</h6>
 							<div class="modal-footer">
@@ -213,12 +213,11 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					</div>
 
 
-			<div class="col mt-4">
-					<table id="example" class="table table-striped" style="width: 100%">
-						<thead class="table-dark">
+			<div class="col mt-4 table-responsive">
+					<table id="example" class="table table-striped" style="width: 100%; font-size: 12px">
+						<thead class="table-success">
 							<tr>
 							    <th>CODIGO</th>
-								<th>BIEN</th>
 								<th>DESCRIPCION</th>
 								<th>TIPO_BIEN</th>
 								<th>STOCK</th>
@@ -231,7 +230,6 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 							<c:forEach items="${sessionScope.listaBienes}" var="row">
 								<tr>
 									<td>${row.cod_bien}</td>
-									<td>${row.nombre}</td>
 									<td>${row.descripcion}</td>
 									<td>${row.nombreTipo}</td>
 									<td>${row.stock}</td>
@@ -242,10 +240,17 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 									<td class="p-1"><button type="button"
 											class="btn btn-outline-success btn-sm align-top btn-editar"
 											data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+<<<<<<< HEAD
 											id="idbtn-editar"><i class=" text-write fas fa-pencil-alt"></i></button></td>
 									<td class="p-1"><button type="button"
 											class="btn btn-outline-danger btn-sm align-top p-1"
 											data-bs-toggle="modal" data-bs-target="#modalElimimar"><i class="text-write fas fa-backspace"></i></button></td>
+=======
+											id="idbtn-editar"> <i class="fas fa-edit"></i></button></td>
+									<td class="p-1"><button type="button"
+											class="btn btn-outline-danger btn-sm align-top p-1"
+											data-bs-toggle="modal" data-bs-target="#modalElimimar"><i class="fas fa-backspace"></i></button></td>
+>>>>>>> NelsonCriollo
 
 								</tr>
 							</c:forEach>
@@ -293,8 +298,28 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		
 			<script>
 			llenarcboTipoBien();
+			DeshabilitarCajas();
+			
+			 function DeshabilitarCajas(){
+			
+			$("#idTipoDeBien").prop('disabled', true);
+			$("#idNomBien").prop('disabled', true);
+			$("#idDescrip").prop('disabled', true);
+			$("#idCantidad").prop('disabled', true);
+			$("#idEstado").prop('disabled', true);
 	
-		
+			 }
+	
+			 function habilitarCajas(){
+					
+					$("#idTipoDeBien").prop('disabled', false);
+					$("#idNomBien").prop('disabled', false);
+					$("#idDescrip").prop('disabled', false);
+					$("#idCantidad").prop('disabled', false);
+					$("#idEstado").prop('disabled', false);
+			
+					 }
+			 
 		 //fuciones para llenar los select
 		 function llenarcboTipoBien(){
 			$.get("ServletTipoBienJSON",function(response){
@@ -313,8 +338,8 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			 
 			if( $('.btn-nuevo').text()=="Nuevo"){           
 			
-					
-					$("#idBien").val("");
+				     habilitarCajas();
+					$("#idBien").val(0);
 					$("#idTipoDeBien").val("");
 					$("#idNomBien").val("");
 					$("#idDescrip").val("");
@@ -327,7 +352,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					 $("#idIdentificador").val(0); //pasamos el valor de cero como indicadorpara registrar
 			
 			  }else{
-				  $("#idBien").val("");
+				  $("#idBien").val(0);
 					$("#idTipoDeBien").val("");
 					$("#idNomBien").val("");
 					$("#idDescrip").val("");
@@ -349,6 +374,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			 $('.btn-registrar').text("Actualizar"); // para cambiar el texto del boton registrar
 			 $('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
 			 $('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
+			 habilitarCajas();
 			 
 			let codigo;
 			 //obtenemos el valor de la columna(0), para paserle como parametro al ServletAccesoJSON
@@ -359,7 +385,6 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				console.log(response);
 				$("#idBien").val(response.cod_bien);
 				$("#idTipoDeBien").val(response.tipo_bien);
-				$("#idNomBien").val(response.nombre);
 				$("#idDescrip").val(response.descripcion);
 				$("#idCantidad").val(response.stock);
 				$("#idEstado").val(response.estado);

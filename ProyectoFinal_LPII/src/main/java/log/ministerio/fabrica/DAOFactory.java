@@ -2,6 +2,9 @@ package log.ministerio.fabrica;
 
 import log.ministerio.interfaces.AccesoInterfaceDAO;
 import log.ministerio.interfaces.BienInterfaceDAO;
+import log.ministerio.interfaces.DetalleDevolucionInterfaceDAO;
+import log.ministerio.interfaces.DetalleOrdenCompraInterfaceDAO;
+import log.ministerio.interfaces.DevolucionInterfaceDAO;
 import log.ministerio.interfaces.MenuInterfaceDAO;
 import log.ministerio.interfaces.ProveedorInterfaceDAO;
 import log.ministerio.interfaces.TipoBienInterfaceDAO;
@@ -20,6 +23,9 @@ public abstract class DAOFactory {
 	
 	public abstract BienInterfaceDAO getBienInterfaceDAO();
 	public abstract TipoBienInterfaceDAO getTipoBienInterfaceDAO();
+	public abstract DetalleOrdenCompraInterfaceDAO getDetalleOrdenCompraInterfaceDAO();
+	public abstract DevolucionInterfaceDAO getDevolucionInterfaceDAO();
+	public abstract DetalleDevolucionInterfaceDAO getDetalleDevolucionInterfaceDAO();
 
 	public static DAOFactory getDAOFactory(int whichFactory) {
 
