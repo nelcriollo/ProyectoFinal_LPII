@@ -88,9 +88,6 @@ VALUES('5','Laptops','Laptop HP 15.5" de 1TB,8RAM','50','Desaprobado'),
 ('2','Agua','Agua Mineral San Luis,botella x 5L','200','Aprobado'),
 ('5','Teclado','Teclado para Pc','20','Aprobado');
 
-SELECT * FROM Bien;
-
-
 
 CREATE TABLE IF NOT EXISTS DetalleOrdenCompra 
 (
@@ -242,13 +239,13 @@ select * from TipoMovimientosAlmacen;
 CREATE TABLE IF NOT EXISTS MovimientosAlmacen 
 (
 		id_codMovimiento int auto_increment,
-		id_tipoMovimiento int not null,
+		id_TipoMovimiento int not null,
         id_TipoBien int not null,
         id_Bien int not null,
 		cantidad int not null,
         constraint primary key (id_codMovimiento),
         constraint FKTipoMovi_MovimientosAlmacen
-	    foreign key(id_tipoMovimiento)
+	    foreign key(id_TipoMovimiento)
 	    references TipoMovimientosAlmacen(id_TipoMovimiento),
         constraint FKTipobienesMovimientosAlmacen
 		foreign key(id_TipoBien)
@@ -315,8 +312,8 @@ VALUES(1,'Bien','ServletBien?tipo=LISTAR',1),
 (2,'Orden de Compra','ServletOrdenCompra?tipo=LISTAR',1),
 (3,'Proveedores','ServletProveedor?tipo=LISTAR',1),
 (4,'Devolucion de bienes','ServletDevolucionBien?tipo=LISTAR',1),
-(5,'Inventario de Bienes','ServletInventarioBienes?tipo=LISTAR',2),
-(6,'Consultar Bienes','ServletBienes?tipo=LISTAR',3),
+(5,'Inventario de Bienes','ServletMovimientoAlmacen?tipo=LISTAR',2),
+(6,'Consultar Bienes','ServletBien?tipo=CONSULTAR',3),
 (7,'Consultar Orden de Compra','ServletOrdenCompra?tipo=LISTAR',3),
 (8,'Reporte de Orden de Compra','Reporte_Orden_de_Compra.jsp',4),
 (9,'Reporte de Devolucion de bienes','Reporte_de_Devolucion.jsp',4),
@@ -325,7 +322,6 @@ VALUES(1,'Bien','ServletBien?tipo=LISTAR',1),
 (12,'Mantener Acceso','ServletAcceso?tipo=LISTAR',1),
 (13,'Qiénes Somos','quienes_somos.jsp',5);
 
-    
 select * from Roles_UsuarioMenu;
 
 CREATE TABLE IF NOT EXISTS Acceso (
@@ -340,12 +336,12 @@ CREATE TABLE IF NOT EXISTS Acceso (
 ) ENGINE = InnoDB;
 
 INSERT INTO Acceso (cod_menu,cod_usuario,cod_Rol)
-VALUES (1,1,1),(1,1,2),(1,1,3),(1,1,4),(2,1,5),(2,1,6),(3,1,7),(3,1,8),(4,1,9),(4,1,10),(4,1,11),(1,1,12),(4,1,13),
-	   (1,2,1),(1,2,2),(1,2,3),(1,2,4),(2,2,5),(2,2,6),(3,2,7),(3,2,8),(4,2,9),(4,2,10),(4,2,11),(5,2,13),
-       (1,3,1),(1,3,2),(1,3,3),(1,3,4),(2,3,5),(2,3,6),(3,3,7),(3,3,8),(4,3,9),(4,3,10),(4,3,11),(5,3,13),
-       (1,4,1),(1,4,2),(1,4,3),(1,4,4),(2,4,5),(2,4,6),(3,4,7),(3,4,8),(4,4,9),(4,4,10),(4,4,11),(5,4,13),
-       (1,5,1),(1,5,2),(1,5,3),(1,5,4),(2,5,5),(2,5,6),(3,5,7),(3,5,8),(4,5,9),(4,5,10),(4,5,11),(5,5,13),
-       (1,6,1),(1,6,2),(1,6,3),(1,6,4),(2,6,5),(2,6,6),(3,6,7),(3,6,8),(4,6,9),(4,6,10),(4,6,11),(5,6,13);
+VALUES (1,1,1),(1,1,2),(1,1,3),(1,1,4),(2,1,5),(3,1,6),(3,1,7),(4,1,8),(4,1,9),(4,1,10),(4,1,11),(1,1,12),(4,1,13),
+	   (1,2,1),(1,2,2),(1,2,3),(1,2,4),(2,2,5),(3,2,6),(3,2,7),(4,2,8),(4,2,9),(4,2,10),(4,2,11),(5,2,13),
+       (1,3,1),(1,3,2),(1,3,3),(1,3,4),(2,3,5),(3,3,6),(3,3,7),(4,3,8),(4,3,9),(4,3,10),(4,3,11),(5,3,13),
+       (1,4,1),(1,4,2),(1,4,3),(1,4,4),(2,4,5),(3,4,6),(3,4,7),(4,4,8),(4,4,9),(4,4,10),(4,4,11),(5,4,13),
+       (1,5,1),(1,5,2),(1,5,3),(1,5,4),(2,5,5),(3,5,6),(3,5,7),(4,5,8),(4,5,9),(4,5,10),(4,5,11),(5,5,13),
+       (1,6,1),(1,6,2),(1,6,3),(1,6,4),(2,6,5),(3,6,6),(3,6,7),(4,6,8),(4,6,9),(4,6,10),(4,6,11),(5,6,13);
 
 select *  from Acceso;
 
@@ -353,4 +349,5 @@ select *  from Acceso;
 
 show tables;
 show databases;
+
 

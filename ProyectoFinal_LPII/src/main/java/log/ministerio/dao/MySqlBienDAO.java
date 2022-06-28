@@ -202,4 +202,45 @@ public class MySqlBienDAO implements BienInterfaceDAO {
 		return lista;
 	}
 
+	@Override
+	public List<Bien> listAllEstado() {
+		List<Bien> lista=new ArrayList<Bien>();
+		Bien bean=null;
+		Connection conex=null;
+		CallableStatement  cstm=null;
+		ResultSet rs=null;
+		try {
+			conex=MySqlConexion.getConectar();
+			cstm=conex.prepareCall("{call SP_LISTAR_BIENES_ESTADO()}"); 
+
+			rs=cstm.executeQuery();
+
+			while(rs.next()) {
+
+				bean=new Bien();
+				
+				
+				bean.setCod_bien(rs.getInt(1));
+				bean.setDescripcion(rs.getString(2));
+
+				lista.add(bean);
+				System.out.println("Se listaron: "+lista+ " datos");
+			} 
+		}
+		catch (Exception e) {
+			System.out.println("Error en la Consulta..."+e.getMessage());
+		}finally {
+			try {
+				if(cstm!=null || conex!=null)
+					cstm.close();
+				conex.close();
+			} catch (SQLException ex) {
+				System.out.println("No se pudo conectar a la BD "+ex.getMessage());
+				ex.printStackTrace();
+			}
+		}
+
+		return lista;
+	}
+
 }

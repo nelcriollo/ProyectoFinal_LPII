@@ -14,4 +14,7 @@ public class TipoBienService {
 	public List<TipoBien> ListarTipoBienes(){
 		return objTipoBien.listAll();
 	}
+	public List<TipoBien> BuscarCodigo(int codBien){
+		return objTipoBien.findById(codBien);
+	}
 }

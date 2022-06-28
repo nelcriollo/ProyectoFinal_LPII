@@ -12,5 +12,6 @@ public interface BienInterfaceDAO {
 	public int Delete(int cod_bien);
 	public Bien findById(int cod_bien);
 	public List<Bien> listAll();
+	public List<Bien> listAllEstado();
 
 }

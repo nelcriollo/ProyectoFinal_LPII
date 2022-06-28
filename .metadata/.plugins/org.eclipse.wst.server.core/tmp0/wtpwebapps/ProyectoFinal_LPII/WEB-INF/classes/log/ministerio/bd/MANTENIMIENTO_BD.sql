@@ -1,3 +1,4 @@
+
 USE MINISTERIOPUBLICO_GLOGISTICA;
 
 
@@ -122,16 +123,6 @@ END;
 --------------------------------------------------------------------------------------------------------------------------
 
 
-/*P.A. PARA LISTAR LOS PRODUCTOS*/
-DELIMITER $$
-CREATE PROCEDURE SP_LISTAR_BIEN()
-BEGIN
-SELECT  b.id_bienes,tb.nombre as 'tipo_bienes',b.nombre,b.precio_Compra,b.stock,b.descripcion  FROM bienes as b 
-JOIN mpglogistica.tipobienes as tb
-ON b.id_bienes=tb.id_TipoBienes;								
-END;
-
-
 
 /*P.A. PARA LISTAR LOS PRODUCTOS*/
 DELIMITER $$
@@ -204,6 +195,7 @@ CALL SP_REGISTRAR_DETALLE_OC(null,'1',1,40,25.00,500);
 
 
 
+
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA ACTUALIZAR N DETALLE DE ORDEN DE COMPRA*/
 DELIMITER $$
@@ -248,22 +240,6 @@ SET ValorTotal_Orden = _ValorTotal_Orden
 WHERE id_orden_compra =_id_orden_compra;
 END;
 
-
-/*PROCEDIMIENTOS ALMACENADOS*/
-/*P.A. PARA GEMNERAR RERPTE DE UNA ORDEN DE COMPRA CON SU DETALLE*/
-DELIMITER $$
-CREATE PROCEDURE SP_REPORTE_ORDEN_COMPRA_DETALLE(
-	_id_orden_compra int
-)
-BEGIN
-SELECT OC.id_orden_compra,OC.nro_orden_compra as 'Nro_Orden',OC.fechaOrden_compra,OC.fechaEntrega,PV.razon_social as 'Proveedor',OC.CondicionesPago,OC.Embalaje,OC.Transporte,TP.nombre as 'Tipo_Bienes',BN.nombre as 'Nom_Bienes',BN.descripcion,
-DT.precio_unitario,DT.cantidad,DT.valor_total as 'Importe',OC.ValorTotal_Orden as 'Total_Orden_Compra' FROM  detalleordencompra as DT JOIN  OrdenCompra as OC
-ON  DT.id_orden_compra=OC.id_orden_compra JOIN Bien as BN
-ON DT.id_bien=BN.id_bien JOIN TipoBien as TP
-ON BN.id_TipoBien=TP.id_TipoBien JOIN proveedor as PV
-ON OC.id_proveedor=PV.id_proveedor
-WHERE  OC.id_orden_compra=_id_orden_compra;
-END;
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA GEMNERAR RERPTE DE UNA ORDEN DE COMPRA CON SU DETALLE*/
@@ -345,6 +321,7 @@ ON B.id_TipoBien=TP.id_TipoBien
 ORDER BY B.id_Bien DESC;
 END;
 
+
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*P.A. PARA ELIMINAR BIEN POR CODIGO*/
 DELIMITER $$
@@ -368,6 +345,134 @@ CREATE PROCEDURE SP_LISTAR_TIPOBIEN(
 BEGIN
 SELECT  id_TipoBien,nombre FROM  TipoBien
 ORDER BY nombre ASC;
+END;
+
+
+-- ------------------------------------------------------------------------------------------------------------------
+-- Mantenimiento Movimientos de almacén
+-- --------------------------------------------------------------------------------------------------------------------
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA REGISTRAR EL INRESOS Y SALIDAS DE ALMACEN*/
+DELIMITER $$
+CREATE PROCEDURE SP_REGISTRAR_INGRESO_SALIDA_BIENES(
+        _id_codMovimiento int,
+		_id_TipoMovimiento int,
+        _id_TipoBien int,
+        _id_bien int,
+		_cantidad int
+)
+BEGIN
+INSERT INTO  MovimientosAlmacen VALUES (_id_codMovimiento,_id_TipoMovimiento,_id_TipoBien,_id_bien,_cantidad);
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ACTUALIZAR EL STOCK*/
+DELIMITER $$
+CREATE PROCEDURE SP_ACTUALIZAR_STOCK_BIEN(
+_id_TipoMovimiento INT,
+_id_bien INT,
+_cantidad INT
+
+)
+BEGIN
+IF _id_TipoMovimiento  = 1 THEN
+UPDATE Bien
+SET stock = stock + _cantidad
+WHERE id_Bien=_id_bien;
+ELSE 
+UPDATE Bien
+SET stock = stock - _cantidad
+WHERE id_Bien=_id_bien;
+END IF;
+END;
+
+
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA ELIMINAR INGRESO-SALIDA DE ALMACEN*/
+DELIMITER $$
+CREATE PROCEDURE SP_ELIMINAR_INGRESO_SALIDA(
+	    _id_codMovimiento int
+)
+BEGIN
+DECLARE tipomovimiento, _cantidad, codBienes INT;
+SET tipomovimiento=(SELECT m.id_TipoMovimiento FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+SET _cantidad=(SELECT m.cantidad FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+
+SET codBienes=(SELECT m.id_bien FROM MovimientosAlmacen as m where id_codMovimiento=_id_codMovimiento);
+
+DELETE FROM  MovimientosAlmacen
+WHERE id_codMovimiento=_id_codMovimiento;
+
+IF tipomovimiento = 1 THEN
+UPDATE Bien
+SET stock = stock - _cantidad
+WHERE id_bien=codBienes;
+ELSE
+UPDATE Bien
+SET stock = stock + _cantidad
+WHERE id_bien=codBienes;
+END IF;
+END;
+
+
+/*P.A. PARA LISTAR BIENES CON ESTADO APROBADO*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_BIENES_ESTADO()
+BEGIN
+SELECT id_Bien,descripcion FROM Bien
+WHERE estado = 'Aprobado'
+ORDER BY descripcion asc;
+END;
+
+
+
+
+/*P.A. PARA LISTAR EL TIPO DE BIEN CON EL NOMBRE*/
+DELIMITER $$
+CREATE PROCEDURE SP_BUSCAR_TIPOBIEN_DESCRIPCIONBIEN(id_bien int)
+BEGIN
+SELECT TB.id_TipoBien,TB.nombre as 'nombre_Tipo_Bien' 
+FROM Bien B JOIN TipoBien TB
+ON B.id_TipoBien = TB.id_TipoBien
+WHERE B.id_bien = id_bien;
+END;
+
+
+/*P.A. PARA EDITAR LOS MOVIMIENTOS DE ALMANCEN*/
+DELIMITER $$
+CREATE PROCEDURE SP_EDITAR_MOVIMIENTO_ALMACEN(_id_codMovimiento int)
+BEGIN
+SELECT * FROM MovimientosAlmacen
+WHERE id_codMovimiento = _id_codMovimiento;
+END;
+
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*P.A. PARA LISTAR LOS TIPOS DE MOVIMIENTOS*/
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_TIPO_MOVI_ALMACEN()
+BEGIN
+SELECT  * FROM TipoMovimientosAlmacen
+ORDER BY nombreMovimiento ASC;
+END;
+
+
+
+/*P.A. PARA LISTAR INGRESO O SALIDA DE BIENES*/ 
+DELIMITER $$
+CREATE PROCEDURE SP_LISTAR_INGRESO_SALIDA_BIENES()
+BEGIN
+SELECT 	M.id_codMovimiento,
+	TPA.nombreMovimiento,
+        TPV.nombre as 'Tipo_Bienes',
+        B.descripcion as 'Nombre_Bien',
+        M.cantidad
+FROM MovimientosAlmacen as M
+JOIN TipoMovimientosAlmacen as TPA ON M.id_TipoMovimiento=TPA.id_TipoMovimiento 
+JOIN TipoBien as TPV ON M.id_TipoBien=TPV.id_TipoBien
+JOIN Bien as B ON M.id_bien=B.id_bien
+ORDER BY id_codMovimiento asc;
 END;
 
 

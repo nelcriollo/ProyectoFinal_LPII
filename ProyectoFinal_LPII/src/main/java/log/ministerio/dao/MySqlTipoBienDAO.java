@@ -52,4 +52,44 @@ public class MySqlTipoBienDAO implements TipoBienInterfaceDAO {
 		return lista;
 	}
 
+	@Override
+	public List<TipoBien> findById(int codBien) {
+		List<TipoBien> lista=new ArrayList<TipoBien>();
+		TipoBien bean = null;
+		Connection cn = null;
+		CallableStatement cstm = null;
+		ResultSet rs = null;
+		
+		try {
+			cn=MySqlConexion.getConectar();
+			cstm=cn.prepareCall("{CALL SP_BUSCAR_TIPOBIEN_DESCRIPCIONBIEN(?)}");
+			cstm.setInt(1, codBien);
+			
+			rs=cstm.executeQuery();
+
+			while(rs.next()) {
+
+				bean=new TipoBien();
+				
+				bean.setCod_tipobien(rs.getInt(1));
+				bean.setNom_tipoBien(rs.getString(2));
+				
+				lista.add(bean);
+				
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cstm!=null) cstm.close();
+				if(cn!=null) cn.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}		
+		return lista;
+	}
+
 }

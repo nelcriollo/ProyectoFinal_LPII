@@ -25,6 +25,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
 	rel="stylesheet">
 
+
 <style type="text/css">
 
 .help-block {
@@ -73,12 +74,12 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				<div class="col-md-3 text-center p-3 lh-sm border">
 					
 					<h6 class="fw-bolder">Registro de Bien</h6>
-					<div class="row">
-						<div class="mb-2 row g-2 d-flex justify-content-center mr-3">
-							<div class="col-auto">
+					<div class="row" >
+						<div class="mb-2 row g-2 d-flex justify-content-center mr-3 form-group">
+							<div class="col-auto ">
 								<label for="inputPassword6" class="col-form-label fw-bolder">NRO:</label>
 							</div>
-							<div class="col-auto">
+							<div class="col-auto ">
 								<input type="text" id="idBien" name="codbien"
 									value="0" class="form-control"readonly="readonly"
 									aria-describedby="passwordHelpInline">
@@ -95,92 +96,53 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		<h6>Datos de Registro de Bienes</h6>
 		
 			 <input type="hidden" class="form-control" id="idIdentificador" name="tipoOperacion">
+		
+	<div class="col-ms-12 col-lg-9">
+<div class="row"> 
+	<div class="col-lg-5 col-md-6 col-sm-12 form-group"id="tipob">
+   <label for="mpTipoDeBienes" class=" col-6 col-form-label">Tipo de Bienes</label>
+   <select id="idTipoDeBien" name="tipobien" class="form-select form-control"><option value="" selected>Seleccionar</option>
+</select>
+  </div>
+  
+  <div class="col-lg-5 col-md-6 col-sm-12 form-group">
+    <label for="txtCantidad" class="col-6 col-form-label">Stock</label>
+    <input type="text" id="idCantidad" name="cant" class="form-control">
+  </div>
+  </div>
+  <div class="row mb-5"> 
+  <div class="col-lg-5 col-md-6 col-sm-12 form-group">
+   	<label for="mpEstado" class="col-6 col-form-label">Estado</label>
+   	<select id="idEstado" name="estado" class="form-select form-control">
+<option value="" selected>Seleccionar</option>
+<option value="Desaprobado">Desaprobado</option>
+<option value="Aprobado" >Aprobado</option>								
+</select>
+  </div>
+  <div class="col-lg-5 col-md-6 col-sm-12 form-group">
+   <label for="txtNombredelBien" class=" col-6 col-form-label">Descripcion del Bien</label>
+   <input type="text" id="idDescrip" name="desbien" class="form-control">
+  </div>
+    </div>
+  </div>
+  
+  	<div class="col-ms-12 col-lg-3 m-auto">
 			<div class="row p-3">
-				<div class="col-md-10 col-12">
-					<div class="row">
-						<div class="col-md-6 col-12">
-							<div class="row my-1">
-								<label for="mpTipoDeBienes" class=" col-6 col-form-label">Tipo de Bienes</label>
-								<div class="col-6">
-									<select id="idTipoDeBien" name="tipobien" class="form-select">
-										<option value="" selected>Seleccionar</option>
-								
-									</select>
-								</div>
-
-							</div>
-						</div>
-						<div class="col-md-6 col-12">
-							<div class="row my-1">
-								<label for="txtCantidad" class="col-6 col-form-label">Cantidad</label>
-								<div class="col-6">
-									<input type="text" id="idCantidad" name="cant" class="form-control">
-								</div>
-
-							</div>
-
-						</div>
-
-					</div>
-					
-					<div class="row">
-						<div class="col-md-6 col-12">
-							<div class="row my-1">
-								 <label for="txtNombredelBien" class=" col-6 col-form-label"></label>
-								<div class="col-6">
-									<input type="hidden" id="idNomBien" name="nombien" class="form-control" value="null">
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-md-6 col-12">
-							<div class="row my-1">
-								<label for="mpEstado" class="col-6 col-form-label">Estado</label>
-								<div class="col-6">
-									<select id="idEstado" name="estado" class="form-select">
-										<option value="" selected>Seleccionar</option>
-										<option value="Desaprobado">Desaprobado</option>
-										<option value="Aprobado" >Aprobado</option>
-								
-									</select>
-								</div>
-							</div>
-
-						</div>
-
-
-					</div>
-					
-										<div class="row">
-						<div class="col-md-6 col-12">
-							<div class="row my-1">
-								<label for="txtNombredelBien" class=" col-6 col-form-label">Descripcion del Bien</label>
-								<div class="col-6">
-									<input type="text" id="idDescrip" name="desbien" class="form-control">
-								</div>
-							</div>
-						</div>
-						
-
-
-
-					</div>
-					
-				</div>
-				<div class="col-md-2 col-12">
-					<div class="row my-1">
+							<div class="col-md-12 col-lg-12">
+					<div class="row my-1 p-1">
 						<div class="col-lg-12 d-grid">
 							<button class="btn btn-dark btn-nuevo" type="reset">Nuevo</button>
 						</div>
 
 					</div>
-					<div class="row my-1">
+					<div class="row my-1 p-1">
 						<div class="col-lg-12 d-grid">
 							<button type="submit"  class="btn btn-primary btn-registrar" disabled="disabled">Registrar</button>
 						</div>
 
 					</div>
 				</div>
+			</div>
 			</div>
 
 
@@ -353,6 +315,14 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					 $('.btn-registrar').text("Registrar"); // para cambiar el texto del boton registrar
 					 $('.btn-nuevo').text("Nuevo"); // para cambiar el texto del boton Nuevo
 					 $('.btn-registrar').prop('disabled', true);// para deshabilitar el  boton registrar
+					 $('.col-md-6').removeClass('form-group');
+					 $('.col-md-6').removeClass('has-error ');
+					 $('.col-md-6').removeClass('form-control-label');
+					 $('small').hide('help-block');
+					 
+					
+					 
+					 DeshabilitarCajas();
 			  }
 		
 		})
@@ -361,12 +331,17 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 				//asignamos evento a todos los botones("editar") con nombre de clase "btn-editar"
 		$(document).on("click", ".btn-editar", function() {
 			
-			
+			 habilitarCajas();
+			 $('.btn-registrar').prop('disabled', true);// para deshabilitar el  boton registrar
+			 $('.col-md-6').removeClass('form-group');
+			 $('.col-md-6').removeClass('has-error ');
+			 $('.col-md-6').removeClass('form-control-label');
+			 $('small').hide('help-block');
 			 $("#idIdentificador").val(1); //pasamos el valor de uno como indicadorpara actualizar
 			 $('.btn-registrar').text("Actualizar"); // para cambiar el texto del boton registrar
 			 $('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
 			 $('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
-			 habilitarCajas();
+			
 			 
 			let codigo;
 			 //obtenemos el valor de la columna(0), para paserle como parametro al ServletAccesoJSON
@@ -398,6 +373,46 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		})
 		
 		</script>
+				<script type="text/javascript">
+		$(document).ready(function() {
+			$('#IdRegistrarBienes').bootstrapValidator(
+								{
+									
+												fields : {
+													
+													tipobien : {
+														validators : {
+															notEmpty: {
+																message : 'Selecione un tipo de bien'
+															},
+														}
+													},
+													cant : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese cantidad'
+															},
+														}
+													},
+													estado : {
+														validators : {
+															notEmpty: {
+																message : 'Selecione una un estado'
+															},
+														}
+													},
+													desbien : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese una descripción'
+															},
+														}
+													}
+										
+												}
+											});
+						});
+	</script>
 		
 		 
 	<script>
