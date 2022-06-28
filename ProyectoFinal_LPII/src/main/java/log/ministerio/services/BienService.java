@@ -26,5 +26,8 @@ public class BienService {
 	public List<Bien> ListarBienes(){
 		return objBien.listAll();
 	}
+	public List<Bien> ListarBienesEstado(){
+		return objBien.listAllEstado();
+	}
 
 }

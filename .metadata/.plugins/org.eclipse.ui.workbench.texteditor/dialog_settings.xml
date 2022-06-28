@@ -6,8 +6,15 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="tableBienes"/>
+		<item key="selection" value="mpDireccion"/>
 		<list key="findhistory">
+			<item value="mpDireccion"/>
+			<item value="form-control"/>
+			<item value="form-group"/>
+			<item value="idDescrip"/>
+			<item value="idEstado"/>
+			<item value="idCantidad"/>
+			<item value="idRegistrar"/>
 			<item value="tableBienes"/>
 			<item value="codigoEliminar"/>
 			<item value="btn-danger"/>
@@ -16,13 +23,6 @@
 			<item value="btn-nuevo"/>
 			<item value="idIdentificador"/>
 			<item value="btn-editar"/>
-			<item value="codDetalleDevol"/>
-			<item value="numeroFichaDevol"/>
-			<item value="nuevoTotalCreditoAdeudo"/>
-			<item value="idtotalCreditoAdeudonuevo"/>
-			<item value="idnumeroFichadevol"/>
-			<item value="codigodevol"/>
-			<item value="divCodigoDevolOculto"/>
 		</list>
 		<list key="replacehistory">
 			<item value="cstmDetDevol"/>
@@ -30,7 +30,7 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_X_ORIGIN" value="1107"/>
-		<item key="DIALOG_Y_ORIGIN" value="656"/>
+		<item key="DIALOG_Y_ORIGIN" value="585"/>
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

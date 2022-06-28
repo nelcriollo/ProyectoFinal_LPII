@@ -28,6 +28,22 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 <link
 	href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
 	rel="stylesheet">
+	
+	<style type="text/css">
+
+.help-block {
+    color: red;
+}
+.form-group.has-error .form-control-label {
+	color: red;
+}
+
+.form-group.has-error .form-control {
+	border: 1px solid red;
+	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+}
+</style>
+
 
 </head>
 
@@ -84,31 +100,30 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			<form class="row mx-5 my-2 p-2 border border-secondary">
 				<!-- Primer nivel -->
 				<input type="hidden" class="form-control" id="idIdentificador" name="tipoOperacion" value=0>
-				<div class="col-md-3 mb-2">
+				<div class="col-md-3 mb-2 form-group quitar">
 
-					<input type="text" class="form-control" id="mpRazonSocial"
+					<input type="text" class="form-control " id="mpRazonSocial"
 						name="mpRazonSocial" requestFocus="true"
 						placeholder="Razón Social">
 				</div>
 				<div class="col-md-1 mb-2"></div>
-				<div class="col-md-5 mb-2">
-					<input type="text" class="form-control" id="mpDireccion"
-						name="mpDireccion" placeholder="Dirección">
+				<div class="col-md-5 mb-2 form-group quitar">
+					<input type="text" class="form-control " id="mpDireccion" name="mpDireccion" placeholder="Dirección">
 				</div>
 				<div class="col-md-1 mb-2"></div>
 				<div class="col-md-2 mb-2">
 					<button class="btn btn-dark m-1 mt-4 col-md-7 p-1 btn-nuevo" type="reset">Nuevo</button>
 				</div>
 				<!-- Segundo nivel -->
-				<div class="col-md-3 mb-2">
+				<div class="col-md-3 mb-2 form-group quitar">
 
-					<input type="email" class="form-control" id="mpEmail"
+					<input type="email" class="form-control " id="mpEmail"
 						name="mpEmail" placeholder="Email">
 				</div>
 				<div class="col-md-1 mb-2"></div>
-				<div class="col-md-3 mb-2">
+				<div class="col-md-3 mb-2 form-group quitar">
 
-					<input type="text" class="form-control" id="mpRuc" name="mpRuc"
+					<input type="text" class="form-control " id="mpRuc" name="mpRuc"
 						placeholder="RUC">
 				</div>
 				<div class="col-md-3 mb-2"></div>
@@ -116,22 +131,22 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					<button class="btn btn-primary m-1 mt-4 col-md-7 p-1 btn-registrar" type="submit"> Registrar</button>
 				</div>
 				<!-- Tercer nivel -->
-				<div class="col-md-3 mb-4">
+				<div class="col-md-3 mb-4 form-group quitar">
 
-					<input type="text" class="form-control" id="mpNombreComercial"
+					<input type="text" class="form-control" quitar id="mpNombreComercial"
 						name="mpNombreComercial" placeholder="Nombre Comercial">
 				</div>
 				<div class="col-md-1 mb-2"></div>
-				<div class="col-md-3 mb-3">
+				<div class="col-md-3 mb-3 form-group quitar">
 
-					<input type="text" class="form-control" id="mpTelefono"
+					<input type="text" class="form-control " id="mpTelefono"
 						name="mpTelefono" placeholder="Telefono">
 				</div>
 				<div class="col-md-5 mb-2"></div>
 				<!-- Cuarto nivel -->
-				<div class="col-md-3 mb-2">
+				<div class="col-md-3 mb-2 form-group quitar">
 
-					<input type="text" class="form-control" id="mpDepartamento"
+					<input type="text" class="form-control " id="mpDepartamento"
 						name="mpDepartamento" placeholder="Departamento">
 				</div>
 			</form>
@@ -219,7 +234,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		crossorigin="anonymous"></script>
 
 
-	<script
+<script
 		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 	<script
 		src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -271,6 +286,25 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	
 			 }
 	 
+	 $(document).on("click", ".btn-registrar", function() {
+			
+			if( $('.btn-registrar').text()=="Registrar"){
+			if( $("#mpRazonSocial").val()=="" || $("#mpNombreComercial").val()==""||$("#mpRuc").val()=="" ||$("#mpEmail").val()=="" ||$("#mpDireccion").val()=="" ||$("#mpDepartamento").val()=="" ||$("#mpTelefono").val()==""){    
+				
+				$('.quitar').addClass('form-group');
+				 $('.quitar').addClass('has-error ');
+				 $('.quitar').addClass('form-control-label');
+				 $('small').show('help-block');
+			}
+			}else{
+				 $('.quitar').removeClass('form-group');
+				 $('.quitar').removeClass('has-error ');
+				 $('.quitar').removeClass('form-control-label');
+				 $('small').hide('help-block');
+			
+			}
+		})
+		
 	
 	function deshabilitarBotones(){			
 		$('.btn-registrar').prop('disabled', true); // para habilitar el  boton registrar
@@ -278,7 +312,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	
 	// Evento para btn-nuevo.
 	$(document).on("click", ".btn-nuevo", function() {
-		habilitarCajas()
+		
 		if($('.btn-nuevo').text()=="Nuevo"){
 			$("#mpIdProveedor").val(0);
 			$("#mpRazonSocial").val("");
@@ -291,10 +325,11 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			$('.btn-registrar').text("Registrar"); // para cambiar el texto del boton registrar
 			$('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
 			$('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
-			$("#idIdentificador").val(0); //pasamos el valor de cero como indicadorpara registrar					
+			$("#idIdentificador").val(0); //pasamos el valor de cero como indicadorpara registrar
+			habilitarCajas()
 		}
 		else {
-			habilitarCajas()
+			
 			$("#mpIdProveedor").val(0);			
 			$("#mpRazonSocial").val("");
 			$("#mpNombreComercial").val("");
@@ -306,6 +341,11 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			$('.btn-registrar').text("Registrar"); // para cambiar el texto del boton registrar
 			$('.btn-nuevo').text("Nuevo"); // para cambiar el texto del boton Nuevo
 			$('.btn-registrar').prop('disabled', true);// para deshabilitar el  boton registrar
+			$('.quitar').removeClass('form-group');
+			 $('.quitar').removeClass('has-error ');
+			 $('.quitar').removeClass('form-control-label');
+			 $('small').hide('help-block');
+			 DeshabilitarCajas();
 			
 		}
 
@@ -318,7 +358,11 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		$('.btn-registrar').text("Actualizar"); // para cambiar el texto del boton registrar
 		$('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
 		$('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
-		habilitarCajas();
+		 habilitarCajas();
+		 $('.quitar').removeClass('form-group');
+		 $('.quitar').removeClass('has-error ');
+		 $('.quitar').removeClass('form-control-label');
+		 $('small').hide('help-block');
 		
     	let id_proveedor,razon_social,nombre_comercial,numero_ruc,email,direccion,departamento,telefonos;
 		
@@ -341,6 +385,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
         $("#mpTelefono").val(telefonos);    
 		 })
 		 
+		 
 		$(document).on("click", ".btn-outline-danger", function() {
 			//variable
 			let id_proveedor;
@@ -350,6 +395,70 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			$("#codigoEliminar").val(id_proveedor);
 
 		})
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#idRegistrarProveedor').bootstrapValidator(
+								{
+									
+												fields : {
+													
+													mpRazonSocial : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese la  RazonSocial'
+															},
+														}
+													},
+													mpDireccion : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese una Dirección'
+															},
+														}
+													},
+													mpEmail : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese el correo..'
+															},
+														}
+													},
+													mpRuc : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese el nro de Ruc'
+															},
+														}
+													},
+													mpNombreComercial : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese un nombre comercial'
+															},
+														}
+													},
+													
+													mpTelefono : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese un número de teléfono'
+															},
+														}
+													},
+													
+													mpDepartamento : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese un Departamento'
+															},
+														}
+													}
+										
+												}
+											});
+						});
 	</script>
 
 	<script>

@@ -110,83 +110,58 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	<div class="row px-3">
 			<div class="row p-3 border ms-0">
 			<h5 class="text-info">Datos de Cabecera</h5>
-				<div class="col-md-12 col-12">
-					<div class="row">
-						<div class="col-md-6 col-12">
-						
+	
+			
+			
+<div class="col-ms-12 col-lg-9">
 							<div class="row my-1 divCodigoDevolOculto" >
-								<label for="txtFechaDevolucion" class=" col-6 col-form-label">Código de Devolución</label>
+								<label for="txtcodDevolucion" class=" col-6 col-form-label">Código de Devolución</label>
 								<div class="col-6">
 								<input type="text" class="form-control text-success fw-bolder" name="codigodevol"
 								id="idcodigodevol" readonly="readonly">
 								</div>
 							</div>
 							
-							<div class="row my-1">
-								<label for="txtFechaDevolucion" class=" col-6 col-form-label">Fecha
-									de Devolución</label>
-								<div class="col-6">
-									<input type="date" id="idFechaDevolucion" name="fech" class="form-control">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 col-12">
-							<div class="row my-1">
-								<label for="mpDepartamento" class="col-6 col-form-label">Remitente</label>
-								<div class="col-6">
-									<input type="text" id="idRemitente" name="remitente" class="form-control" value="${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}" readonly="readonly">
-								</div>
-
-							</div>
-
-						</div>
-
-					</div>
-					
-					<div class="row">
-						<div class="col-md-6 col-12">
-							<div class="row my-1">
-								<label for="txtProveedor" class=" col-6 col-form-label">Proveedor</label>
-								<div class="col-6">
-									<select id="idProveedor" name="proveedor" class="form-select">
-										<option selected>Seleccionar</option>
-										
-									</select>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-md-6 col-12">
-							<div class="row my-1">
-								<label for="mpDepartamento" class="col-6 col-form-label">Total
-									crédito adeudado</label>
-								<div class="col-6">
-									<input type="text" id="idtotalCreditoAdeudo" name="totalCreditoAdeudo" class="form-control text-danger fw-bold" value="0" readonly="readonly">
-								</div>
-
-							</div>
-
-						</div>
-
-
-					</div>
-				</div>
-	
-			</div>
+	<div class="row"> 
+		<div class="col-lg-5 col-md-6 col-sm-12 form-group quitar " id="tipob">
+	  <label for="txtFechaDevolucion" class=" col-6 col-form-label">Fecha de Devolución</label>
+	   <input type="date" id="idFechaDevolucion" name="fech" class="form-control">
+	  </div>
+	  
+	  <div class="col-lg-5 col-md-6 col-sm-12">
+	    <label for="mpDepartamento" class="col-6 col-form-label">Remitente</label>
+	 <input type="text" id="idRemitente" name="remitente" class="form-control" value="${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}" readonly="readonly">							
+	  </div>
+	  </div>
+	  <div class="row mb-5"> 
+	  <div class="col-lg-5 col-md-6 col-sm-12 form-group quitar">
+	   <label for="txtProveedor" class=" col-6 col-form-label">Proveedor</label>
+	   <select id="idProveedor" name="proveedor" class="form-select form-control">
+	    <option value="" selected>--Seleccionar--</option>
+	  </select>
+	  </div>
+	  <div class="col-lg-5 col-md-6 col-sm-12">
+	<label for="mpDepartamento" class="col-6 col-form-label">Total crédito adeudado</label>
+	  <input type="text" id="idtotalCreditoAdeudo" name="totalCreditoAdeudo" class="form-control text-danger fw-bold" value="0" readonly="readonly">
+							
+	  </div>
+    </div>
+  </div>
+  </div>
 
 
 </div>
 
 <div class="row p-3  mb-3">
-	<div class="col-lg-6 col-ms-12 p-3  mb-3 border cambiarTamano">
+	<div class="col-lg-6 col-ms-12 p-3  mb-3 border cambiarTamano ">
 		<h5 class="text-success">Datos del Detalle</h5>
-	   <div class="col-md-12">
+	   <div class="col-md-12 form-group quitar">
 	    <label for="validationDefault02" class="form-label">Cantidad</label>
 	    <input type="text" class="form-control cal-creditoAdeudado" id="idcantidad" name="cantidad" value="">
 	  </div>
 	    <div class="col-md-12">
 	    <label for="validationDefaultUsername" class="form-label">Descrpción del Daño</label>
-		    <div class="form-floating">
+		    <div class="form-floating form-group quitar">
 			  <textarea class="form-control" placeholder="" id="idDescripDano" name="descripcionDano" style="height: 100px"></textarea>
 			  <label for="floatingTextarea2">Descrpción del Daño</label>
 			</div>
@@ -243,7 +218,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 
 						<div class="col-md-12 text-center mt-4 mb-5"> 										
 								<button type="submit" id="Guardar" class="btn btn-primary me-2 btn-registrar"><i class="fas fa-save"></i> Registrar</button>
-								<button type="reset" id="Cancelar" class="btn btn-danger ms-2" data-dismiss="modal"><i class="fas fa-undo-alt"></i> Cancelar</button>
+								<button type="button" id="Cancelar" class="btn btn-danger ms-2 cancelar" data-dismiss="modal"><i class="fas fa-undo-alt"></i> Cancelar</button>
 						</div> 
 
 		</form>
@@ -608,9 +583,43 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			
 		})
 		
+		
 	</script>	
 		
 		<script>
+		 $(document).on("click", ".btn-registrar", function() {
+				
+				if( $('.btn-registrar').text()=="Registrar"){
+				if( $("#idFechaDevolucion").val()=="" || $("#idProveedor").val()==""||$("#idcantidad").val()=="" ||$("#idDescripDano").val()==""){    
+					
+					$('.quitar').addClass('form-group');
+					 $('.quitar').addClass('has-error ');
+					 $('.quitar').addClass('form-control-label');
+					 $('small').show('help-block');
+				}
+				}else{
+					 $('.quitar').removeClass('form-group');
+					 $('.quitar').removeClass('has-error ');
+					 $('.quitar').removeClass('form-control-label');
+					 $('small').hide('help-block');
+				
+				}
+			})
+			
+				 $(document).on("click", ".cancelar", function() {
+				
+				 $("#idFechaDevolucion").val("");
+				 $("#idProveedor").val("");
+				 $("#idcantidad").val("");
+				 $("#idDescripDano").val();
+					 $('.quitar').removeClass('form-group');
+					 $('.quitar').removeClass('has-error ');
+					 $('.quitar').removeClass('form-control-label');
+					 $('small').hide('help-block');
+					 $('.btn-registrar').prop('disabled', false);
+				
+				
+			})
 		
 		
 		//asignamos evento a todos los botones("editar") con nombre de clase "btn-editar"
@@ -749,7 +758,53 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 			console.log(VYear+"-"+VMes+"-"+VDia);
 		}
 		
+			
+		
 		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$('#IdRegistrarDevol').bootstrapValidator(
+								{
+									
+												fields : {
+													
+													fech : {
+														validators : {
+															notEmpty: {
+																message : 'Seleccione la fecha'
+															},
+														}
+													},
+													proveedor : {
+														validators : {
+															notEmpty: {
+																message : 'Seleccione el Proveedor'
+															},
+														}
+													},
+													cantidad : {
+														validators : {
+															notEmpty: {
+																message : 'ingrese la cantidad'
+															},
+														}
+													},
+													descripcionDano : {
+														validators : {
+															notEmpty: {
+																message : 'Ingrese Descripción del Daño'
+															},
+														}
+													}
+											
+											
+										
+												}
+											});
+						});
+	</script>
+		
 		
 		 
 	<script>

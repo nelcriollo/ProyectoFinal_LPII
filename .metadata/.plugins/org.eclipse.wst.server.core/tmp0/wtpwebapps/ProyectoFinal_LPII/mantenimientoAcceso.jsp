@@ -76,14 +76,14 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 							 <input type="text" class="form-control" id="idcodigo" name="codAcc" readonly="readonly">
 							</div>
 
-						<div class="col-md-6 form-group">
+						<div class="col-md-6 form-group quitar">
 							<label for="inputState" class="form-label">Usuario</label> <select
 								id="idUser" class="form-select form-control" name="user">
 								<option value="" selected>--Seleccione Usuario--</option>
 
 							</select>
 						</div>
-						<div class="col-md-6 form-group">
+						<div class="col-md-6 form-group quitar">
 							<label for="inputState" class="form-label">Menu</label> <select
 								id="idcodMenu" class="form-select form-control" name="menu">
 								<option value="" selected>--Seleccione Menú--</option>
@@ -91,7 +91,7 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 							</select>
 						</div>
 
-						<div class="col-md-12 form-group">
+						<div class="col-md-12 form-group quitar">
 							<label for="inputState" class="form-label">Opcion de Menu</label>
 							<select id="idcodOpcionMemu" class="form-select form-control"
 								name="opcionMemu">
@@ -214,6 +214,28 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 	<script>
 			llenarCboMenu();
 			llenarcboUsuario();
+			
+			
+			DeshabilitarCajas();
+			
+			 function DeshabilitarCajas(){
+			
+			$("#idcodigo").prop('disabled', true);
+			$("#idUser").prop('disabled', true);
+			$("#idcodMenu").prop('disabled', true);
+			$("#idcodOpcionMemu").prop('disabled', true);
+			
+			 }
+	
+			 function habilitarCajas(){
+					
+				 $("#idcodigo").prop('disabled', false);
+					$("#idUser").prop('disabled', false);
+					$("#idcodMenu").prop('disabled', false);
+					$("#idcodOpcionMemu").prop('disabled', false);
+			
+					 }
+			 
 		
 		 //fuciones para llenar los select
 		 function llenarcboUsuario(){
@@ -251,11 +273,20 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		
 		//asignamos evento a todos los botones("editar") con nombre de clase "btn-editar"
 		$(document).on("click", ".btn-editar", function() {
+			
+			habilitarCajas();
 			let codmenu;
 			let codigo;
 			codmenu=$("#idcodMenu").val();
 			 //obtenemos el valor de la columna(0), para paserle como parametro al ServletAccesoJSON
 			codigo = $(this).parents("tr").find("td")[0].innerHTML;
+			 
+			$('.quitar').removeClass('form-group');
+			 $('.quitar').removeClass('has-error');
+			 $('.quitar').removeClass('form-control-label');
+		
+			
+			 $('small').hide('help-block');
 			
 			
 			$.get("ServletRolMenuJSON?rolesmenu="+codmenu,function(response){
@@ -307,6 +338,25 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 		
 		<script type="text/javascript">
 		
+		$(document).on("click", ".btn-registrar", function() {
+			
+			if( $('.btn-registrar').text()=="Registrar"){
+			if( $("#idUser").val()=="" || $("#idcodMenu").val()==""||$("#idcodOpcionMemu").val()==""){    
+				
+				$('.quitar').addClass('form-group');
+				 $('.quitar').addClass('has-error ');
+				 $('.quitar').addClass('form-control-label');
+				 $('small').show('help-block');
+			}
+			}else if( $('.btn-registrar').text()=="Actualizar"){
+				 $('.quitar').removeClass('form-group');
+				 $('.quitar').removeClass('has-error ');
+				 $('.quitar').removeClass('form-control-label');
+				 $('small').hide('help-block');
+			
+			}
+		})
+		
 		//funcion para el btn-nuevo 
 		$(document).on("click", ".btn-nuevo", function() {
 			
@@ -323,6 +373,9 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					 $('.btn-registrar').prop('disabled', false);// para habilitar el  boton registrar
 					 $('.btn-nuevo').text("Cancelar"); // para cambiar el texto del boton Nuevo
 					 $("#idIdentificador").val(0); //pasamos el valor de cero como indicadorpara registrar
+					 habilitarCajas();
+					 
+					 
 				})
 			  }else{
 				  $("#idcodigo").val("");
@@ -332,6 +385,11 @@ if (request.getSession().getAttribute("LISTAMenu") == null)
 					 $('.btn-registrar').text("Registrar"); // para cambiar el texto del boton registrar
 					 $('.btn-nuevo').text("Nuevo"); // para cambiar el texto del boton Nuevo
 					 $('.btn-registrar').prop('disabled', true);// para deshabilitar el  boton registrar
+					 $('.quitar').removeClass('form-group');
+					 $('.quitar').removeClass('has-error ');
+					 $('.quitar').removeClass('form-control-label');
+					 $('small').hide('help-block');
+					DeshabilitarCajas();
 			  }
 		
 		})

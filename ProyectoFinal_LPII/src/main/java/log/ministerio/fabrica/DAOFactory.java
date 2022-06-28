@@ -6,8 +6,10 @@ import log.ministerio.interfaces.DetalleDevolucionInterfaceDAO;
 import log.ministerio.interfaces.DetalleOrdenCompraInterfaceDAO;
 import log.ministerio.interfaces.DevolucionInterfaceDAO;
 import log.ministerio.interfaces.MenuInterfaceDAO;
+import log.ministerio.interfaces.MovimientoAlmacenInterfaceDAO;
 import log.ministerio.interfaces.ProveedorInterfaceDAO;
 import log.ministerio.interfaces.TipoBienInterfaceDAO;
+import log.ministerio.interfaces.TipoMovimientoInterfaceDAO;
 import log.ministerio.interfaces.UsuarioInterfaceDAO;
 
 public abstract class DAOFactory {
@@ -27,6 +29,9 @@ public abstract class DAOFactory {
 	public abstract DevolucionInterfaceDAO getDevolucionInterfaceDAO();
 	public abstract DetalleDevolucionInterfaceDAO getDetalleDevolucionInterfaceDAO();
 
+	public abstract MovimientoAlmacenInterfaceDAO getMovimientoAlmacenInterfaceDAO();
+	public abstract TipoMovimientoInterfaceDAO getTipoMovimientoInterfaceDAO();
+	
 	public static DAOFactory getDAOFactory(int whichFactory) {
 
 		switch (whichFactory) {
